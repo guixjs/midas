@@ -1,4 +1,4 @@
-package com.residencia.backend.modules.controllers;
+package com.residencia.backend.modules.controllers.usuario;
 
 import com.residencia.backend.modules.models.UsuarioEntity;
 import com.residencia.backend.modules.services.usuario.CriarUsuarioService;
