@@ -5,7 +5,10 @@ import com.residencia.backend.modules.enums.CategoriaTemp;
 import com.residencia.backend.modules.enums.TipoTransacao;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
@@ -14,6 +17,9 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity(name = "transacoes")
 public class TransacaoEntity {
 
