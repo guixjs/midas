@@ -2,6 +2,7 @@ package com.residencia.backend.modules.controllers.transacao;
 
 
 import com.residencia.backend.modules.dto.transacao.TransacaoDTO;
+import com.residencia.backend.modules.enums.TipoTransacao;
 import com.residencia.backend.modules.models.TransacaoEntity;
 import com.residencia.backend.modules.services.transacao.CriarTransacaoService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @RestController
@@ -27,10 +29,16 @@ public class TransacaoController {
     try{
       var idUser = request.getAttribute("id_usuario");
 
+      BigDecimal valor = transacaoDTO.getValor();
+
+      if(transacaoDTO.getTipoTransacao() == TipoTransacao.DEBITO){
+        valor = valor.negate();
+      }
+
       var transacao = TransacaoEntity.builder()
           .descricao(transacaoDTO.getDescricao())
           .data_transacao(transacaoDTO.getData_transacao())
-          .valor(transacaoDTO.getValor())
+          .valor(valor)
           .tipoTransacao(transacaoDTO.getTipoTransacao())
           .categoria(transacaoDTO.getCategoria())
           .id_usuario(UUID.fromString(idUser.toString()))
