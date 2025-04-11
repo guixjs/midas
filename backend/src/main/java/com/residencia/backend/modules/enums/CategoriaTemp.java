@@ -4,5 +4,9 @@ public enum CategoriaTemp {
   FIXO,
   LAZER,
   COMIDA,
-  TRANSPORTE
+  TRANSPORTE,
+  RENDA_FIXA,
+  PAGAMENTO,
+  ALIMENTACAO,
+  OUTROS
 }
