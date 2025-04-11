@@ -1,7 +1,6 @@
 package com.residencia.backend.modules.models;
 
 
-import com.residencia.backend.modules.enums.CategoriaTemp;
 import com.residencia.backend.modules.enums.TipoTransacao;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -37,8 +36,12 @@ public class TransacaoEntity {
   @Enumerated(EnumType.STRING)
   private TipoTransacao tipoTransacao;
 
-  @Enumerated(EnumType.STRING)
-  private CategoriaTemp categoria;
+  @ManyToOne
+  @JoinColumn(name = "id_categoria", referencedColumnName = "id")
+  private CategoriaEntity categoria;
+
+//  @Column(name = "id_categoria")
+//  private Integer id_categoria;
 
   @ManyToOne()
   @JoinColumn(name = "id_usuario", insertable = false, updatable = false)
