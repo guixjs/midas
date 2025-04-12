@@ -23,7 +23,6 @@ public class SecurityConfig {
           auth.requestMatchers("/user/criar").permitAll()
               .requestMatchers("/user/auth").permitAll()
               .requestMatchers("/transaction/new").permitAll()
-//              .requestMatchers("/transaction/import").permitAll()
           ;
           auth.anyRequest().authenticated();
         })

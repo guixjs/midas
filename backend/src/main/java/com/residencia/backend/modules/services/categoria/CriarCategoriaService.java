@@ -12,6 +12,11 @@ public class CriarCategoriaService {
   private CategoriaRepository categoriaRepository;
 
   public CategoriaEntity execute(CategoriaEntity categoria){
+    String nome;
+    nome = categoria.getNome().toLowerCase();
+    nome = nome.substring(0, 1).toUpperCase() + nome.substring(1);
+    categoria.setNome(nome);
+
     return this.categoriaRepository.save(categoria);
   }
 }

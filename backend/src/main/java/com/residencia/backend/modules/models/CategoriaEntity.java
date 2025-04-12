@@ -34,5 +34,4 @@ public class CategoriaEntity {
   @Column(name = "id_usuario")
   private UUID id_usuario;
 
-  testeee123huifuisdhjhsdajhsdajsdksdjdhsdd
 }

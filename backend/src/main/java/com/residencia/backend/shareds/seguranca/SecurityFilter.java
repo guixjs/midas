@@ -23,8 +23,6 @@ public class SecurityFilter extends OncePerRequestFilter {
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
     String header = request.getHeader("Authorization");
     SecurityContextHolder.getContext().setAuthentication(null);
-    System.out.println(header);
-
     if(header != null){
       var subjectToken = this.jwtProvider.validarToken(header);
       if(subjectToken.isEmpty()){
