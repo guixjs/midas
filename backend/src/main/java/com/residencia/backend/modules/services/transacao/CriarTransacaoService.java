@@ -50,7 +50,7 @@ public class CriarTransacaoService {
         .valor(valor)
         .tipoTransacao(transacaoDTO.getTipoTransacao())
         .categoria(categoriaEntity)
-        .id_usuario(idUsuario)
+        .idUsuario(idUsuario)
         .build();
 
 
@@ -71,7 +71,7 @@ public class CriarTransacaoService {
         .valor(resultado.getValor())
         .tipoTransacao(resultado.getTipoTransacao())
         .categoria(categoriaResponse)
-        .id_usuario(resultado.getId_usuario())
+        .idUsuario(resultado.getIdUsuario())
         .build();
 
     return response;

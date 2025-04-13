@@ -29,7 +29,7 @@ public class CategoriaController {
       var categoria = CategoriaEntity.builder()
           .descricao(categoriaDTO.getDescricao())
           .nome(categoriaDTO.getNome())
-          .id_usuario(UUID.fromString(idUser.toString()))
+          .idUsuario(UUID.fromString(idUser.toString()))
           .build();
       var resultado = this.criarCategoriaService.execute(categoria);
       return ResponseEntity.ok().body(resultado);

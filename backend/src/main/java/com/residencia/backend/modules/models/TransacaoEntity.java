@@ -48,7 +48,7 @@ public class TransacaoEntity {
   private UsuarioEntity usuarioEntity;
 
   @Column(name = "id_usuario",nullable = false)
-  private UUID id_usuario;
+  private UUID idUsuario;
 
 
   @CreationTimestamp

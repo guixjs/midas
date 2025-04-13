@@ -24,5 +24,5 @@ public class TransacaoResponseDTO {
 
   private CategoriaResponseDTO categoria;
 
-  private UUID id_usuario;
+  private UUID idUsuario;
 }

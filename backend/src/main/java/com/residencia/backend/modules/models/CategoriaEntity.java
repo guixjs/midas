@@ -32,6 +32,6 @@ public class CategoriaEntity {
   private UsuarioEntity usuarioEntity;
 
   @Column(name = "id_usuario")
-  private UUID id_usuario;
+  private UUID idUsuario;
 
 }
