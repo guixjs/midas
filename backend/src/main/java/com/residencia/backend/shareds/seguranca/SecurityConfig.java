@@ -22,7 +22,6 @@ public class SecurityConfig {
         .authorizeHttpRequests(auth->{
           auth.requestMatchers("/user/criar").permitAll()
               .requestMatchers("/user/auth").permitAll()
-              .requestMatchers("/transaction/new").permitAll()
           ;
           auth.anyRequest().authenticated();
         })

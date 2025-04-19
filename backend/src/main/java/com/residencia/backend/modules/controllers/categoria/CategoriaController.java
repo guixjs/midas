@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/categoria")
+@RequestMapping("/category")
 public class CategoriaController {
 
   @Autowired

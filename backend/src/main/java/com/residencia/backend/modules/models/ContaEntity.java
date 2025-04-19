@@ -1,44 +1,36 @@
 package com.residencia.backend.modules.models;
 
 
-import com.residencia.backend.modules.enums.TipoTransacao;
+import com.residencia.backend.modules.enums.TipoConta;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
+@Entity(name = "conta")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "transacoes")
-public class TransacaoEntity {
+public class ContaEntity {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.UUID)
-  private UUID id;
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Integer id;
 
-  private String descricao;
-
-  private LocalDate data_transacao;
-
-  @NotNull(message = "O valor não pode ser nulo")
-  private BigDecimal valor;
+  @NotBlank(message = "A conta deve ter um nome")
+  @Pattern(regexp = "^.{1,50}$",message = "O nome deve ter no máximo 50 caractéres")
+  private String nome;
 
   @Enumerated(EnumType.STRING)
-  private TipoTransacao tipoTransacao;
-
-  @ManyToOne
-  @JoinColumn(name = "id_categoria", referencedColumnName = "id")
-  private CategoriaEntity categoria;
+  private TipoConta tipoConta;
 
   @ManyToOne()
   @JoinColumn(name = "id_usuario", insertable = false, updatable = false)
@@ -47,8 +39,10 @@ public class TransacaoEntity {
   @Column(name = "id_usuario",nullable = false)
   private UUID idUsuario;
 
+  private String banco;
 
   @CreationTimestamp
   @Column(name = "dt_criacao", updatable = false)
   private LocalDateTime dataCriacao;
+
 }

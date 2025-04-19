@@ -5,6 +5,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.residencia.backend.modules.dto.usuario.AuthUsuarioDTO;
 import com.residencia.backend.modules.repositories.UsuarioRepository;
+import com.residencia.backend.modules.services.conta.CriarContaGeralService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -25,6 +26,9 @@ public class AutenticarUsuarioService {
   private UsuarioRepository usuarioRepository;
 
   @Autowired
+  private CriarContaGeralService criarContaGeralService;
+
+  @Autowired
   private PasswordEncoder passwordEncoder;
 
   public String execute(AuthUsuarioDTO authUsuarioDTO) throws AuthenticationException {
@@ -32,6 +36,8 @@ public class AutenticarUsuarioService {
         .orElseThrow(()->{
           throw new UsernameNotFoundException("Usuario ou senha inválida");
         });
+
+
 
     var verificaSenha = passwordEncoder.matches(authUsuarioDTO.getSenha(), usuario.getSenha());
 
@@ -45,6 +51,7 @@ public class AutenticarUsuarioService {
         .withExpiresAt(Instant.now().plus(Duration.ofMinutes(20)))
         .sign(algorithm);
 
+    criarContaGeralService.criarContaGeral(usuario);
     return token;
   }
 }

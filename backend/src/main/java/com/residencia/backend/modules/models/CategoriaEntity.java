@@ -7,7 +7,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
@@ -33,5 +35,9 @@ public class CategoriaEntity {
 
   @Column(name = "id_usuario")
   private UUID idUsuario;
+
+  @CreationTimestamp
+  @Column(name = "dt_criacao", updatable = false)
+  private LocalDateTime dataCriacao;
 
 }

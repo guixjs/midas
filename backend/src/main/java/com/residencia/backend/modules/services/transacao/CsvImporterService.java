@@ -90,7 +90,7 @@ public class CsvImporterService {
                 linhasImportadas++;
             } catch (Exception e) {
                 linhasIgnoradas++;
-                e.printStackTrace();
+//                e.printStackTrace();
             }
         }
 
