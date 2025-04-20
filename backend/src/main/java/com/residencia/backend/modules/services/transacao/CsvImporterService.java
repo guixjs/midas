@@ -78,7 +78,7 @@ public class CsvImporterService {
                         ));
 
                 TransacaoEntity transacao = TransacaoEntity.builder()
-                        .data_transacao(data)
+                        .dataTransacao(data)
                         .valor(valor)
                         .descricao(descricao)
                         .tipoTransacao(tipo)

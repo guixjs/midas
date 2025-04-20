@@ -48,7 +48,7 @@ public class AutenticarUsuarioService {
     var token = JWT.create()
         .withIssuer("midas")
         .withSubject(usuario.getId().toString())
-        .withExpiresAt(Instant.now().plus(Duration.ofMinutes(20)))
+        .withExpiresAt(Instant.now().plus(Duration.ofHours(4)))
         .sign(algorithm);
 
     criarContaGeralService.criarContaGeral(usuario);

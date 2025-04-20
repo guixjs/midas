@@ -1,6 +1,5 @@
 package com.residencia.backend.modules.services.conta;
 
-import com.residencia.backend.modules.dto.categoria.CategoriaResponseDTO;
 import com.residencia.backend.modules.dto.conta.ContaResponseDTO;
 import com.residencia.backend.modules.models.ContaEntity;
 import com.residencia.backend.modules.repositories.ContaRepository;

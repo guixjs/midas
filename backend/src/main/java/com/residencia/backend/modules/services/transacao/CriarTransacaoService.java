@@ -46,7 +46,7 @@ public class CriarTransacaoService {
 
     var transacao = TransacaoEntity.builder()
         .descricao(transacaoDTO.getDescricao())
-        .data_transacao(transacaoDTO.getData_transacao())
+        .dataTransacao(transacaoDTO.getData_transacao())
         .valor(valor)
         .tipoTransacao(transacaoDTO.getTipoTransacao())
         .categoria(categoriaEntity)
@@ -67,7 +67,7 @@ public class CriarTransacaoService {
     TransacaoResponseDTO response = TransacaoResponseDTO.builder()
         .id(resultado.getId())
         .descricao(resultado.getDescricao())
-        .data_transacao(resultado.getData_transacao())
+        .data_transacao(resultado.getDataTransacao())
         .valor(resultado.getValor())
         .tipoTransacao(resultado.getTipoTransacao())
         .categoria(categoriaResponse)
