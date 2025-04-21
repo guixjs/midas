@@ -18,11 +18,14 @@ import java.util.UUID;
 public class TransacaoResponseDTO {
   private UUID id;
   private String descricao;
-  private LocalDate data_transacao;
+  private LocalDate dataTransacao;
   private BigDecimal valor;
   private TipoTransacao tipoTransacao;
 
   private CategoriaResponseDTO categoria;
+
+  private Integer idConta;
+  private UUID idCartao;
 
   private UUID idUsuario;
 }

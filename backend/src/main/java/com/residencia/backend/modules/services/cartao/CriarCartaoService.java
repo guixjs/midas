@@ -26,7 +26,7 @@ public class CriarCartaoService {
     var conta = contaRepository.findByIdAndIdUsuario(cartaoEntity.getIdConta(), idUsuario)
         .orElseThrow(() -> new OperacaoNaoPermitidaException("Conta não encontrada para este usuário"));
 
-    if(cartaoEntity.getIdConta() == 1) {
+    if(conta.getNome().equals("Geral") ) {
       throw new OperacaoNaoPermitidaException("O cartão não pode ser vinculado à conta Geral");
     }
     // Criar o cartão com vínculo à conta

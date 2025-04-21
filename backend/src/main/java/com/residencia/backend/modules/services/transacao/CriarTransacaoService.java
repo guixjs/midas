@@ -4,8 +4,10 @@ import com.residencia.backend.modules.dto.categoria.CategoriaResponseDTO;
 import com.residencia.backend.modules.dto.transacao.TransacaoDTO;
 import com.residencia.backend.modules.dto.transacao.TransacaoResponseDTO;
 import com.residencia.backend.modules.enums.TipoTransacao;
+import com.residencia.backend.modules.exceptions.OperacaoNaoPermitidaException;
 import com.residencia.backend.modules.models.CategoriaEntity;
 import com.residencia.backend.modules.models.TransacaoEntity;
+import com.residencia.backend.modules.repositories.CartaoRepository;
 import com.residencia.backend.modules.repositories.CategoriaRepository;
 import com.residencia.backend.modules.repositories.ContaRepository;
 import com.residencia.backend.modules.repositories.TransacaoRepository;
@@ -27,6 +29,9 @@ public class CriarTransacaoService {
   @Autowired
   private ContaRepository contaRepository;
 
+  @Autowired
+  private CartaoRepository cartaoRepository;
+
   private TransacaoEntity execute(TransacaoEntity transacao){
     return this.transacaoRepository.save(transacao);
   }
@@ -39,34 +44,47 @@ public class CriarTransacaoService {
     BigDecimal valor = transacaoDTO.getValor();
 
     Integer idConta = transacaoDTO.getIdConta();
+    System.out.println(idConta);
 
     if(transacaoDTO.getTipoTransacao() == TipoTransacao.DEBITO){
       valor = valor.negate();
     }
-    if(transacaoDTO.getId_categoria()!= null){
-      categoriaEntity = this.categoriaRepository.findById(transacaoDTO.getId_categoria())
+
+
+    if(transacaoDTO.getIdCategoria()!= null){
+      categoriaEntity = this.categoriaRepository.findById(transacaoDTO.getIdCategoria())
           .orElseThrow(()->{
             throw new RuntimeException("Categoria não encontrada");
           });
     }
 
-    if(idConta==null){
-      transacaoDTO.setIdConta(1);
-    }
     if (idConta == null) {
       var contaGeral = contaRepository.findByIdUsuarioAndNome(idUsuario,"Geral")
-          .orElseThrow(() -> new RuntimeException("Conta Geral não encontrada"));
+          .orElseThrow(() -> new OperacaoNaoPermitidaException("Conta Geral não encontrada"));
       idConta = contaGeral.getId();
+    } else {
+      var contaEspecifica = contaRepository.findByIdAndIdUsuario(idConta, idUsuario)
+          .orElseThrow(() -> new OperacaoNaoPermitidaException("Conta informada não encontrada para este usuário"));
+      idConta = contaEspecifica.getId();
     }
+
     var transacao = TransacaoEntity.builder()
         .descricao(transacaoDTO.getDescricao())
-        .dataTransacao(transacaoDTO.getData_transacao())
+        .dataTransacao(transacaoDTO.getDataTransacao())
         .valor(valor)
         .tipoTransacao(transacaoDTO.getTipoTransacao())
         .categoria(categoriaEntity)
         .idUsuario(idUsuario)
+        .idConta(idConta)
+        .idCartao(transacaoDTO.getIdCartao())
         .build();
 
+    if (transacaoDTO.getIdCartao() != null) {
+      var cartao = cartaoRepository.findById(transacaoDTO.getIdCartao())
+          .orElseThrow(() -> new RuntimeException("Cartão não encontrado"));
+
+      transacao.setCartaoEntity(cartao); // se usar builder e quiser setar depois
+    }
 
     var resultado = execute(transacao);
 
@@ -81,9 +99,11 @@ public class CriarTransacaoService {
     TransacaoResponseDTO response = TransacaoResponseDTO.builder()
         .id(resultado.getId())
         .descricao(resultado.getDescricao())
-        .data_transacao(resultado.getDataTransacao())
+        .dataTransacao(resultado.getDataTransacao())
         .valor(resultado.getValor())
         .tipoTransacao(resultado.getTipoTransacao())
+        .idConta(resultado.getIdConta())
+        .idCartao(resultado.getIdCartao())
         .categoria(categoriaResponse)
         .idUsuario(resultado.getIdUsuario())
         .build();

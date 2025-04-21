@@ -32,7 +32,7 @@ public class ContaController {
           .tipoConta(contaDTO.getTipoConta())
           .idUsuario(idUser)
           .build();
-      var resultado = criarContaService.execute(conta);
+      var resultado = criarContaService.execute(conta,idUser);
       return ResponseEntity.ok().body(resultado);
     } catch (Exception e) {
       return ResponseEntity.badRequest().body(e.getMessage());

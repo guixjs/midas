@@ -11,10 +11,10 @@ import java.util.UUID;
 @Data
 public class TransacaoDTO {
   private String descricao;
-  private LocalDate data_transacao;
+  private LocalDate dataTransacao;
   private BigDecimal valor;
   private TipoTransacao tipoTransacao;
-  private Integer id_categoria;
+  private Integer idCategoria;
   private Integer idConta;
   private UUID idCartao;
 }
