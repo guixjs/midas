@@ -47,6 +47,20 @@ public class TransacaoEntity {
   @Column(name = "id_usuario",nullable = false)
   private UUID idUsuario;
 
+  @ManyToOne()
+  @JoinColumn(name = "id_conta",insertable = false,updatable = false)
+  private ContaEntity contaEntity;
+
+  @Column(name = "id_conta")
+  private Integer idConta;
+
+  @ManyToOne()
+  @JoinColumn(name = "id_cartao",insertable = false,updatable = false)
+  private CartaoEntity cartaoEntity;
+
+  @Column(name = "id_cartao")
+  private UUID idCartao;
+
 
   @CreationTimestamp
   @Column(name = "dt_criacao", updatable = false)

@@ -7,6 +7,7 @@ import com.residencia.backend.modules.enums.TipoTransacao;
 import com.residencia.backend.modules.models.CategoriaEntity;
 import com.residencia.backend.modules.models.TransacaoEntity;
 import com.residencia.backend.modules.repositories.CategoriaRepository;
+import com.residencia.backend.modules.repositories.ContaRepository;
 import com.residencia.backend.modules.repositories.TransacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,9 @@ public class CriarTransacaoService {
   @Autowired
   private CategoriaRepository categoriaRepository;
 
+  @Autowired
+  private ContaRepository contaRepository;
+
   private TransacaoEntity execute(TransacaoEntity transacao){
     return this.transacaoRepository.save(transacao);
   }
@@ -34,6 +38,8 @@ public class CriarTransacaoService {
 
     BigDecimal valor = transacaoDTO.getValor();
 
+    Integer idConta = transacaoDTO.getIdConta();
+
     if(transacaoDTO.getTipoTransacao() == TipoTransacao.DEBITO){
       valor = valor.negate();
     }
@@ -44,6 +50,14 @@ public class CriarTransacaoService {
           });
     }
 
+    if(idConta==null){
+      transacaoDTO.setIdConta(1);
+    }
+    if (idConta == null) {
+      var contaGeral = contaRepository.findByIdUsuarioAndNome(idUsuario,"Geral")
+          .orElseThrow(() -> new RuntimeException("Conta Geral não encontrada"));
+      idConta = contaGeral.getId();
+    }
     var transacao = TransacaoEntity.builder()
         .descricao(transacaoDTO.getDescricao())
         .dataTransacao(transacaoDTO.getData_transacao())

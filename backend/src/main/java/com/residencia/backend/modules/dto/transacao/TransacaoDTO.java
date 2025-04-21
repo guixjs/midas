@@ -2,11 +2,11 @@ package com.residencia.backend.modules.dto.transacao;
 
 
 import com.residencia.backend.modules.enums.TipoTransacao;
-import com.residencia.backend.modules.models.CategoriaEntity;
 import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Data
 public class TransacaoDTO {
@@ -15,5 +15,7 @@ public class TransacaoDTO {
   private BigDecimal valor;
   private TipoTransacao tipoTransacao;
   private Integer id_categoria;
+  private Integer idConta;
+  private UUID idCartao;
 }
 
