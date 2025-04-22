@@ -42,21 +42,21 @@ public class TransacaoEntity {
 
   @ManyToOne()
   @JoinColumn(name = "id_usuario", insertable = false, updatable = false)
-  private UsuarioEntity usuarioEntity;
+  private UsuarioEntity usuario;
 
   @Column(name = "id_usuario",nullable = false)
   private UUID idUsuario;
 
   @ManyToOne()
   @JoinColumn(name = "id_conta",insertable = false,updatable = false)
-  private ContaEntity contaEntity;
+  private ContaEntity conta;
 
   @Column(name = "id_conta")
   private Integer idConta;
 
   @ManyToOne()
   @JoinColumn(name = "id_cartao",insertable = false,updatable = false)
-  private CartaoEntity cartaoEntity;
+  private CartaoEntity cartao;
 
   @Column(name = "id_cartao")
   private UUID idCartao;

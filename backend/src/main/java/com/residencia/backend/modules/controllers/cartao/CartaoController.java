@@ -1,15 +1,12 @@
 package com.residencia.backend.modules.controllers.cartao;
 
 import com.residencia.backend.modules.dto.cartao.CartaoDTO;
-import com.residencia.backend.modules.dto.conta.ContaDTO;
 import com.residencia.backend.modules.exceptions.OperacaoNaoPermitidaException;
 import com.residencia.backend.modules.models.CartaoEntity;
-import com.residencia.backend.modules.models.ContaEntity;
 import com.residencia.backend.modules.services.cartao.CriarCartaoService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,10 +35,12 @@ public class CartaoController {
       return ResponseEntity.ok().body(resultado);
     } catch (OperacaoNaoPermitidaException e) {
       // Captura específica para esta exceção
+      e.printStackTrace();
       return ResponseEntity.badRequest().body(e.getMessage());
 
     } catch (Exception e) {
       // Captura genérica para outros erros
+      e.printStackTrace();
       return ResponseEntity.internalServerError().body("Ocorreu um erro inesperado");
     }
   }

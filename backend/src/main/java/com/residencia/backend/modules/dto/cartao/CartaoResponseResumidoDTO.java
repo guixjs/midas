@@ -1,7 +1,5 @@
 package com.residencia.backend.modules.dto.cartao;
 
-import com.residencia.backend.modules.dto.conta.ContaResponseResumidoDTO;
-import com.residencia.backend.modules.dto.usuario.UsuarioResponseResumidoDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,14 +7,11 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CartaoResponseDTO {
+public class CartaoResponseResumidoDTO {
   private String nome;
   private LocalDate dataVencimento;
-  private ContaResponseResumidoDTO conta;
-  private UsuarioResponseResumidoDTO usuario;
 }

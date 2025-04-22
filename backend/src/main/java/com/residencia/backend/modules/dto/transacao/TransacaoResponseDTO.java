@@ -1,6 +1,9 @@
 package com.residencia.backend.modules.dto.transacao;
 
-import com.residencia.backend.modules.dto.categoria.CategoriaResponseDTO;
+import com.residencia.backend.modules.dto.cartao.CartaoResponseResumidoDTO;
+import com.residencia.backend.modules.dto.categoria.CategoriaResponseResumidoDTO;
+import com.residencia.backend.modules.dto.conta.ContaResponseResumidoDTO;
+import com.residencia.backend.modules.dto.usuario.UsuarioResponseResumidoDTO;
 import com.residencia.backend.modules.enums.TipoTransacao;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,13 +19,13 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TransacaoResponseDTO {
-  private UUID id;
+  private BigDecimal valor;
   private String descricao;
   private LocalDate dataTransacao;
-  private BigDecimal valor;
   private TipoTransacao tipoTransacao;
-  private CategoriaResponseDTO categoria;
-  private Integer idConta;
-  private UUID idCartao;
-  private UUID idUsuario;
+
+  private CategoriaResponseResumidoDTO categoria;
+  private ContaResponseResumidoDTO conta;
+  private CartaoResponseResumidoDTO cartao;
+  private UsuarioResponseResumidoDTO usuario;
 }

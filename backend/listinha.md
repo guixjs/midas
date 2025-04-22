@@ -57,6 +57,9 @@
 - [x] Relacionar transação com cartão
 - [x] Está sendo possível, cadastrar uma transação com cartão sem conta (conta do cartão e conta da transação diferentes)
 - [x] corrigir: cadastrar dois cartões com o mesmo nome
+- [ ] corrigir: ao passar um cartoa inexistente no body da transacao ele não fala qual é o erro, só dá 403
+- [ ] corrigir: ao criar uma conta sem autenticação, ele executa mesmo sem salvar no bd (nunca irá acontecer)
+- [ ] corrigir: conta e cartao estão com o usuario null, precisa passar no response builder
 
 ### CRIAR REGRA DE NEGÓCIO CONTA
 - [x] Não permitir criar contas com o mesmo nome
@@ -66,12 +69,12 @@
 - [ ] Corrigir erro: "dataVencimento=12/03/2025" (O vencimento é um dia específico? Não deveria ser todo mês?)
 
 ### CRIAR UM RESPONSE DTO PARA AS ENTIDADES QUE FALTAM
-- [ ] Usuário
-- [ ] Conta
-- [ ] Cartão
+- [x] Usuário
+- [x] Conta
+- [x] Cartão
   - [ ] Usar mapper para mapear cada um
   - [ ] substituir em todos os lugares que usa builder
-  - [ ] Colocar idConta e idCartão no response de transação
+  - [x] Colocar idConta e idCartão no response de transação
 
 ### !POSSIVEIS FUNCIONALIDADES!
 - [ ] transações com cartão podem ter parcelas

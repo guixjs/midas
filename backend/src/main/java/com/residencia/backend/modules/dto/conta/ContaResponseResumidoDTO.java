@@ -1,7 +1,5 @@
 package com.residencia.backend.modules.dto.conta;
 
-
-import com.residencia.backend.modules.dto.usuario.UsuarioResponseResumidoDTO;
 import com.residencia.backend.modules.enums.TipoConta;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,9 +10,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ContaResponseDTO {
+public class ContaResponseResumidoDTO {
   private String nome;
   private TipoConta tipoConta;
   private String banco;
-  private UsuarioResponseResumidoDTO usuario;
 }

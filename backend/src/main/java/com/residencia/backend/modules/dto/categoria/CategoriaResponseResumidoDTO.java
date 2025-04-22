@@ -1,7 +1,5 @@
 package com.residencia.backend.modules.dto.categoria;
 
-
-import com.residencia.backend.modules.dto.usuario.UsuarioResponseResumidoDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,9 +9,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CategoriaResponseDTO {
+public class CategoriaResponseResumidoDTO {
   private Integer id;
   private String nome;
   private String descricao;
-  private UsuarioResponseResumidoDTO usuario;
 }
