@@ -29,6 +29,11 @@ public class CriarCartaoService {
     if(conta.getNome().equals("Geral") ) {
       throw new OperacaoNaoPermitidaException("O cartão não pode ser vinculado à conta Geral");
     }
+
+    boolean cartaoExistente = contaRepository.existsByIdUsuarioAndNome(idUsuario,conta.getNome());
+    if (cartaoExistente) {
+      throw new RuntimeException("Você já possui um cartão com esse nome.");
+    }
     // Criar o cartão com vínculo à conta
     var cartao = CartaoEntity.builder()
         .nome(cartaoEntity.getNome())

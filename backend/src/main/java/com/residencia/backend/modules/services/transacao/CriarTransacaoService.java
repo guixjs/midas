@@ -53,9 +53,7 @@ public class CriarTransacaoService {
 
     if(transacaoDTO.getIdCategoria()!= null){
       categoriaEntity = this.categoriaRepository.findById(transacaoDTO.getIdCategoria())
-          .orElseThrow(()->{
-            throw new RuntimeException("Categoria não encontrada");
-          });
+          .orElseThrow(()-> new RuntimeException("Categoria não encontrada"));
     }
 
     if (idConta == null) {
@@ -66,6 +64,13 @@ public class CriarTransacaoService {
       var contaEspecifica = contaRepository.findByIdAndIdUsuario(idConta, idUsuario)
           .orElseThrow(() -> new OperacaoNaoPermitidaException("Conta informada não encontrada para este usuário"));
       idConta = contaEspecifica.getId();
+    }
+    if(transacaoDTO.getIdCartao() != null){
+      var cartao = cartaoRepository.findByIdAndIdContaAndIdUsuario(transacaoDTO.getIdCartao(),idConta,idUsuario)
+          .orElseThrow(()-> new OperacaoNaoPermitidaException("Cartão não encontrado"));
+      if(!cartao.getIdConta().equals(idConta)){
+        throw new OperacaoNaoPermitidaException("O cartão informado não encontrado para essa conta");
+      }
     }
 
     var transacao = TransacaoEntity.builder()

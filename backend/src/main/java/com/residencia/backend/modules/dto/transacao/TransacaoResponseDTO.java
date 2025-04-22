@@ -21,11 +21,8 @@ public class TransacaoResponseDTO {
   private LocalDate dataTransacao;
   private BigDecimal valor;
   private TipoTransacao tipoTransacao;
-
   private CategoriaResponseDTO categoria;
-
   private Integer idConta;
   private UUID idCartao;
-
   private UUID idUsuario;
 }

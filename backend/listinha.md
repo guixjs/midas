@@ -5,7 +5,6 @@
 ### Cadastro
 - [x] Cadastrar manualmente
 - [ ] Cadastrar via CSV
-- [ ] Importar planilha de anotações
 
 ### Edição
 - [ ] Editar transação
@@ -56,7 +55,8 @@
 - [ ] Marcar como "hoje" se a data não for informada
 - [x] Relacionar transação com conta
 - [x] Relacionar transação com cartão
-- [ ] Está sendo possível, cadastrar uma transação com cartão sem conta (conta do cartão e conta da transação diferentes)
+- [x] Está sendo possível, cadastrar uma transação com cartão sem conta (conta do cartão e conta da transação diferentes)
+- [x] corrigir: cadastrar dois cartões com o mesmo nome
 
 ### CRIAR REGRA DE NEGÓCIO CONTA
 - [x] Não permitir criar contas com o mesmo nome
