@@ -22,10 +22,14 @@ public class SecurityConfig {
         .authorizeHttpRequests(auth->{
           auth.requestMatchers("/user/criar").permitAll()
               .requestMatchers("/user/auth").permitAll()
+              .requestMatchers("/h2-console/**").permitAll()//adicionado
           ;
           auth.anyRequest().authenticated();
         })
         .addFilterBefore(securityFilter, BasicAuthenticationFilter.class)
+        .headers(headers -> headers //adicionado
+            .frameOptions(frame -> frame.sameOrigin()) //adicionado
+        )
     ;
     return http.build();
   }
