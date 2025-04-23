@@ -1,15 +1,9 @@
 package com.residencia.backend.modules.controllers.transacao;
 
 
-import com.residencia.backend.modules.dto.categoria.CategoriaResponseDTO;
 import com.residencia.backend.modules.dto.transacao.TransacaoDTO;
 import com.residencia.backend.modules.dto.transacao.TransacaoResponseDTO;
-import com.residencia.backend.modules.enums.TipoTransacao;
-import com.residencia.backend.modules.models.CategoriaEntity;
-import com.residencia.backend.modules.models.TransacaoEntity;
-import com.residencia.backend.modules.repositories.CategoriaRepository;
 import com.residencia.backend.modules.services.transacao.CriarTransacaoService;
-//import com.residencia.backend.modules.services.transacao.CsvImporterService;
 import com.residencia.backend.modules.services.transacao.CsvImporterService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -18,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.math.BigDecimal;
 import java.util.UUID;
 
 @RestController

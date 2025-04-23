@@ -33,15 +33,8 @@ public class CartaoController {
           .build();
       var resultado = criarCartaoService.execute(cartao, idUser);
       return ResponseEntity.ok().body(resultado);
-    } catch (OperacaoNaoPermitidaException e) {
-      // Captura específica para esta exceção
-      e.printStackTrace();
-      return ResponseEntity.badRequest().body(e.getMessage());
-
     } catch (Exception e) {
-      // Captura genérica para outros erros
-      e.printStackTrace();
-      return ResponseEntity.internalServerError().body("Ocorreu um erro inesperado");
+      return ResponseEntity.badRequest().body(e.getMessage());
     }
   }
 }

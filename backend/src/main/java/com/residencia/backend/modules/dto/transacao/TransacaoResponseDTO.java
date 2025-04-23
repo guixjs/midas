@@ -19,6 +19,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TransacaoResponseDTO {
+  private UUID id;
   private BigDecimal valor;
   private String descricao;
   private LocalDate dataTransacao;

@@ -8,6 +8,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface ContaRepository extends JpaRepository<ContaEntity, Integer>{
+  Optional<ContaEntity> findById(Integer idConta);
   Optional<ContaEntity> findByIdUsuarioAndNome(UUID usuario,String nome);
   Optional<ContaEntity> findByIdAndIdUsuario(Integer id,UUID idUsuario);
   boolean existsByIdUsuarioAndNome(UUID idUsuario, String nome);

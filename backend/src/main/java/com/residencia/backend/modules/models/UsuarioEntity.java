@@ -17,7 +17,7 @@ import java.util.UUID;
 
 @Data
 @Entity
-@Table(name = "usuario")  // Especifique explicitamente o nome da tabela
+@Table(name = "usuario")
 public class UsuarioEntity {
 
   @Id
@@ -25,8 +25,8 @@ public class UsuarioEntity {
   private UUID id;
 
   @NotBlank(message = "O nome é obrigatório")
-  @Column(nullable = false)  // Garante a restrição no banco
-  private String nome;  // Mantenha em português para consistência
+  @Column(nullable = false)
+  private String nome;
 
   @CPF(message = "CPF inválido")
   @Column(unique = true, nullable = false)

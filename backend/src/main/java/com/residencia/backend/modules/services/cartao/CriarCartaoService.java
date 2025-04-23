@@ -35,21 +35,7 @@ public class CriarCartaoService {
     if (cartaoExistente) {
       throw new RuntimeException("Você já possui um cartão com esse nome.");
     }
-    // Criar o cartão com vínculo à conta
-//    var cartao = CartaoEntity.builder()
-//        .nome(cartaoEntity.getNome())
-//        .dataVencimento(cartaoEntity.getDataVencimento())
-//        .idConta(cartaoEntity.getIdConta())
-//        .idUsuario(idUsuario)
-//        .conta(conta)
-//        .build();
-//    CartaoEntity resultado = this.cartaoRepository.save(cartao);
-//
-//    ContaResponseResumidoDTO contaResponse = ContaResponseResumidoDTO.builder()
-//        .nome(resultado.getConta().getNome())
-//        .banco(resultado.getConta().getBanco())
-//        .tipoConta(resultado.getConta().getTipoConta())
-//        .build();
+
     var cartao = CartaoEntity.builder()
         .nome(cartaoEntity.getNome())
         .dataVencimento(cartaoEntity.getDataVencimento())
@@ -59,22 +45,15 @@ public class CriarCartaoService {
 
     CartaoEntity resultado = cartaoRepository.save(cartao);
 
-// usar a conta já carregada lá em cima
     ContaResponseResumidoDTO contaResponse = ContaResponseResumidoDTO.builder()
+        .id(conta.getId())
         .nome(conta.getNome())
         .banco(conta.getBanco())
         .tipoConta(conta.getTipoConta())
         .build();
 
-
-//    return CartaoResponseDTO.builder()
-//        .nome(resultado.getNome())
-//        .dataVencimento(resultado.getDataVencimento())
-//        .conta(contaResponse)
-//        .usuario(null)
-//        .build();
-
     return CartaoResponseDTO.builder()
+        .id(resultado.getId())
         .nome(resultado.getNome())
         .dataVencimento(resultado.getDataVencimento())
         .conta(contaResponse)

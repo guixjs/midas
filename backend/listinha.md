@@ -79,3 +79,17 @@
 ### !POSSIVEIS FUNCIONALIDADES!
 - [ ] transações com cartão podem ter parcelas
 - [ ] Permitir a importação de uma planilha própria (através da descrição da planilha pelo usúario)
+
+## HOJE
+- [x] refatorar responsesDTO, incluir IDs das entidades relacionadas e do objeto criado 
+- [x] corrigir "data criação =null" (cartão, conta e onde estiver)
+- [x] refatorar transacao, várias verificações estão sendo feitas no service, devo criar uma classe "validator" e injeta-la no service
+- [ ] montar o builder certo para conta e cartão (usuario está nulo)
+- [ ] erro no response do cartão e conta
+- [x] erro na criação de um cartão com nome repetido não retorna o erro 400
+- [ ] corrigir response do usuario 
+- [ ] criar os mappers para cada dto, resolvendo o erro da montagem do response no serviece ou controller
+- [ ] corrigir a lógica de data da transacao (caso n informado, hoje (ou isso é trabalho pro front?))
+- [ ] criar as novas categorias fixas
+- [ ] tornar repositório publico
+- [ ] testar se o codigo funciona só com o postgre (sem docker)
