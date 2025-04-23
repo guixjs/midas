@@ -25,11 +25,17 @@ public class TransacaoValidator {
   private ContaRepository contaRepository;
 
   public CategoriaEntity validarCategoria(Integer idCategoria, UUID idUsuario){
+    if(idCategoria == null){
+      return null;
+    }
     return categoriaRepository.findByIdAndPossivelUsuario(idCategoria, idUsuario)
         .orElseThrow(() -> new OperacaoNaoPermitidaException("Categoria não encontrada"));
   } //retorna a categoria encontrada
 
   public CartaoEntity validarCartao(UUID idCartao, Integer idConta, UUID idUser){
+    if(idCartao == null){
+      return null;
+    }
     var cartao = cartaoRepository.findByIdAndIdContaAndIdUsuario(idCartao, idConta, idUser)
         .orElseThrow(()-> new OperacaoNaoPermitidaException("Cartão não encontrado"));
     if(!cartao.getIdConta().equals(idConta)){

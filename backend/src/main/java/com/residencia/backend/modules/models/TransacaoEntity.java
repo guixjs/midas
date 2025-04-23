@@ -34,11 +34,15 @@ public class TransacaoEntity {
   private BigDecimal valor;
 
   @Enumerated(EnumType.STRING)
+  @NotNull(message = "O tipo não pode ser nulo")
   private TipoTransacao tipoTransacao;
 
   @ManyToOne
-  @JoinColumn(name = "id_categoria", referencedColumnName = "id")
+  @JoinColumn(name = "id_categoria", insertable = false, updatable = false)
   private CategoriaEntity categoria;
+
+  @Column(name = "id_categoria")
+  private Integer idCategoria;
 
   @ManyToOne()
   @JoinColumn(name = "id_usuario", insertable = false, updatable = false)

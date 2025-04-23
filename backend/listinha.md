@@ -52,11 +52,6 @@
 
 ### REFATORAR TRANSAÇÃO
 - [ ] Corrigir o tipo da transação (crédito > receita / débito > despesa)
-- [ ] Marcar como "hoje" se a data não for informada
-- [x] Relacionar transação com conta
-- [x] Relacionar transação com cartão
-- [x] Está sendo possível, cadastrar uma transação com cartão sem conta (conta do cartão e conta da transação diferentes)
-- [x] corrigir: cadastrar dois cartões com o mesmo nome
 - [ ] corrigir: ao passar um cartoa inexistente no body da transacao ele não fala qual é o erro, só dá 403
 - [ ] corrigir: ao criar uma conta sem autenticação, ele executa mesmo sem salvar no bd (nunca irá acontecer)
 - [ ] corrigir: conta e cartao estão com o usuario null, precisa passar no response builder
@@ -81,15 +76,13 @@
 - [ ] Permitir a importação de uma planilha própria (através da descrição da planilha pelo usúario)
 
 ## HOJE
-- [x] refatorar responsesDTO, incluir IDs das entidades relacionadas e do objeto criado 
-- [x] corrigir "data criação =null" (cartão, conta e onde estiver)
-- [x] refatorar transacao, várias verificações estão sendo feitas no service, devo criar uma classe "validator" e injeta-la no service
 - [ ] montar o builder certo para conta e cartão (usuario está nulo)
-- [ ] erro no response do cartão e conta
-- [x] erro na criação de um cartão com nome repetido não retorna o erro 400
+- [ ] não aparece o erro: valor nulo transacao 
+- [ ] não aparece o erro: tipo nulo transacao
+- [ ] mostrar mensagem do erro: nome obrigatório usuario
 - [ ] corrigir response do usuario 
+- 
 - [ ] criar os mappers para cada dto, resolvendo o erro da montagem do response no serviece ou controller
-- [ ] corrigir a lógica de data da transacao (caso n informado, hoje (ou isso é trabalho pro front?))
 - [ ] criar as novas categorias fixas
 - [ ] tornar repositório publico
 - [ ] testar se o codigo funciona só com o postgre (sem docker)

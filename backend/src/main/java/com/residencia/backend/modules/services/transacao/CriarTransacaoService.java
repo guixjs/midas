@@ -7,17 +7,15 @@ import com.residencia.backend.modules.dto.transacao.TransacaoDTO;
 import com.residencia.backend.modules.dto.transacao.TransacaoResponseDTO;
 import com.residencia.backend.modules.dto.usuario.UsuarioResponseResumidoDTO;
 import com.residencia.backend.modules.enums.TipoTransacao;
-import com.residencia.backend.modules.exceptions.OperacaoNaoPermitidaException;
-import com.residencia.backend.modules.models.CartaoEntity;
-import com.residencia.backend.modules.models.CategoriaEntity;
-import com.residencia.backend.modules.models.ContaEntity;
-import com.residencia.backend.modules.models.TransacaoEntity;
+import com.residencia.backend.modules.models.*;
 import com.residencia.backend.modules.repositories.*;
 import com.residencia.backend.modules.validator.TransacaoValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -37,33 +35,25 @@ public class CriarTransacaoService {
   }
 
   public TransacaoResponseDTO criarTransacao(TransacaoDTO transacaoDTO, UUID idUsuario){
-    CategoriaEntity categoriaEntity = null;
     CartaoResponseResumidoDTO cartaoResponse = null;
     CategoriaResponseResumidoDTO categoriaResponse = null;
-    CartaoEntity cartao = null;
 
     BigDecimal valor = transacaoDTO.getValor();
+    LocalDate data = transacaoDTO.getDataTransacao();
+
+    if(data == null){
+      transacaoDTO.setDataTransacao(LocalDate.now());
+    }
 
     if(transacaoDTO.getTipoTransacao() == TipoTransacao.DEBITO){
       valor = valor.negate();
     }
 
-    var usuario = usuarioRepository.findById(idUsuario)
-        .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
-
-    if(transacaoDTO.getIdCategoria()!= null){
-      categoriaEntity = transacaoValidator.validarCategoria(transacaoDTO.getIdCategoria(), idUsuario);
-    } // validacao categoria (se informada)
-
-
-
+    UsuarioEntity usuario = usuarioRepository.findById(idUsuario).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+    CategoriaEntity categoria = transacaoValidator.validarCategoria(transacaoDTO.getIdCategoria(), idUsuario);
     Integer idConta = transacaoValidator.validarConta(transacaoDTO.getIdConta(), idUsuario);
     ContaEntity contaGeral = transacaoValidator.getContaById(idConta);
-
-    if (transacaoDTO.getIdCartao() != null) {
-      cartao = transacaoValidator.validarCartao(transacaoDTO.getIdCartao(), idConta, idUsuario);
-    } // validacao cartao (se informado)
-
+    CartaoEntity cartao = transacaoValidator.validarCartao(transacaoDTO.getIdCartao(), idConta, idUsuario);
 
 
     var transacao = TransacaoEntity.builder()
@@ -73,41 +63,38 @@ public class CriarTransacaoService {
         .tipoTransacao(transacaoDTO.getTipoTransacao())
         .idUsuario(idUsuario)
         .idConta(idConta)
-        .idCartao(transacaoDTO.getIdCartao())
-        .cartao(cartao)
-        .categoria(categoriaEntity)
-        .conta(contaGeral)
-        .usuario(usuario)
+        .idCategoria(Optional.ofNullable(categoria).map(CategoriaEntity::getId).orElse(null))
+        .idCartao(Optional.ofNullable(cartao).map(CartaoEntity::getId).orElse(null))
         .build();
 
     var resultado = execute(transacao);
 
     ContaResponseResumidoDTO contaResponse = ContaResponseResumidoDTO.builder()
-        .id(resultado.getIdConta())
-        .nome(resultado.getConta().getNome())
-        .banco(resultado.getConta().getBanco())
-        .tipoConta(resultado.getConta().getTipoConta())
+        .id(contaGeral.getId())
+        .nome(contaGeral.getNome())
+        .banco(contaGeral.getBanco())
+        .tipoConta(contaGeral.getTipoConta())
         .build();
 
     UsuarioResponseResumidoDTO usuarioResponse = UsuarioResponseResumidoDTO.builder()
-        .id(resultado.getUsuario().getId())
-        .nome(resultado.getUsuario().getNome())
-        .email(resultado.getUsuario().getEmail())
-        .telefone(resultado.getUsuario().getTelefone())
+        .id(usuario.getId())
+        .nome(usuario.getNome())
+        .email(usuario.getEmail())
+        .telefone(usuario.getTelefone())
         .build();
 
-    if(resultado.getCategoria()!=null){
-      categoriaResponse = CategoriaResponseResumidoDTO.builder()
-          .id(resultado.getCategoria().getId())
-          .nome(resultado.getCategoria().getNome())
-          .descricao(resultado.getCategoria().getDescricao())
+    if(categoria !=null){
+       categoriaResponse = CategoriaResponseResumidoDTO.builder()
+          .id(categoria.getId())
+          .nome(categoria.getNome())
+          .descricao(categoria.getDescricao())
           .build();
     }
-    if(resultado.getCartao()!=null){
-      cartaoResponse = CartaoResponseResumidoDTO.builder()
-          .id(resultado.getIdCartao())
-          .nome(resultado.getCartao().getNome())
-          .dataVencimento(resultado.getCartao().getDataVencimento())
+    if(cartao !=null){
+       cartaoResponse = CartaoResponseResumidoDTO.builder()
+          .id(cartao.getId())
+          .nome(cartao.getNome())
+          .dataVencimento(cartao.getDataVencimento())
           .build();
     }
 
