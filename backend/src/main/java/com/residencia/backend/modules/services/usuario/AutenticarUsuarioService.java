@@ -52,6 +52,7 @@ public class AutenticarUsuarioService {
         .sign(algorithm);
 
     criarContaGeralService.criarContaGeral(usuario);
+    System.out.println(token);
     return token;
   }
 }

@@ -13,8 +13,8 @@
 ### Listagem
 - [ ] Listar todas as transações
 - [ ] Filtrar transações por:
-    - [ ] Categoria
-    - [ ] Data
+    - [x] Categoria
+    - [x] Data
     - [ ] Conta
     - [ ] Cartão
     - [ ] Tipo

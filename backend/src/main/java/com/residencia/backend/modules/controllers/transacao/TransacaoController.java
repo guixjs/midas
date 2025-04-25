@@ -1,6 +1,8 @@
 package com.residencia.backend.modules.controllers.transacao;
 
-
+import java.util.List;
+import com.residencia.backend.modules.dto.transacao.TransacaoPesquisaDTO;
+import com.residencia.backend.modules.services.transacao.PesquisarTransacoesService;
 import com.residencia.backend.modules.dto.transacao.TransacaoDTO;
 import com.residencia.backend.modules.dto.transacao.TransacaoResponseDTO;
 import com.residencia.backend.modules.services.transacao.CriarTransacaoService;
@@ -20,6 +22,9 @@ public class TransacaoController {
 
   @Autowired
   private CriarTransacaoService criarTransacaoService;
+
+  @Autowired
+  private PesquisarTransacoesService pesquisarTransacoesService;
 
   @Autowired
   private CsvImporterService csvImporterService;
@@ -46,5 +51,16 @@ public class TransacaoController {
       return ResponseEntity.badRequest().body("Erro ao importar CSV: " + e.getMessage());
     }
   }
+
+  @PostMapping("/pesquisar")
+    public ResponseEntity<List<TransacaoResponseDTO>> pesquisarTransacoes(
+            @RequestBody TransacaoPesquisaDTO filtros,
+            HttpServletRequest request) {
+        
+        UUID idUsuario = UUID.fromString(request.getAttribute("id_usuario").toString());
+        List<TransacaoResponseDTO> transacoes = pesquisarTransacoesService.execute(filtros, idUsuario);
+        
+        return ResponseEntity.ok(transacoes);
+    }
 }
 

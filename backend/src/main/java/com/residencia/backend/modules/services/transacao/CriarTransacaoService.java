@@ -111,4 +111,56 @@ public class CriarTransacaoService {
         .build();
   }
 
+  public TransacaoResponseDTO montarResponseDTO(TransacaoEntity transacao) {
+      CartaoResponseResumidoDTO cartaoResponse = null;
+      CategoriaResponseResumidoDTO categoriaResponse = null;
+      
+      if(transacao.getCategoria() != null) {
+          categoriaResponse = CategoriaResponseResumidoDTO.builder()
+              .id(transacao.getCategoria().getId())
+              .nome(transacao.getCategoria().getNome())
+              .descricao(transacao.getCategoria().getDescricao())
+              .build();
+      }
+      
+      if(transacao.getCartao() != null) {
+          cartaoResponse = CartaoResponseResumidoDTO.builder()
+              .id(transacao.getCartao().getId())
+              .nome(transacao.getCartao().getNome())
+              .dataVencimento(transacao.getCartao().getDataVencimento())
+              .build();
+      }
+      
+      ContaResponseResumidoDTO contaResponse = null;
+      if(transacao.getConta() != null) {
+          contaResponse = ContaResponseResumidoDTO.builder()
+              .id(transacao.getConta().getId())
+              .nome(transacao.getConta().getNome())
+              .banco(transacao.getConta().getBanco())
+              .tipoConta(transacao.getConta().getTipoConta())
+              .build();
+      }
+      
+      UsuarioResponseResumidoDTO usuarioResponse = null;
+      if(transacao.getUsuario() != null) {
+          usuarioResponse = UsuarioResponseResumidoDTO.builder()
+              .id(transacao.getUsuario().getId())
+              .nome(transacao.getUsuario().getNome())
+              .email(transacao.getUsuario().getEmail())
+              .telefone(transacao.getUsuario().getTelefone())
+              .build();
+      }
+      
+      return TransacaoResponseDTO.builder()
+          .id(transacao.getId())
+          .descricao(transacao.getDescricao())
+          .dataTransacao(transacao.getDataTransacao())
+          .valor(transacao.getValor())
+          .tipoTransacao(transacao.getTipoTransacao())
+          .conta(contaResponse)
+          .cartao(cartaoResponse)
+          .usuario(usuarioResponse)
+          .categoria(categoriaResponse)
+          .build();
+  }
 }
