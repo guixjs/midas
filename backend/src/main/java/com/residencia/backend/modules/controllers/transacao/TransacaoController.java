@@ -36,8 +36,6 @@ public class TransacaoController {
       var idUser = UUID.fromString(request.getAttribute("id_usuario").toString());
       TransacaoResponseDTO response = criarTransacaoService.criarTransacao(transacaoDTO, idUser);
       return ResponseEntity.ok().body(response);
-
-
     } catch (Exception e) {
       return ResponseEntity.badRequest().body(e.getMessage());
     }

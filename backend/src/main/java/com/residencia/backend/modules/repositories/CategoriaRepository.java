@@ -12,6 +12,7 @@ import java.util.UUID;
 public interface CategoriaRepository extends JpaRepository<CategoriaEntity, Integer> {
 
   Optional<CategoriaEntity> findById(Integer id);
+  Optional<CategoriaEntity> findByNome(String nome);
 
   @Query("SELECT c FROM categoria c WHERE c.id = :id AND (c.idUsuario IS NULL OR c.idUsuario = :idUsuario)")
   Optional<CategoriaEntity> findByIdAndPossivelUsuario(@Param("id") Integer id, @Param("idUsuario") UUID idUsuario);

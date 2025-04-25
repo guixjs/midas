@@ -47,42 +47,33 @@
 - [x] Vincular cartão a uma conta **diferente** da "Geral"
 
 ---
-
-# Correções
-
-### REFATORAR TRANSAÇÃO
-- [ ] Corrigir o tipo da transação (crédito > receita / débito > despesa)
-- [ ] corrigir: ao passar um cartoa inexistente no body da transacao ele não fala qual é o erro, só dá 403
-- [ ] corrigir: ao criar uma conta sem autenticação, ele executa mesmo sem salvar no bd (nunca irá acontecer)
-- [ ] corrigir: conta e cartao estão com o usuario null, precisa passar no response builder
-
-### CRIAR REGRA DE NEGÓCIO CONTA
-- [x] Não permitir criar contas com o mesmo nome
-
-### CRIAR REGRA DE NEGÓCIO CARTÃO
-- [ ] Corrigir erro: "dataCriacao=null"
-- [ ] Corrigir erro: "dataVencimento=12/03/2025" (O vencimento é um dia específico? Não deveria ser todo mês?)
-
-### CRIAR UM RESPONSE DTO PARA AS ENTIDADES QUE FALTAM
-- [x] Usuário
-- [x] Conta
-- [x] Cartão
-  - [ ] Usar mapper para mapear cada um
-  - [ ] substituir em todos os lugares que usa builder
-  - [x] Colocar idConta e idCartão no response de transação
-
 ### !POSSIVEIS FUNCIONALIDADES!
 - [ ] transações com cartão podem ter parcelas
 - [ ] Permitir a importação de uma planilha própria (através da descrição da planilha pelo usúario)
+---
+
+# Correções
+
+- [ ] Corrigir o tipo da transação (crédito > receita / débito > despesa)
+- [ ] corrigir: ao passar um cartoa inexistente no body da transacao ele não fala qual é o erro, só dá 403
+- [ ] Corrigir erro: "dataVencimento=12/03/2025" (O vencimento é um dia específico? Não deveria ser todo mês?)
 
 ## HOJE
-- [ ] montar o builder certo para conta e cartão (usuario está nulo)
-- [ ] não aparece o erro: valor nulo transacao 
-- [ ] não aparece o erro: tipo nulo transacao
-- [ ] mostrar mensagem do erro: nome obrigatório usuario
-- [ ] corrigir response do usuario 
-- 
-- [ ] criar os mappers para cada dto, resolvendo o erro da montagem do response no serviece ou controller
-- [ ] criar as novas categorias fixas
-- [ ] tornar repositório publico
-- [ ] testar se o codigo funciona só com o postgre (sem docker)
+- [x] Criar os mappers para cada entidade, com os métodos:
+----
+ - [x] **toEntity** (passa de dto para entity, usado do controller para o service)
+ - [x] **toResponseDTO** (faz o build do response da entidade, só será usado nos services da propria entidade)
+ - [x] **toResponseResumidoDTO** (faz o build do response resumido, será usado nas entidades com relacionamento)
+  -----
+  - [x] Usuário
+  - [x] Conta
+  - [x] Cartão
+  - [x] Categoria
+  - [x] Transação
+
+### Corrgir
+- [x] não aparece o erro: valor nulo transacao 
+- [x] não aparece o erro: tipo nulo transacao
+  (estão resolvidos mas deve ter uma forma melhor de corrigir isso)
+
+

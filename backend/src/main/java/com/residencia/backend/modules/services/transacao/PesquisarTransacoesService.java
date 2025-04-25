@@ -25,10 +25,10 @@ public class PesquisarTransacoesService {
         Specification<TransacaoEntity> spec = (root, query, builder) -> {
             List<Predicate> predicates = new ArrayList<>();
             
-            // Filtro usuário (obrigatório)
+            // Filtro usuario (obrigatório)
             predicates.add(builder.equal(root.get("idUsuario"), idUsuario));
             
-            // Filtro  período
+            // Filtro periodo
             if (filtros.getDataInicio() != null) {
                 predicates.add(builder.greaterThanOrEqualTo(
                     root.get("dataTransacao"), filtros.getDataInicio()));

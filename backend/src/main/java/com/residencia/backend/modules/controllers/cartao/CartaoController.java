@@ -1,8 +1,6 @@
 package com.residencia.backend.modules.controllers.cartao;
 
 import com.residencia.backend.modules.dto.cartao.CartaoDTO;
-import com.residencia.backend.modules.exceptions.OperacaoNaoPermitidaException;
-import com.residencia.backend.modules.models.CartaoEntity;
 import com.residencia.backend.modules.services.cartao.CriarCartaoService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -25,13 +23,7 @@ public class CartaoController {
   public ResponseEntity<Object> create(@Valid @RequestBody CartaoDTO cartaoDTO, HttpServletRequest request){
     try{
       var idUser = UUID.fromString(request.getAttribute("id_usuario").toString());
-      var cartao = CartaoEntity.builder()
-          .nome(cartaoDTO.getNome())
-          .dataVencimento(cartaoDTO.getDataVencimento())
-          .idConta(cartaoDTO.getIdConta())
-          .idUsuario(idUser)
-          .build();
-      var resultado = criarCartaoService.execute(cartao, idUser);
+      var resultado = criarCartaoService.execute(cartaoDTO, idUser);
       return ResponseEntity.ok().body(resultado);
     } catch (Exception e) {
       return ResponseEntity.badRequest().body(e.getMessage());

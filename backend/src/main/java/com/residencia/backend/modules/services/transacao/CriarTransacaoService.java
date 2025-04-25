@@ -6,16 +6,13 @@ import com.residencia.backend.modules.dto.conta.ContaResponseResumidoDTO;
 import com.residencia.backend.modules.dto.transacao.TransacaoDTO;
 import com.residencia.backend.modules.dto.transacao.TransacaoResponseDTO;
 import com.residencia.backend.modules.dto.usuario.UsuarioResponseResumidoDTO;
-import com.residencia.backend.modules.enums.TipoTransacao;
+import com.residencia.backend.modules.mapper.*;
 import com.residencia.backend.modules.models.*;
 import com.residencia.backend.modules.repositories.*;
 import com.residencia.backend.modules.validator.TransacaoValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -35,19 +32,6 @@ public class CriarTransacaoService {
   }
 
   public TransacaoResponseDTO criarTransacao(TransacaoDTO transacaoDTO, UUID idUsuario){
-    CartaoResponseResumidoDTO cartaoResponse = null;
-    CategoriaResponseResumidoDTO categoriaResponse = null;
-
-    BigDecimal valor = transacaoDTO.getValor();
-    LocalDate data = transacaoDTO.getDataTransacao();
-
-    if(data == null){
-      transacaoDTO.setDataTransacao(LocalDate.now());
-    }
-
-    if(transacaoDTO.getTipoTransacao() == TipoTransacao.DEBITO){
-      valor = valor.negate();
-    }
 
     UsuarioEntity usuario = usuarioRepository.findById(idUsuario).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
     CategoriaEntity categoria = transacaoValidator.validarCategoria(transacaoDTO.getIdCategoria(), idUsuario);
@@ -56,59 +40,16 @@ public class CriarTransacaoService {
     CartaoEntity cartao = transacaoValidator.validarCartao(transacaoDTO.getIdCartao(), idConta, idUsuario);
 
 
-    var transacao = TransacaoEntity.builder()
-        .descricao(transacaoDTO.getDescricao())
-        .dataTransacao(transacaoDTO.getDataTransacao())
-        .valor(valor)
-        .tipoTransacao(transacaoDTO.getTipoTransacao())
-        .idUsuario(idUsuario)
-        .idConta(idConta)
-        .idCategoria(Optional.ofNullable(categoria).map(CategoriaEntity::getId).orElse(null))
-        .idCartao(Optional.ofNullable(cartao).map(CartaoEntity::getId).orElse(null))
-        .build();
+    TransacaoEntity transacao = TransacaoMapper.toEntity(transacaoDTO, categoria, idConta,cartao, idUsuario);
 
-    var resultado = execute(transacao);
+    TransacaoEntity resultado = execute(transacao);
 
-    ContaResponseResumidoDTO contaResponse = ContaResponseResumidoDTO.builder()
-        .id(contaGeral.getId())
-        .nome(contaGeral.getNome())
-        .banco(contaGeral.getBanco())
-        .tipoConta(contaGeral.getTipoConta())
-        .build();
+    ContaResponseResumidoDTO contaResponse = ContaMapper.toResponseResumidoDTO(contaGeral);
+    UsuarioResponseResumidoDTO usuarioResponse = UsuarioMapper.toResponseResumidoDTO(usuario);
+    CartaoResponseResumidoDTO cartaoResponse = CartaoMapper.toResponseResumidoDTO(cartao);
+    CategoriaResponseResumidoDTO categoriaResponse = CategoriaMapper.toResponseResumidoDTO(categoria);
+    return TransacaoMapper.toResponseDTO(resultado,categoriaResponse,cartaoResponse,usuarioResponse,contaResponse);
 
-    UsuarioResponseResumidoDTO usuarioResponse = UsuarioResponseResumidoDTO.builder()
-        .id(usuario.getId())
-        .nome(usuario.getNome())
-        .email(usuario.getEmail())
-        .telefone(usuario.getTelefone())
-        .build();
-
-    if(categoria !=null){
-       categoriaResponse = CategoriaResponseResumidoDTO.builder()
-          .id(categoria.getId())
-          .nome(categoria.getNome())
-          .descricao(categoria.getDescricao())
-          .build();
-    }
-    if(cartao !=null){
-       cartaoResponse = CartaoResponseResumidoDTO.builder()
-          .id(cartao.getId())
-          .nome(cartao.getNome())
-          .dataVencimento(cartao.getDataVencimento())
-          .build();
-    }
-
-    return TransacaoResponseDTO.builder()
-        .id(resultado.getId())
-        .descricao(resultado.getDescricao())
-        .dataTransacao(resultado.getDataTransacao())
-        .valor(resultado.getValor())
-        .tipoTransacao(resultado.getTipoTransacao())
-        .conta(contaResponse)
-        .cartao(cartaoResponse)
-        .usuario(usuarioResponse)
-        .categoria(categoriaResponse)
-        .build();
   }
 
   public TransacaoResponseDTO montarResponseDTO(TransacaoEntity transacao) {
@@ -134,7 +75,7 @@ public class CriarTransacaoService {
       ContaResponseResumidoDTO contaResponse = null;
       if(transacao.getConta() != null) {
           contaResponse = ContaResponseResumidoDTO.builder()
-              .id(transacao.getConta().getId())
+              .idConta(transacao.getConta().getId()) //mudei aqui
               .nome(transacao.getConta().getNome())
               .banco(transacao.getConta().getBanco())
               .tipoConta(transacao.getConta().getTipoConta())

@@ -1,45 +1,22 @@
-package com.residencia.backend.modules.models;
+package com.residencia.backend.modules.dto.usuario;
 
-
-
-
-import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.br.CPF;
-import java.time.LocalDateTime;
-import java.util.UUID;
 
 
 @Data
-@Entity
-@Table(name = "usuario")
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
-public class UsuarioEntity {
-
-  @Id
-  @GeneratedValue(strategy = GenerationType.UUID)
-  private UUID id;
-
+public class UsuarioDTO {
   @NotBlank(message = "O nome é obrigatório")
-  @Column(nullable = false)
   private String nome;
 
   @CPF(message = "CPF inválido")
-  @Column(unique = true, nullable = false)
   private String cpf;
 
   @Email(message = "Email inválido")
-  @Column(unique = true, nullable = false)
   private String email;
 
   @Pattern(regexp = "^\\d{2}\\s?\\d{4,5}\\s?\\d{4}$",
@@ -48,8 +25,4 @@ public class UsuarioEntity {
 
   @Length(min = 6, max = 100, message = "Senha deve ter 6 a 100 caracteres")
   private String senha;
-
-  @CreationTimestamp
-  @Column(name = "dt_criacao", updatable = false)
-  private LocalDateTime dataCriacao;
 }

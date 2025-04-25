@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ContaResponseResumidoDTO {
-  private Integer id;
+  private Integer idConta;
   private String nome;
   private TipoConta tipoConta;
   private String banco;
