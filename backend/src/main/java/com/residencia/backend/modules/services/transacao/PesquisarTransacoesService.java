@@ -43,7 +43,27 @@ public class PesquisarTransacoesService {
             if (filtros.getIdCategoria() != null) {
                 predicates.add(builder.equal(root.get("idCategoria"), filtros.getIdCategoria()));
             }
-            
+
+            if(filtros.getTipoTransacao() != null) {
+                predicates.add(builder.equal(root.get("tipoTransacao"), filtros.getTipoTransacao()));
+            }
+
+            if (Boolean.TRUE.equals(filtros.isPossuiCartao())) {
+                predicates.add(builder.isNotNull(root.get("idCartao")));
+            }
+            if(filtros.getIdConta() != null) {
+                predicates.add(builder.equal(root.get("idConta"), filtros.getIdConta()));
+            }
+
+            if (filtros.getValorMin() != null) {
+                predicates.add(builder.greaterThanOrEqualTo(
+                    root.get("valor"), filtros.getValorMin()));
+            }
+
+            if (filtros.getValorMax() != null) {
+                predicates.add(builder.lessThanOrEqualTo(
+                    root.get("valor"), filtros.getValorMax()));
+            }
             return builder.and(predicates.toArray(new Predicate[0]));
         };
         

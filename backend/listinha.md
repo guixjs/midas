@@ -12,12 +12,13 @@
 
 ### Listagem
 - [ ] Listar todas as transações
-- [ ] Filtrar transações por:
+- [x] Filtrar transações por:
     - [x] Categoria
     - [x] Data
-    - [ ] Conta
-    - [ ] Cartão
-    - [ ] Tipo
+    - [x] Conta
+    - [x] Cartão
+    - [x] Tipo
+    - [x] valor
 
 ### Regras de Relacionamento
 - [ ] Uma transação pode pertencer a um cartão, desde que tenha uma conta
