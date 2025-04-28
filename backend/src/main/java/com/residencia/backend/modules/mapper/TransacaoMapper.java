@@ -5,6 +5,7 @@ import com.residencia.backend.modules.dto.categoria.CategoriaResponseResumidoDTO
 import com.residencia.backend.modules.dto.conta.ContaResponseResumidoDTO;
 import com.residencia.backend.modules.dto.transacao.TransacaoDTO;
 import com.residencia.backend.modules.dto.transacao.TransacaoResponseDTO;
+import com.residencia.backend.modules.dto.transacao.TransacaoResponseResumidoDTO;
 import com.residencia.backend.modules.dto.usuario.UsuarioResponseResumidoDTO;
 import com.residencia.backend.modules.enums.TipoTransacao;
 import com.residencia.backend.modules.exceptions.OperacaoNaoPermitidaException;
@@ -34,7 +35,7 @@ public class TransacaoMapper {
       transacaoDTO.setDataTransacao(LocalDate.now());
     }
 
-    if(transacaoDTO.getTipoTransacao() == TipoTransacao.DEBITO){
+    if(transacaoDTO.getTipoTransacao() == TipoTransacao.DESPESA){
       valor = valor.negate();
     }
 
@@ -67,6 +68,23 @@ public class TransacaoMapper {
         .cartao(cartaoResponse)
         .usuario(usuarioResponse)
         .categoria(categoriaResponse)
+        .build();
+  }
+
+  public static TransacaoResponseResumidoDTO toResponseResumidoDTO(TransacaoEntity transacao){
+
+    String nomeCartao = transacao.getCartao() != null ? transacao.getCartao().getNome() : "Transação não vinculada a um cartão";
+    String nomeCategoria = transacao.getCategoria() != null ? transacao.getCategoria().getNome() : "Sem categoria";
+
+    return TransacaoResponseResumidoDTO.builder()
+        .id(transacao.getId())
+        .valor(transacao.getValor())
+        .descricao(transacao.getDescricao())
+        .dataTransacao(transacao.getDataTransacao())
+        .tipoTransacao(transacao.getTipoTransacao())
+        .nomeConta(transacao.getConta().getNome())
+        .nomeCategoria(nomeCategoria)
+        .nomeCartao(nomeCartao)
         .build();
   }
 }

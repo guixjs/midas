@@ -2,6 +2,7 @@ package com.residencia.backend.modules.controllers.transacao;
 
 import java.util.List;
 import com.residencia.backend.modules.dto.transacao.TransacaoPesquisaDTO;
+import com.residencia.backend.modules.dto.transacao.TransacaoResponseResumidoDTO;
 import com.residencia.backend.modules.services.transacao.PesquisarTransacoesService;
 import com.residencia.backend.modules.dto.transacao.TransacaoDTO;
 import com.residencia.backend.modules.dto.transacao.TransacaoResponseDTO;
@@ -51,12 +52,12 @@ public class TransacaoController {
   }
 
   @PostMapping("/pesquisar")
-    public ResponseEntity<List<TransacaoResponseDTO>> pesquisarTransacoes(
+    public ResponseEntity<List<TransacaoResponseResumidoDTO>> pesquisarTransacoes(
             @RequestBody TransacaoPesquisaDTO filtros,
             HttpServletRequest request) {
         
         UUID idUsuario = UUID.fromString(request.getAttribute("id_usuario").toString());
-        List<TransacaoResponseDTO> transacoes = pesquisarTransacoesService.execute(filtros, idUsuario);
+        List<TransacaoResponseResumidoDTO> transacoes = pesquisarTransacoesService.execute(filtros, idUsuario);
         
         return ResponseEntity.ok(transacoes);
     }

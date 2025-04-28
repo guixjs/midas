@@ -67,7 +67,7 @@ public class CsvImporterService {
                     nomeCategoria = "Importado";
                 }
 
-                TipoTransacao tipo = valor.compareTo(BigDecimal.ZERO) >= 0 ? TipoTransacao.RECEITA : TipoTransacao.DEBITO;
+                TipoTransacao tipo = valor.compareTo(BigDecimal.ZERO) >= 0 ? TipoTransacao.RECEITA : TipoTransacao.DESPESA;
                 CategoriaEntity categoria = categoriaRepository.findByNomeAndIdUsuario(nomeCategoria, idUsuario)
                         .orElseGet(() -> categoriaRepository.save(
                                 CategoriaEntity.builder()

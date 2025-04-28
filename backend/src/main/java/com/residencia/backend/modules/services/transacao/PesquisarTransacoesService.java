@@ -1,7 +1,8 @@
 package com.residencia.backend.modules.services.transacao;
 
 import com.residencia.backend.modules.dto.transacao.TransacaoPesquisaDTO;
-import com.residencia.backend.modules.dto.transacao.TransacaoResponseDTO;
+import com.residencia.backend.modules.dto.transacao.TransacaoResponseResumidoDTO;
+import com.residencia.backend.modules.mapper.TransacaoMapper;
 import com.residencia.backend.modules.models.TransacaoEntity;
 import com.residencia.backend.modules.repositories.TransacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +19,8 @@ public class PesquisarTransacoesService {
     @Autowired
     private TransacaoRepository transacaoRepository;
 
-    @Autowired
-    private CriarTransacaoService criarTransacaoService;
 
-    public List<TransacaoResponseDTO> execute(TransacaoPesquisaDTO filtros, UUID idUsuario) {
+    public List<TransacaoResponseResumidoDTO> execute(TransacaoPesquisaDTO filtros, UUID idUsuario) {
         Specification<TransacaoEntity> spec = (root, query, builder) -> {
             List<Predicate> predicates = new ArrayList<>();
             
@@ -49,14 +48,12 @@ public class PesquisarTransacoesService {
         };
         
         List<TransacaoEntity> transacoes = transacaoRepository.findAll(spec);
-        List<TransacaoResponseDTO> response = new ArrayList<>();
+        List<TransacaoResponseResumidoDTO> listaRespostas = new ArrayList<>();
         
         for (TransacaoEntity transacao : transacoes) {
-            
-            TransacaoResponseDTO dto = criarTransacaoService.montarResponseDTO(transacao);
-            response.add(dto);
+            TransacaoResponseResumidoDTO resposta = TransacaoMapper.toResponseResumidoDTO(transacao);
+            listaRespostas.add(resposta);
         }
-        
-        return response;
+        return listaRespostas;
     }
 }
