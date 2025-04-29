@@ -26,10 +26,10 @@
 ---
 
 ## CATEGORIAS
-- [ ] Editar categoria das transações
-- [ ] Editar categorias do sistema
-- [ ] Excluir categorias criadas
-- [ ] Listar todas as categorias
+- [ ] Editar categoria das transações ( não fica muito bagunçado)
+- [x] Editar categorias do sistema
+- [x] Excluir categorias criadas
+- [x] Listar todas as categorias
 
 ---
 

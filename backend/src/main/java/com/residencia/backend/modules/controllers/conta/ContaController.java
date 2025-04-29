@@ -3,10 +3,16 @@ package com.residencia.backend.modules.controllers.conta;
 
 import com.residencia.backend.modules.dto.conta.ContaDTO;
 import com.residencia.backend.modules.services.conta.CriarContaService;
+import com.residencia.backend.modules.services.conta.ExcluirContaService;
+import com.residencia.backend.modules.services.conta.ListarContasService;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +27,12 @@ public class ContaController {
   @Autowired
   private CriarContaService criarContaService;
 
+  @Autowired
+    private ListarContasService listarContasService;
+
+    @Autowired
+    private ExcluirContaService excluirContaService;
+
   @PostMapping("/new")
   public ResponseEntity<Object> create(@Valid @RequestBody ContaDTO contaDTO, HttpServletRequest request){
     try{
@@ -31,4 +43,26 @@ public class ContaController {
       return ResponseEntity.badRequest().body(e.getMessage());
     }
   }
+
+  @GetMapping
+    public ResponseEntity<Object> list(HttpServletRequest request) {
+        try {
+            var idUsuario = UUID.fromString(request.getAttribute("id_usuario").toString());
+            var resultado = this.listarContasService.execute(idUsuario);
+            return ResponseEntity.ok().body(resultado);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> delete(@PathVariable Integer id, HttpServletRequest request) {
+        try {
+            var idUsuario = UUID.fromString(request.getAttribute("id_usuario").toString());
+            this.excluirContaService.execute(id, idUsuario);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }
