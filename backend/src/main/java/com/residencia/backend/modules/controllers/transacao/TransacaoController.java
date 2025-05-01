@@ -1,13 +1,12 @@
 package com.residencia.backend.modules.controllers.transacao;
 
 import java.util.List;
+
 import com.residencia.backend.modules.dto.transacao.TransacaoPesquisaDTO;
 import com.residencia.backend.modules.dto.transacao.TransacaoResponseResumidoDTO;
-import com.residencia.backend.modules.services.transacao.PesquisarTransacoesService;
+import com.residencia.backend.modules.services.transacao.*;
 import com.residencia.backend.modules.dto.transacao.TransacaoDTO;
 import com.residencia.backend.modules.dto.transacao.TransacaoResponseDTO;
-import com.residencia.backend.modules.services.transacao.CriarTransacaoService;
-import com.residencia.backend.modules.services.transacao.CsvImporterService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +25,15 @@ public class TransacaoController {
 
   @Autowired
   private PesquisarTransacoesService pesquisarTransacoesService;
+
+  @Autowired
+  private ListarTransacaoEspecificaService listarTransacaoEspecificaService;
+
+  @Autowired
+  private ExcluirTransacaoService excluirTransacaoService;
+
+  @Autowired
+  private EditarTransacaoService editarTransacaoService;
 
   @Autowired
   private CsvImporterService csvImporterService;
@@ -50,8 +58,7 @@ public class TransacaoController {
       return ResponseEntity.badRequest().body("Erro ao importar CSV: " + e.getMessage());
     }
   }
-
-  @PostMapping("/pesquisar")
+  @PostMapping("/search")
     public ResponseEntity<List<TransacaoResponseResumidoDTO>> pesquisarTransacoes(
             @RequestBody TransacaoPesquisaDTO filtros,
             HttpServletRequest request) {
@@ -61,5 +68,36 @@ public class TransacaoController {
         
         return ResponseEntity.ok(transacoes);
     }
+  @GetMapping("/{id}")
+  public ResponseEntity<Object> list(@PathVariable UUID id,HttpServletRequest request) {
+    try {
+      var idUser = UUID.fromString(request.getAttribute("id_usuario").toString());
+      TransacaoResponseDTO response = listarTransacaoEspecificaService.execute(id, idUser);
+      return ResponseEntity.ok().body(response);
+    }catch (Exception e) {
+      return ResponseEntity.badRequest().body(e.getMessage());
+    }
+  }
+  @DeleteMapping("/{id}")
+  public ResponseEntity<Object> delete(@PathVariable UUID id, HttpServletRequest request) {
+    try {
+      var idUsuario = UUID.fromString(request.getAttribute("id_usuario").toString());
+      this.excluirTransacaoService.execute(id, idUsuario);
+      return ResponseEntity.ok().build();
+    } catch (Exception e) {
+      return ResponseEntity.badRequest().body(e.getMessage());
+    }
+  }
+
+  @PutMapping("/{id}")
+  public ResponseEntity<Object> update(@PathVariable UUID id, @Valid @RequestBody TransacaoDTO transacaoDTO, HttpServletRequest request) {
+    try {
+      var idUsuario = UUID.fromString(request.getAttribute("id_usuario").toString());
+      TransacaoResponseResumidoDTO resultado = this.editarTransacaoService.execute(id, transacaoDTO, idUsuario);
+      return ResponseEntity.ok().body(resultado);
+    } catch (Exception e) {
+      return ResponseEntity.badRequest().body(e.getMessage());
+    }
+  }
 }
 

@@ -51,26 +51,26 @@ public class CategoriaController {
   }
 
   @PutMapping("/{id}")
-    public ResponseEntity<Object> update(@PathVariable Integer id, @Valid @RequestBody CategoriaDTO categoriaDTO, HttpServletRequest request) {
-        try {
-            var idUsuario = UUID.fromString(request.getAttribute("id_usuario").toString());
-            var resultado = this.editarCategoriaService.execute(id, categoriaDTO, idUsuario);
-            return ResponseEntity.ok().body(resultado);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+  public ResponseEntity<Object> update(@PathVariable Integer id, @Valid @RequestBody CategoriaDTO categoriaDTO, HttpServletRequest request) {
+    try {
+      var idUsuario = UUID.fromString(request.getAttribute("id_usuario").toString());
+      var resultado = this.editarCategoriaService.execute(id, categoriaDTO, idUsuario);
+      return ResponseEntity.ok().body(resultado);
+    } catch (Exception e) {
+      return ResponseEntity.badRequest().body(e.getMessage());
     }
+  }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> delete(@PathVariable Integer id, HttpServletRequest request) {
-        try {
-            var idUsuario = UUID.fromString(request.getAttribute("id_usuario").toString());
-            this.excluirCategoriaService.execute(id, idUsuario);
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+  @DeleteMapping("/{id}")
+  public ResponseEntity<Object> delete(@PathVariable Integer id, HttpServletRequest request) {
+    try {
+      var idUsuario = UUID.fromString(request.getAttribute("id_usuario").toString());
+      this.excluirCategoriaService.execute(id, idUsuario);
+      return ResponseEntity.ok().build();
+    } catch (Exception e) {
+      return ResponseEntity.badRequest().body(e.getMessage());
     }
+  }
 
     @GetMapping
     public ResponseEntity<Object> list(HttpServletRequest request) {
