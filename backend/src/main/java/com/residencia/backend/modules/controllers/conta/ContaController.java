@@ -6,6 +6,9 @@ import com.residencia.backend.modules.services.conta.CriarContaService;
 import com.residencia.backend.modules.services.conta.ExcluirContaService;
 import com.residencia.backend.modules.services.conta.ListarContasService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +25,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/account")
+@Tag(name = "Contas",description = "Endpoints para gerenciar contas bancárias")
 public class ContaController {
 
   @Autowired
@@ -33,6 +37,16 @@ public class ContaController {
     @Autowired
     private ExcluirContaService excluirContaService;
 
+@Operation(
+    summary = "Criar conta bancária",
+    method = "POST",
+    description = "Cria uma nova conta bancária no sistema",
+    responses = {
+        @ApiResponse(responseCode = "200", description = "Conta criada com sucesso"),
+        @ApiResponse(responseCode = "400", description = "Dados inválidos"),
+        @ApiResponse(responseCode = "401", description = "Não autorizado para realizar o serviço"),
+        @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+    })
   @PostMapping("/new")
   public ResponseEntity<Object> create(@Valid @RequestBody ContaDTO contaDTO, HttpServletRequest request){
     try{
@@ -44,6 +58,16 @@ public class ContaController {
     }
   }
 
+  @Operation(
+      summary = "Listar contas",
+      method = "GET",
+      description = "Lista todas as contas do usuário autenticado",
+      responses = {
+          @ApiResponse(responseCode = "200", description = "Contas listadas com sucesso"),
+          @ApiResponse(responseCode = "401", description = "Não autorizado para realizar o serviço"),
+          @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+      }
+  )
   @GetMapping
     public ResponseEntity<Object> list(HttpServletRequest request) {
         try {
@@ -55,6 +79,16 @@ public class ContaController {
         }
     }
 
+  @Operation(
+      summary = "Deletar conta bancária",
+      method = "DELETE",
+      description = "Deleta uma conta bancária especificada pelo id",
+      responses = {
+          @ApiResponse(responseCode = "200", description = "Conta deletada com sucesso"),
+          @ApiResponse(responseCode = "400", description = "Conta não encontrada"),
+          @ApiResponse(responseCode = "401", description = "Não autorizado para realizar o serviço"),
+          @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+      })
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> delete(@PathVariable Integer id, HttpServletRequest request) {
         try {

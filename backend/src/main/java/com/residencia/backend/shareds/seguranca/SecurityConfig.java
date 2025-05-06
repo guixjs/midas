@@ -12,6 +12,10 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 
 @Configuration
 public class SecurityConfig {
+  private static final String[] WHITE_LIST_URL = { "/api/v1/auth/**", "/v2/api-docs", "/v3/api-docs",
+      "/v3/api-docs/**", "/swagger-resources", "/swagger-resources/**", "/configuration/ui",
+      "/configuration/security", "/swagger-ui/**", "/webjars/**", "/swagger-ui.html", "/api/auth/**",
+      "/api/test/**", "/authenticate" };
 
   @Autowired
   private SecurityFilter securityFilter;
@@ -20,15 +24,16 @@ public class SecurityConfig {
   SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http.csrf(csrf-> csrf.disable())
         .authorizeHttpRequests(auth->{
-          auth.requestMatchers("/user/criar").permitAll()
+          auth.requestMatchers("/user/new").permitAll()
               .requestMatchers("/user/auth").permitAll()
-              .requestMatchers("/h2-console/**").permitAll()//adicionado
+              .requestMatchers("/h2-console/**").permitAll()
+              .requestMatchers(WHITE_LIST_URL).permitAll()
           ;
           auth.anyRequest().authenticated();
         })
         .addFilterBefore(securityFilter, BasicAuthenticationFilter.class)
-        .headers(headers -> headers //adicionado
-            .frameOptions(frame -> frame.sameOrigin()) //adicionado
+        .headers(headers -> headers
+            .frameOptions(frame -> frame.sameOrigin())
         )
     ;
     return http.build();

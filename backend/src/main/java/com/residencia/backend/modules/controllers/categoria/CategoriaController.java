@@ -6,6 +6,9 @@ import com.residencia.backend.modules.services.categoria.EditarCategoriaService;
 import com.residencia.backend.modules.services.categoria.ExcluirCategoriaService;
 import com.residencia.backend.modules.services.categoria.ListarCategoriasService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +27,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/category")
+@Tag(name = "Categorias", description = "Endpoints para gerenciar categorias que classificam transações")
 public class CategoriaController {
 
   @Autowired
@@ -38,6 +42,16 @@ public class CategoriaController {
     @Autowired
     private ListarCategoriasService listarCategoriasService;
 
+  @Operation(
+      summary = "Criar nova categoria",
+      method = "POST",
+      description = "Cria uma nova categoria pertencente ao usuário",
+      responses = {
+          @ApiResponse(responseCode = "200", description = "Categoria criada com sucesso"),
+          @ApiResponse(responseCode = "400", description = "Dados inválidos"),
+          @ApiResponse(responseCode = "401", description = "Não autorizado para realizar o serviço"),
+          @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+      })
   @PostMapping("/new")
   public ResponseEntity<Object> create(@Valid @RequestBody CategoriaDTO categoriaDTO, HttpServletRequest request){
     try{
@@ -50,6 +64,16 @@ public class CategoriaController {
     }
   }
 
+  @Operation(
+      summary = "Alterar categoria",
+      method = "PUT",
+      description = "Altera informações de uma categoria específica",
+      responses = {
+          @ApiResponse(responseCode = "200", description = "Categoria criada com sucesso"),
+          @ApiResponse(responseCode = "400", description = "Dados inválidos"),
+          @ApiResponse(responseCode = "401", description = "Não autorizado para realizar o serviço"),
+          @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+      })
   @PutMapping("/{id}")
   public ResponseEntity<Object> update(@PathVariable Integer id, @Valid @RequestBody CategoriaDTO categoriaDTO, HttpServletRequest request) {
     try {
@@ -61,6 +85,16 @@ public class CategoriaController {
     }
   }
 
+  @Operation(
+      summary = "Deletar categoria",
+      method = "DELETE",
+      description = "Apaga uma categoria específica pertencente ao usuário",
+      responses = {
+          @ApiResponse(responseCode = "200", description = "Categoria apagada com sucesso"),
+          @ApiResponse(responseCode = "400", description = "Categoria não encontrada"),
+          @ApiResponse(responseCode = "401", description = "Não autorizado para realizar o serviço"),
+          @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+      })
   @DeleteMapping("/{id}")
   public ResponseEntity<Object> delete(@PathVariable Integer id, HttpServletRequest request) {
     try {
@@ -72,6 +106,15 @@ public class CategoriaController {
     }
   }
 
+  @Operation(
+      summary = "Listar categorias",
+      method = "GET",
+      description = "Lista todas as categorias, do sistema e do usuário",
+      responses = {
+          @ApiResponse(responseCode = "200", description = "Categoria encontradas com sucesso"),
+          @ApiResponse(responseCode = "401", description = "Não autorizado para realizar o serviço"),
+          @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+      })
     @GetMapping
     public ResponseEntity<Object> list(HttpServletRequest request) {
         try {
