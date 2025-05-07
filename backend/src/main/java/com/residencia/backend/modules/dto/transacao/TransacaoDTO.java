@@ -13,9 +13,9 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @Data
-//@Builder
-//@AllArgsConstructor
-//@NoArgsConstructor
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Schema(description = "DTO de criação de transações")
 public class TransacaoDTO {
   @Schema(description = "Descrição da transação")

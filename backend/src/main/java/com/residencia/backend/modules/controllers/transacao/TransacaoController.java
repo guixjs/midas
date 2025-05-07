@@ -16,7 +16,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -83,7 +83,6 @@ public class TransacaoController {
       TransacaoResponseDTO response = criarTransacaoService.criarTransacao(transacaoDTO, idUser);
       return ResponseEntity.ok().body(response);
     } catch (Exception e) {
-      e.printStackTrace();
       return ResponseEntity.badRequest().body(e.getMessage());
     }
   }
@@ -112,31 +111,33 @@ public class TransacaoController {
       summary = "Listar e filtrar transações",
       method = "POST",
       description = "Retorna todas as transações do usuário autenticado. Permite aplicar filtros opcionais, como tipo (receita ou despesa), categoria, datas, faixa de valor, entre outros.",
-      requestBody = @RequestBody(content = @Content(
-          mediaType = "application/json",
-          schema = @Schema(implementation = TransacaoPesquisaDTO.class),
-          examples = {
-              @ExampleObject(
-                  name = "com filtros",
-                  summary = "Busca com múltiplos filtros aplicados",
-                  value = "{\n" +
-                      "  \"dataInicio\": \"2024-05-01\",\n" +
-                      "  \"dataFim\": \"2024-05-31\",\n" +
-                      "  \"idCategoria\": 2,\n" +
-                      "  \"tipoTransacao\": \"DESPESA\",\n" +
-                      "  \"possuiCartao\": true,\n" +
-                      "  \"idConta\": 5,\n" +
-                      "  \"valorMin\": 50.00,\n" +
-                      "  \"valorMax\": 500.00\n" +
-                      "}"
-              ),
-              @ExampleObject(
-                  name = "sem filtros",
-                  summary = "Busca sem aplicar nenhum filtro",
-                  value = "{\n}"
-              )
-          }
-      )),
+      requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+          content = @Content(
+              mediaType = "application/json",
+              schema = @Schema(implementation = TransacaoPesquisaDTO.class),
+              examples = {
+                  @ExampleObject(
+                      name = "com filtros",
+                      summary = "Busca com múltiplos filtros aplicados",
+                      value = "{\n" +
+                          "  \"dataInicio\": \"2024-05-01\",\n" +
+                          "  \"dataFim\": \"2024-05-31\",\n" +
+                          "  \"idCategoria\": 2,\n" +
+                          "  \"tipoTransacao\": \"DESPESA\",\n" +
+                          "  \"possuiCartao\": true,\n" +
+                          "  \"idConta\": 5,\n" +
+                          "  \"valorMin\": 50.00,\n" +
+                          "  \"valorMax\": 500.00\n" +
+                          "}"
+                  ),
+                  @ExampleObject(
+                      name = "sem filtros",
+                      summary = "Busca sem aplicar nenhum filtro",
+                      value = "{\n}"
+                  )
+              }
+          )
+      ),
       responses = {
           @ApiResponse(responseCode = "200", description = "Transações encontradas com sucesso"),
           @ApiResponse(responseCode = "401", description = "Usuário não autorizado"),

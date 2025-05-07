@@ -16,6 +16,7 @@ import com.residencia.backend.modules.models.RecorrenteEntity;
 
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -74,17 +75,16 @@ public class RecorrenteMapper {
       valorVerificado = recorrente.getValor();
     }
 
-//    return TransacaoDTO.builder()
-//        .descricao(recorrente.getDescricao())
-//        .valor(recorrente.getValor())
-//        .tipoTransacao(recorrente.getTipoTransacao())
-//        .valor(valorVerificado)
-//        .dataTransacao(LocalDate.now())
-//        .idConta(recorrente.getIdConta())
-//        .idCartao(recorrente.getIdCartao())
-//        .idCategoria(recorrente.getIdCategoria())
-//        .build();
-    return null;
+    return TransacaoDTO.builder()
+        .descricao(recorrente.getDescricao())
+        .valor(recorrente.getValor())
+        .tipoTransacao(recorrente.getTipoTransacao())
+        .valor(valorVerificado)
+        .dataTransacao(LocalDate.now())
+        .idConta(recorrente.getIdConta())
+        .idCartao(recorrente.getIdCartao())
+        .idCategoria(recorrente.getIdCategoria())
+        .build();
   }
 
   public static List<TransacaoDTO> toTransacaoDTOList(List<RecorrenteEntity> recorrentes){
