@@ -29,7 +29,7 @@ public class CriarCategoriaService {
     nome = nome.substring(0, 1).toUpperCase() + nome.substring(1);
     categoriaDTO.setNome(nome);
 
-    this.categoriaRepository.findByNome(nome)
+    this.categoriaRepository.findByNomeAndIdUsuario(nome, idUsuario)
         .ifPresent((cat)->{
           throw new OperacaoNaoPermitidaException("Categoria já cadastrada");
         });

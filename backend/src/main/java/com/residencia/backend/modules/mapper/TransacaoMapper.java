@@ -24,15 +24,18 @@ public class TransacaoMapper {
     BigDecimal valor = transacaoDTO.getValor();
     LocalDate data = transacaoDTO.getDataTransacao();
 
-    if(valor == null){
+    if (valor == null) {
       throw new OperacaoNaoPermitidaException("O valor da transação não deve ser null");
     }
+    valor = valor.abs();
+
+
     if(transacaoDTO.getTipoTransacao() == null){
       throw new OperacaoNaoPermitidaException("O tipo da transação não deve ser null");
     }
 
     if(data == null){
-      transacaoDTO.setDataTransacao(LocalDate.now());
+      data = LocalDate.now();
     }
 
     if(transacaoDTO.getTipoTransacao() == TipoTransacao.DESPESA){
@@ -41,7 +44,7 @@ public class TransacaoMapper {
 
     return TransacaoEntity.builder()
         .descricao(transacaoDTO.getDescricao())
-        .dataTransacao(transacaoDTO.getDataTransacao())
+        .dataTransacao(data)
         .valor(valor)
         .tipoTransacao(transacaoDTO.getTipoTransacao())
         .idUsuario(idUsuario)

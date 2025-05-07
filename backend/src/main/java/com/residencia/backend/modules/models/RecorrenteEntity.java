@@ -1,6 +1,5 @@
 package com.residencia.backend.modules.models;
 
-
 import com.residencia.backend.modules.enums.TipoTransacao;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -11,7 +10,6 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -19,24 +17,21 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "transacoes")
-public class TransacaoEntity {
-
+@Entity(name = "transacoes_recorrentes")
+public class RecorrenteEntity{
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
-
   private String descricao;
 
-  @Column(nullable = false)
-  private LocalDate dataTransacao;
-
-  @NotNull(message = "O valor não pode ser nulo")
   private BigDecimal valor;
 
   @Enumerated(EnumType.STRING)
   @NotNull(message = "O tipo não pode ser nulo")
   private TipoTransacao tipoTransacao;
+
+  @Column(name = "repetir_valor", nullable = false)
+  private boolean repetirValor;
 
   @ManyToOne
   @JoinColumn(name = "id_categoria", insertable = false, updatable = false)
@@ -71,3 +66,6 @@ public class TransacaoEntity {
   @Column(name = "dt_criacao", updatable = false)
   private LocalDateTime dataCriacao;
 }
+
+
+

@@ -1,27 +1,17 @@
-package com.residencia.backend.modules.dto.transacao;
-
+package com.residencia.backend.modules.dto.recorrente;
 
 import com.residencia.backend.modules.enums.TipoTransacao;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.UUID;
 
 @Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
-@Schema(description = "DTO de criação de transações")
-public class TransacaoDTO {
-  @Schema(description = "Descrição da transação")
+@Schema(description = "DTO de criação de transações recorrentes")
+public class RecorrenteDTO {
+  @Schema(description = "Descrição da transação recorrente")
   private String descricao;
-  @Schema(description = "Data da transação")
-  private LocalDate dataTransacao;
   @Schema(description = "Valor da transação")
   private BigDecimal valor;
   @Schema(description = "Tipo da transação (receita ou despesas)")
@@ -32,7 +22,6 @@ public class TransacaoDTO {
   private Integer idConta;
   @Schema(description = "Id do cartão à qual a transação pertence",nullable = true)
   private UUID idCartao;
+  @Schema(description = "Boolean que irá informar se o valor da transação sempre será o mesmo ou se mudará")
+  private boolean repetirValor;
 }
-
-
-
