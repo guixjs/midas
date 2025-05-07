@@ -83,6 +83,7 @@ public class TransacaoController {
       TransacaoResponseDTO response = criarTransacaoService.criarTransacao(transacaoDTO, idUser);
       return ResponseEntity.ok().body(response);
     } catch (Exception e) {
+      e.printStackTrace();
       return ResponseEntity.badRequest().body(e.getMessage());
     }
   }

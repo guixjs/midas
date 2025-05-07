@@ -21,12 +21,22 @@ import java.util.UUID;
 public class TransacaoMapper {
 
   public static TransacaoEntity toEntity(TransacaoDTO transacaoDTO, CategoriaEntity categoria, Integer idConta, CartaoEntity cartao, UUID idUsuario){
+    System.out.println("Valor recebido na transação: " + transacaoDTO.getValor());
+    System.out.println("Data recebida: " + transacaoDTO.getDataTransacao());
+    System.out.println("Categoria: " + categoria);
+    System.out.println("ID Conta: " + idConta);
+    System.out.println("Cartão: " + cartao);
+    System.out.println("ID Usuário: " + idUsuario);
+
     BigDecimal valor = transacaoDTO.getValor();
     LocalDate data = transacaoDTO.getDataTransacao();
 
-    if(valor == null){
+    // Verificando se o valor é null e logando essa condição
+    if (valor == null) {
+      System.out.println("Erro: o valor da transação é null!");
       throw new OperacaoNaoPermitidaException("O valor da transação não deve ser null");
     }
+
     if(transacaoDTO.getTipoTransacao() == null){
       throw new OperacaoNaoPermitidaException("O tipo da transação não deve ser null");
     }
