@@ -20,5 +20,6 @@ public interface CategoriaRepository extends JpaRepository<CategoriaEntity, Inte
   List<CategoriaEntity> findCategoriasDisponiveis(@Param("idUsuario") UUID idUsuario);
 
   Optional<CategoriaEntity> findByNomeAndIdUsuario(String nome, UUID idUsuario);
+
 }
 
