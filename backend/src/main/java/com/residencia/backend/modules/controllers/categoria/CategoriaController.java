@@ -4,6 +4,7 @@ import com.residencia.backend.modules.dto.categoria.CategoriaDTO;
 import com.residencia.backend.modules.services.categoria.CriarCategoriaService;
 import com.residencia.backend.modules.services.categoria.EditarCategoriaService;
 import com.residencia.backend.modules.services.categoria.ExcluirCategoriaService;
+import com.residencia.backend.modules.services.categoria.IdentificarCategoriaMaiorGastoService;
 import com.residencia.backend.modules.services.categoria.ListarCategoriasService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -34,24 +35,27 @@ public class CategoriaController {
   private CriarCategoriaService criarCategoriaService;
 
   @Autowired
-    private EditarCategoriaService editarCategoriaService;
+  private EditarCategoriaService editarCategoriaService;
 
-    @Autowired
-    private ExcluirCategoriaService excluirCategoriaService;
+  @Autowired
+  private ExcluirCategoriaService excluirCategoriaService;
 
-    @Autowired
-    private ListarCategoriasService listarCategoriasService;
+  @Autowired
+  private ListarCategoriasService listarCategoriasService;
+
+  @Autowired
+  private IdentificarCategoriaMaiorGastoService identificarCategoriaMaiorGastoService;
 
   @Operation(
-      summary = "Criar nova categoria",
-      method = "POST",
-      description = "Cria uma nova categoria pertencente ao usuário",
-      responses = {
-          @ApiResponse(responseCode = "200", description = "Categoria criada com sucesso"),
-          @ApiResponse(responseCode = "400", description = "Dados inválidos"),
-          @ApiResponse(responseCode = "401", description = "Não autorizado para realizar o serviço"),
-          @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
-      })
+          summary = "Criar nova categoria",
+          method = "POST",
+          description = "Cria uma nova categoria pertencente ao usuário",
+          responses = {
+                  @ApiResponse(responseCode = "200", description = "Categoria criada com sucesso"),
+                  @ApiResponse(responseCode = "400", description = "Dados inválidos"),
+                  @ApiResponse(responseCode = "401", description = "Não autorizado para realizar o serviço"),
+                  @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+          })
   @PostMapping("/new")
   public ResponseEntity<Object> create(@Valid @RequestBody CategoriaDTO categoriaDTO, HttpServletRequest request){
     try{
@@ -65,15 +69,15 @@ public class CategoriaController {
   }
 
   @Operation(
-      summary = "Alterar categoria",
-      method = "PUT",
-      description = "Altera informações de uma categoria específica",
-      responses = {
-          @ApiResponse(responseCode = "200", description = "Categoria criada com sucesso"),
-          @ApiResponse(responseCode = "400", description = "Dados inválidos"),
-          @ApiResponse(responseCode = "401", description = "Não autorizado para realizar o serviço"),
-          @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
-      })
+          summary = "Alterar categoria",
+          method = "PUT",
+          description = "Altera informações de uma categoria específica",
+          responses = {
+                  @ApiResponse(responseCode = "200", description = "Categoria criada com sucesso"),
+                  @ApiResponse(responseCode = "400", description = "Dados inválidos"),
+                  @ApiResponse(responseCode = "401", description = "Não autorizado para realizar o serviço"),
+                  @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+          })
   @PutMapping("/{id}")
   public ResponseEntity<Object> update(@PathVariable Integer id, @Valid @RequestBody CategoriaDTO categoriaDTO, HttpServletRequest request) {
     try {
@@ -86,15 +90,15 @@ public class CategoriaController {
   }
 
   @Operation(
-      summary = "Deletar categoria",
-      method = "DELETE",
-      description = "Apaga uma categoria específica pertencente ao usuário",
-      responses = {
-          @ApiResponse(responseCode = "200", description = "Categoria apagada com sucesso"),
-          @ApiResponse(responseCode = "400", description = "Categoria não encontrada"),
-          @ApiResponse(responseCode = "401", description = "Não autorizado para realizar o serviço"),
-          @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
-      })
+          summary = "Deletar categoria",
+          method = "DELETE",
+          description = "Apaga uma categoria específica pertencente ao usuário",
+          responses = {
+                  @ApiResponse(responseCode = "200", description = "Categoria apagada com sucesso"),
+                  @ApiResponse(responseCode = "400", description = "Categoria não encontrada"),
+                  @ApiResponse(responseCode = "401", description = "Não autorizado para realizar o serviço"),
+                  @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+          })
   @DeleteMapping("/{id}")
   public ResponseEntity<Object> delete(@PathVariable Integer id, HttpServletRequest request) {
     try {
@@ -107,23 +111,41 @@ public class CategoriaController {
   }
 
   @Operation(
-      summary = "Listar categorias",
-      method = "GET",
-      description = "Lista todas as categorias, do sistema e do usuário",
-      responses = {
-          @ApiResponse(responseCode = "200", description = "Categoria encontradas com sucesso"),
-          @ApiResponse(responseCode = "401", description = "Não autorizado para realizar o serviço"),
-          @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
-      })
-    @GetMapping
-    public ResponseEntity<Object> list(HttpServletRequest request) {
-        try {
-            var idUsuario = UUID.fromString(request.getAttribute("id_usuario").toString());
-            var resultado = this.listarCategoriasService.execute(idUsuario);
-            return ResponseEntity.ok().body(resultado);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+          summary = "Listar categorias",
+          method = "GET",
+          description = "Lista todas as categorias, do sistema e do usuário",
+          responses = {
+                  @ApiResponse(responseCode = "200", description = "Categoria encontradas com sucesso"),
+                  @ApiResponse(responseCode = "401", description = "Não autorizado para realizar o serviço"),
+                  @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+          })
+  @GetMapping
+  public ResponseEntity<Object> list(HttpServletRequest request) {
+    try {
+      var idUsuario = UUID.fromString(request.getAttribute("id_usuario").toString());
+      var resultado = this.listarCategoriasService.execute(idUsuario);
+      return ResponseEntity.ok().body(resultado);
+    } catch (Exception e) {
+      return ResponseEntity.badRequest().body(e.getMessage());
+    }
+  }
+  @Operation(
+    summary = "Identificar categoria com maior gasto",
+    description = "Retorna a categoria que possui o maior gasto total",
+    responses = {
+        @ApiResponse(responseCode = "200", description = "Categoria identificada com sucesso"),
+        @ApiResponse(responseCode = "401", description = "Não autorizado"),
+        @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+    }
+)
+@GetMapping("/maior-gasto")
+public ResponseEntity<Object> identificarCategoriaMaiorGasto(HttpServletRequest request) {
+    try {
+        var idUsuario = UUID.fromString(request.getAttribute("id_usuario").toString());
+        var resultado = identificarCategoriaMaiorGastoService.execute(idUsuario);
+        return ResponseEntity.ok().body(resultado);
+    } catch (Exception e) {
+        return ResponseEntity.badRequest().body(e.getMessage());
     }
 }
-
+}
