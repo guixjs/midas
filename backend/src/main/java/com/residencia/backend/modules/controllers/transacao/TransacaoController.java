@@ -184,7 +184,7 @@ public class TransacaoController {
           @ApiResponse(responseCode = "200", description = "Transação deletada com sucesso"),
           @ApiResponse(responseCode = "400", description = "Transação não encontrada"),
           @ApiResponse(responseCode = "401", description = "Usuário não autorizado"),
-          @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+          @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
       })
   @DeleteMapping("/{id}")
   public ResponseEntity<Object> delete(@PathVariable UUID id, HttpServletRequest request) {
