@@ -130,22 +130,22 @@ public class CategoriaController {
     }
   }
   @Operation(
-          summary = "Identificar categoria com maior gasto",
-          description = "Retorna a categoria que possui o maior gasto total",
-          responses = {
-                  @ApiResponse(responseCode = "200", description = "Categoria identificada com sucesso"),
-                  @ApiResponse(responseCode = "401", description = "Não autorizado"),
-                  @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
-          }
-  )
-  @GetMapping("/maior-gasto")
-  public ResponseEntity<Object> identificarCategoriaMaiorGasto(HttpServletRequest request) {
-    try {
-      var idUsuario = UUID.fromString(request.getAttribute("id_usuario").toString());
-      var resultado = identificarCategoriaMaiorGastoService.execute(idUsuario);
-      return ResponseEntity.ok().body(resultado);
-    } catch (Exception e) {
-      return ResponseEntity.badRequest().body(e.getMessage());
+    summary = "Identificar categoria com maior gasto",
+    description = "Retorna a categoria que possui o maior gasto total",
+    responses = {
+        @ApiResponse(responseCode = "200", description = "Categoria identificada com sucesso"),
+        @ApiResponse(responseCode = "401", description = "Não autorizado"),
+        @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
     }
-  }
+)
+@GetMapping("/maior-gasto")
+public ResponseEntity<Object> identificarCategoriaMaiorGasto(HttpServletRequest request) {
+    try {
+        var idUsuario = UUID.fromString(request.getAttribute("id_usuario").toString());
+        var resultado = identificarCategoriaMaiorGastoService.execute(idUsuario);
+        return ResponseEntity.ok().body(resultado);
+    } catch (Exception e) {
+        return ResponseEntity.badRequest().body(e.getMessage());
+    }
+}
 }

@@ -15,6 +15,7 @@ public class ListarPrincipaisDespesasService {
     private TransacaoRepository transacaoRepository;
 
     public List<PrincipalDespesaDTO> execute(UUID idUsuario) {
-        return transacaoRepository.findTop10DespesasByValor(idUsuario);
+        List<PrincipalDespesaDTO> despesas = transacaoRepository.findTop10DespesasByValor(idUsuario);
+        return despesas.size() > 10 ? despesas.subList(0, 10) : despesas;
     }
 }
