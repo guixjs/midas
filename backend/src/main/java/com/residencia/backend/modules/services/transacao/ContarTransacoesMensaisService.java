@@ -1,6 +1,7 @@
 package com.residencia.backend.modules.services.transacao;
 
 import com.residencia.backend.modules.dto.transacao.TransacoesMensaisDTO;
+import com.residencia.backend.modules.enums.TipoTransacao;
 import com.residencia.backend.modules.repositories.TransacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,8 +15,8 @@ public class ContarTransacoesMensaisService {
     private TransacaoRepository transacaoRepository;
 
     public TransacoesMensaisDTO execute(UUID idUsuario, Integer mes, Integer ano) {
-        Long totalReceitas = transacaoRepository.contarTransacoesPorTipoEMes(idUsuario, "RECEITA", mes, ano);
-        Long totalDespesas = transacaoRepository.contarTransacoesPorTipoEMes(idUsuario, "DESPESA", mes, ano);
+        Long totalReceitas = transacaoRepository.contarTransacoesPorTipoEMes(idUsuario, TipoTransacao.RECEITA, mes, ano);
+        Long totalDespesas = transacaoRepository.contarTransacoesPorTipoEMes(idUsuario, TipoTransacao.DESPESA, mes, ano);
         Long totalTransacoes = totalReceitas + totalDespesas;
 
         return TransacoesMensaisDTO.builder()
