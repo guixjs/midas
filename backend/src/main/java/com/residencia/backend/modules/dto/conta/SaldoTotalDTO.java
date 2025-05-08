@@ -13,4 +13,3 @@ public class SaldoTotalDTO {
     private BigDecimal saldoTotal;
     private boolean saldoPositivo;
 }
-

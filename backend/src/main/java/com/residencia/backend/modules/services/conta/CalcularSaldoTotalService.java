@@ -17,7 +17,7 @@ public class CalcularSaldoTotalService {
     public SaldoTotalDTO execute(UUID idUsuario) {
         BigDecimal totalReceitas = transacaoRepository.somaTotalReceitasPorUsuario(idUsuario);
         BigDecimal totalDespesas = transacaoRepository.somaTotalDespesasPorUsuario(idUsuario);
-
+        
         BigDecimal saldoTotal = totalReceitas.subtract(totalDespesas);
         boolean saldoPositivo = saldoTotal.compareTo(BigDecimal.ZERO) >= 0;
 
