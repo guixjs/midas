@@ -14,6 +14,7 @@ public class CategoriaMapper {
     return CategoriaEntity.builder()
         .descricao(categoriaDTO.getDescricao())
         .nome(categoriaDTO.getNome())
+        .tipoTransacao(categoriaDTO.getTipoTransacao())
         .idUsuario(idUsuario)
         .build();
   }
@@ -23,6 +24,7 @@ public class CategoriaMapper {
         .id(resultado.getId())
         .nome(resultado.getNome())
         .descricao(resultado.getDescricao())
+        .tipoTransacao(resultado.getTipoTransacao())
         .usuario(usuarioResponse)
         .build();
   }
@@ -35,6 +37,7 @@ public class CategoriaMapper {
         .id(categoria.getId())
         .nome(categoria.getNome())
         .descricao(categoria.getDescricao())
+        .tipoTransacao(categoria.getTipoTransacao())
         .build();
   }
 }

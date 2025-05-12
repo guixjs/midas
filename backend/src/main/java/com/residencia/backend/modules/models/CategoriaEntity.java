@@ -1,7 +1,9 @@
 package com.residencia.backend.modules.models;
 
+import com.residencia.backend.modules.enums.TipoTransacao;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,6 +30,10 @@ public class CategoriaEntity {
   private String nome;
 
   private String descricao;
+
+  @Enumerated(EnumType.STRING)
+  @NotNull(message = "O tipo não pode ser nulo")
+  private TipoTransacao tipoTransacao;
 
   @ManyToOne()
   @JoinColumn(name = "id_usuario", insertable = false, updatable = false)
