@@ -8,7 +8,7 @@ import com.residencia.backend.modules.dto.usuario.UsuarioResponseResumidoDTO;
 import com.residencia.backend.modules.models.CartaoEntity;
 
 import java.util.UUID;
-//teste sávio
+
 public class CartaoMapper {
   public static CartaoEntity toEntity(CartaoDTO cartaoDTO, UUID idUsuario, Integer idConta) {
     return CartaoEntity.builder()
