@@ -29,9 +29,6 @@ public class CriarRecorrenteService {
   @Autowired
   private RecorrenteRepository recorrenteRepository;
 
-  private RecorrenteEntity execute(RecorrenteEntity recorrente) {
-    return this.recorrenteRepository.save(recorrente);
-  }
   public RecorrenteResponseDTO criarRecorrente(RecorrenteDTO recorrenteDTO, UUID idUsuario) {
 
     UsuarioEntity usuario = usuarioRepository.findById(idUsuario).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));

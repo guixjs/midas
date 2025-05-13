@@ -1,0 +1,104 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.dashboard {
+    background-color: #0a0742;
+    height: 100vh;
+    color: white;
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+
+}
+
+
+.navLinks {
+    display: flex;
+    align-items: center;
+    background-color: #0a0742;
+    top: 10px;
+    gap: 15px;
+    align-items: center;
+    padding: 8px 16px;
+    gap: 16px;
+    color: #ffffff;
+}
+
+.navLinks a {
+    color: #ffffff;
+    text-decoration: none;
+    padding: 4px 10px;
+}
+
+.navLinks a:nth-child(4) {
+    background-color: #1a1a5c;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px #000000;
+}
+
+
+
+.navIcones {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+    position: absolute;
+    right: 16px;
+    top: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+}
+
+
+
+.botoes {
+    background-color: #76849d;
+    margin: 2rem auto;
+    width: 100%;
+    height: 78%;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn {
+    background-color: #d4b16a;
+    color: rgb(255, 255, 255);
+    padding: 1.5rem 7rem;
+    font-size: 1.0rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 32px;
+    justify-content: center;
+}
+
+.profile-pic {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.DivTabela {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 30px;
+    max-width: 2000px;
+    width: 100%;
+
+}

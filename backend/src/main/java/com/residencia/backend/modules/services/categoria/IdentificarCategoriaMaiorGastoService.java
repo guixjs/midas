@@ -2,7 +2,6 @@ package com.residencia.backend.modules.services.categoria;
 
 import com.residencia.backend.modules.dto.categoria.CategoriaMaiorGastoDTO;
 import com.residencia.backend.modules.repositories.CategoriaRepository;
-import com.residencia.backend.modules.repositories.TransacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
