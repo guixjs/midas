@@ -22,15 +22,14 @@ public interface CategoriaRepository extends JpaRepository<CategoriaEntity, Inte
 
   Optional<CategoriaEntity> findByNomeAndIdUsuario(String nome, UUID idUsuario);
 
-  @Query(value = "SELECT new CategoriaMaiorGastoDTO(" +
-      "c.nome, SUM(t.valor), COUNT(t.*), " +
-      "(SUM(t.valor) / (SELECT SUM(t2.valor) FROM transacao t2 WHERE t2.id_usuario = :idUsuario AND t2.tipo = 'DESPESA')) * 100) " +
-      "FROM transacao t " +
-      "JOIN categoria c ON t.categoria_id = c.id " +
-      "WHERE t.id_usuario = :idUsuario AND t.tipo = 'DESPESA' " +
-      "GROUP BY c.nome " +
-      "ORDER BY SUM(t.valor) DESC " +
-      "LIMIT 1", nativeQuery = true)
+  @Query(value = "SELECT new com.residencia.backend.modules.dto.categoria.CategoriaMaiorGastoDTO(" +
+      "c.id, c.nome, SUM(t.valor)) " +
+      "FROM TransacaoEntity t " +
+      "JOIN CategoriaEntity c ON t.idCategoria = c.id " +
+      "WHERE t.idUsuario = :idUsuario " +
+      "AND t.tipoTransacao = com.residencia.backend.modules.enums.TipoTransacao.DESPESA " +
+      "GROUP BY c.id, c.nome " +
+      "ORDER BY SUM(t.valor) DESC")
   CategoriaMaiorGastoDTO findCategoriaMaiorGasto(@Param("idUsuario") UUID idUsuario);
 
 }

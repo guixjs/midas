@@ -5,15 +5,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
-
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class CategoriaMaiorGastoDTO {
-    private String nome;
-    private BigDecimal valorTotal;
-    private Long quantidade;
-    private Double percentual;
+    private Integer idCategoria;
+    private String nomeCategoria;
+    private Double valorTotal;
 }

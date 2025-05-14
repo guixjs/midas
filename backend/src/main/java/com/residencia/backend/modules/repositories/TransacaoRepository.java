@@ -18,13 +18,15 @@ public interface TransacaoRepository extends JpaRepository<TransacaoEntity, UUID
   Optional<TransacaoEntity> findByIdAndIdUsuario(UUID uuid, UUID idUsuario);
 
   // 1. Buscar as 10 maiores despesas por valor de um usuário (ordenado DESC para pegar as maiores)
-  @Query("SELECT new com.residencia.backend.modules.dto.transacao.PrincipalDespesaDTO(t.descricao, t.valor, t.dataTransacao, c.nome, co.nome) " +
-      "FROM TransacaoEntity t " +
-      "JOIN t.categoria c " +
-      "JOIN t.conta co " +
-      "WHERE t.usuario.id = :usuarioId AND t.tipoTransacao = 'DESPESA' " +
-      "ORDER BY t.valor DESC")
-  List<PrincipalDespesaDTO> findTop10DespesasByValor(@Param("usuarioId") UUID usuarioId, Pageable pageable);
+  @Query(value = "SELECT new com.residencia.backend.modules.dto.transacao.PrincipalDespesaDTO(" +
+    "t.descricao, t.valor, t.dataTransacao, c.nome, co.nome) " +
+    "FROM TransacaoEntity t " +
+    "JOIN t.categoria c " +
+    "JOIN t.conta co " +
+    "WHERE t.idUsuario = :idUsuario " +
+    "AND t.tipoTransacao = 'DESPESA' " +
+    "ORDER BY ABS(t.valor) DESC")
+List<PrincipalDespesaDTO> findTop10DespesasByValor(@Param("idUsuario") UUID idUsuario, Pageable pageable);
 
   // 2. Soma total de receitas por usuário
   @Query("""
@@ -44,16 +46,16 @@ public interface TransacaoRepository extends JpaRepository<TransacaoEntity, UUID
 
   // 4. Contar transações por tipo e mês (usando FUNCTION para compatibilidade com JPA)
   @Query("""
-        SELECT COUNT(t)
-        FROM TransacaoEntity t
-        WHERE t.usuario.id = :usuarioId
-          AND t.tipoTransacao = :tipo
-          AND FUNCTION('MONTH', t.dataTransacao) = :mes
-          AND FUNCTION('YEAR', t.dataTransacao) = :ano
-        """)
-  Long contarTransacoesPorTipoEMes(
-      @Param("usuarioId") UUID usuarioId,
-      @Param("tipo") TipoTransacao tipo,
-      @Param("mes") int mes,
-      @Param("ano") int ano);
+      SELECT COUNT(t)
+      FROM TransacaoEntity t
+      WHERE t.idUsuario = :usuarioId
+        AND t.tipoTransacao = :tipo
+        AND FUNCTION('MONTH', t.dataTransacao) = :mes
+        AND FUNCTION('YEAR', t.dataTransacao) = :ano
+      """)
+Long contarTransacoesPorTipoEMes(
+    @Param("usuarioId") UUID usuarioId,
+    @Param("tipo") TipoTransacao tipo,
+    @Param("mes") int mes,
+    @Param("ano") int ano);
 }
