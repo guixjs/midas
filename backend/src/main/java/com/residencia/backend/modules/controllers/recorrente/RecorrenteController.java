@@ -5,6 +5,8 @@ import com.residencia.backend.modules.dto.recorrente.RecorrenteResponseDTO;
 import com.residencia.backend.modules.dto.recorrente.RecorrenteResponseResumidoDTO;
 import com.residencia.backend.modules.dto.transacao.TransacaoDTO;
 import com.residencia.backend.modules.dto.transacao.TransacaoResponseDTO;
+import com.residencia.backend.modules.dto.transacao.TransacaoResponseResumidoDTO;
+import com.residencia.backend.modules.mapper.TransacaoMapper;
 import com.residencia.backend.modules.services.recorrente.*;
 import com.residencia.backend.modules.services.transacao.CriarTransacaoService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -114,11 +116,12 @@ public class RecorrenteController {
     try {
       var idUser = UUID.fromString(request.getAttribute("id_usuario").toString());
 
-      List<TransacaoResponseDTO> response = new ArrayList<>();
+      List<TransacaoResponseResumidoDTO> response = new ArrayList<>();
 
       for (TransacaoDTO transacao : transacoes) {
         TransacaoResponseDTO salva = criarTransacaoService.criarTransacao(transacao, idUser);
-        response.add(salva);
+        TransacaoResponseResumidoDTO resumido = TransacaoMapper.toResponseResumidoConversaoRecorrente(salva);
+        response.add(resumido);
       }
       return ResponseEntity.ok().body(response);
     } catch (Exception e) {

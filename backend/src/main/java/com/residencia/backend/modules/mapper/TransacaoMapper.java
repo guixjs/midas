@@ -90,4 +90,21 @@ public class TransacaoMapper {
         .nomeCartao(nomeCartao)
         .build();
   }
+
+  public static TransacaoResponseResumidoDTO toResponseResumidoConversaoRecorrente(TransacaoResponseDTO transacaoResponse){
+
+    String nomeCartao = transacaoResponse.getCartao() != null ? transacaoResponse.getCartao().getNome() : "Transação não vinculada a um cartão";
+    String nomeCategoria = transacaoResponse.getCategoria() != null ? transacaoResponse.getCategoria().getNome() : "Sem categoria";
+
+    return TransacaoResponseResumidoDTO.builder()
+        .id(transacaoResponse.getId())
+        .valor(transacaoResponse.getValor())
+        .descricao(transacaoResponse.getDescricao())
+        .dataTransacao(transacaoResponse.getDataTransacao())
+        .tipoTransacao(transacaoResponse.getTipoTransacao())
+        .nomeConta(transacaoResponse.getConta().getNome())
+        .nomeCategoria(nomeCategoria)
+        .nomeCartao(nomeCartao)
+        .build();
+  }
 }

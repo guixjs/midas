@@ -1,0 +1,2494 @@
+{
+	"log": {
+		"version": "1.2",
+		"creator": {
+			"name": "Insomnia REST Client",
+			"version": "insomnia.desktop.app:v11.1.0"
+		},
+		"entries": [
+			{
+				"startedDateTime": "2025-05-14T23:04:08.804Z",
+				"time": 8.654,
+				"request": {
+					"method": "GET",
+					"url": "http://localhost:8080/account/saldo-total",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [
+						{
+							"name": "JSESSIONID",
+							"value": "EB253E7594B347813A6742B80CB5C92A",
+							"path": "/",
+							"domain": "localhost",
+							"httpOnly": true
+						}
+					],
+					"headers": [
+						{
+							"name": "User-Agent",
+							"value": "insomnia/11.1.0"
+						}
+					],
+					"queryString": [],
+					"postData": {
+						"mimeType": "",
+						"text": ""
+					},
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"response": {
+					"status": 200,
+					"statusText": "",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"name": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"name": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"name": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"name": "Expires",
+							"value": "0"
+						},
+						{
+							"name": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"name": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"name": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"name": "Date",
+							"value": "Tue, 13 May 2025 20:36:16 GMT"
+						}
+					],
+					"content": {
+						"size": 84,
+						"mimeType": "application/json",
+						"text": "{\"totalReceitas\":0,\"totalDespesas\":-238.00,\"saldoTotal\":238.00,\"saldoPositivo\":true}"
+					},
+					"redirectURL": "",
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"cache": {},
+				"timings": {
+					"blocked": -1,
+					"dns": -1,
+					"connect": -1,
+					"send": 0,
+					"wait": 8.654,
+					"receive": 0,
+					"ssl": -1
+				},
+				"comment": "Saldo total conta"
+			},
+			{
+				"startedDateTime": "2025-05-14T23:04:08.804Z",
+				"time": 22.872,
+				"request": {
+					"method": "GET",
+					"url": "http://localhost:8080/transacation/count/02/2025",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [
+						{
+							"name": "JSESSIONID",
+							"value": "EB253E7594B347813A6742B80CB5C92A",
+							"path": "/",
+							"domain": "localhost",
+							"httpOnly": true
+						}
+					],
+					"headers": [
+						{
+							"name": "User-Agent",
+							"value": "insomnia/11.1.0"
+						}
+					],
+					"queryString": [],
+					"postData": {
+						"mimeType": "",
+						"text": ""
+					},
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"response": {
+					"status": 403,
+					"statusText": "",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "Vary",
+							"value": "Origin"
+						},
+						{
+							"name": "Vary",
+							"value": "Access-Control-Request-Method"
+						},
+						{
+							"name": "Vary",
+							"value": "Access-Control-Request-Headers"
+						},
+						{
+							"name": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"name": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"name": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"name": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"name": "Expires",
+							"value": "0"
+						},
+						{
+							"name": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"name": "Content-Length",
+							"value": "0"
+						},
+						{
+							"name": "Date",
+							"value": "Tue, 13 May 2025 20:34:34 GMT"
+						}
+					],
+					"content": {
+						"size": 0,
+						"mimeType": "",
+						"text": ""
+					},
+					"redirectURL": "",
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"cache": {},
+				"timings": {
+					"blocked": -1,
+					"dns": -1,
+					"connect": -1,
+					"send": 0,
+					"wait": 22.872,
+					"receive": 0,
+					"ssl": -1
+				},
+				"comment": "Contar transações mês"
+			},
+			{
+				"startedDateTime": "2025-05-14T23:04:08.804Z",
+				"time": 14.497,
+				"request": {
+					"method": "GET",
+					"url": "http://localhost:8080/transaction/top-despesas",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [
+						{
+							"name": "JSESSIONID",
+							"value": "EB253E7594B347813A6742B80CB5C92A",
+							"path": "/",
+							"domain": "localhost",
+							"httpOnly": true
+						}
+					],
+					"headers": [
+						{
+							"name": "User-Agent",
+							"value": "insomnia/11.1.0"
+						}
+					],
+					"queryString": [],
+					"postData": {
+						"mimeType": "",
+						"text": ""
+					},
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"response": {
+					"status": 200,
+					"statusText": "",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"name": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"name": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"name": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"name": "Expires",
+							"value": "0"
+						},
+						{
+							"name": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"name": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"name": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"name": "Date",
+							"value": "Tue, 13 May 2025 20:41:26 GMT"
+						}
+					],
+					"content": {
+						"size": 1080,
+						"mimeType": "application/json",
+						"text": "[{\"descricao\":\"Comprei um hamburuger\",\"valor\":-20.00,\"data\":\"2025-04-20\",\"categoria\":\"Alimentação\",\"conta\":\"Geral\"},{\"descricao\":\"Comprei um refrigerante\",\"valor\":-20.00,\"data\":\"2025-04-20\",\"categoria\":\"Alimentação\",\"conta\":\"Geral\"},{\"descricao\":\"Comprei um sanduiche\",\"valor\":-20.00,\"data\":\"2025-04-20\",\"categoria\":\"Alimentação\",\"conta\":\"Geral\"},{\"descricao\":\"Comprei um norget\",\"valor\":-20.00,\"data\":\"2025-04-20\",\"categoria\":\"Alimentação\",\"conta\":\"Geral\"},{\"descricao\":\"lazeres\",\"valor\":-79.00,\"data\":\"2025-04-20\",\"categoria\":\"Lazer\",\"conta\":\"Conta exemplo\"},{\"descricao\":\"lazeres\",\"valor\":-79.00,\"data\":\"2025-04-20\",\"categoria\":\"Lazer\",\"conta\":\"Geral\"},{\"descricao\":\"TOP 10\",\"valor\":-1000.00,\"data\":\"2025-04-20\",\"categoria\":\"Lazer\",\"conta\":\"Conta exemplo\"},{\"descricao\":\"TOP 10\",\"valor\":-1000.00,\"data\":\"2025-04-20\",\"categoria\":\"Lazer\",\"conta\":\"Conta exemplo\"},{\"descricao\":\"TOP 10\",\"valor\":-1000.00,\"data\":\"2025-04-20\",\"categoria\":\"Lazer\",\"conta\":\"Conta exemplo\"},{\"descricao\":\"TOP 10\",\"valor\":-1000.00,\"data\":\"2025-04-20\",\"categoria\":\"Lazer\",\"conta\":\"Conta exemplo\"}]"
+					},
+					"redirectURL": "",
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"cache": {},
+				"timings": {
+					"blocked": -1,
+					"dns": -1,
+					"connect": -1,
+					"send": 0,
+					"wait": 14.497,
+					"receive": 0,
+					"ssl": -1
+				},
+				"comment": "Top despesas"
+			},
+			{
+				"startedDateTime": "2025-05-14T23:04:08.804Z",
+				"time": 21.5,
+				"request": {
+					"method": "DELETE",
+					"url": "http://localhost:8080/recurring/",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [
+						{
+							"name": "JSESSIONID",
+							"value": "EB253E7594B347813A6742B80CB5C92A",
+							"path": "/",
+							"domain": "localhost",
+							"httpOnly": true
+						}
+					],
+					"headers": [
+						{
+							"name": "User-Agent",
+							"value": "insomnia/11.1.0"
+						}
+					],
+					"queryString": [],
+					"postData": {
+						"mimeType": "",
+						"text": ""
+					},
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"response": {
+					"status": 200,
+					"statusText": "",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"name": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"name": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"name": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"name": "Expires",
+							"value": "0"
+						},
+						{
+							"name": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"name": "Content-Length",
+							"value": "0"
+						},
+						{
+							"name": "Date",
+							"value": "Mon, 12 May 2025 18:40:43 GMT"
+						}
+					],
+					"content": {
+						"size": 0,
+						"mimeType": "",
+						"text": ""
+					},
+					"redirectURL": "",
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"cache": {},
+				"timings": {
+					"blocked": -1,
+					"dns": -1,
+					"connect": -1,
+					"send": 0,
+					"wait": 21.5,
+					"receive": 0,
+					"ssl": -1
+				},
+				"comment": "Deletar Recorrente"
+			},
+			{
+				"startedDateTime": "2025-05-14T23:04:08.804Z",
+				"time": 33.635,
+				"request": {
+					"method": "PUT",
+					"url": "http://localhost:8080/recurring/",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [
+						{
+							"name": "JSESSIONID",
+							"value": "EB253E7594B347813A6742B80CB5C92A",
+							"path": "/",
+							"domain": "localhost",
+							"httpOnly": true
+						}
+					],
+					"headers": [
+						{
+							"name": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"name": "User-Agent",
+							"value": "insomnia/11.1.0"
+						}
+					],
+					"queryString": [],
+					"postData": {
+						"mimeType": "application/json",
+						"text": "{\n  \"descricao\": \"Aluguel - alterando o valor e descricao por exemplo\",\n  \"tipoTransacao\": \"DESPESA\",\n\t\"valor\": 1200,\n  \"idCategoria\": 3,\n  \"idConta\": 1,\n  \"idCartao\": null,\n  \"repetirValor\": true\n}\n"
+					},
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"response": {
+					"status": 200,
+					"statusText": "",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"name": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"name": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"name": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"name": "Expires",
+							"value": "0"
+						},
+						{
+							"name": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"name": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"name": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"name": "Date",
+							"value": "Mon, 12 May 2025 18:40:17 GMT"
+						}
+					],
+					"content": {
+						"size": 275,
+						"mimeType": "application/json",
+						"text": "{\"id\":\"9128ec0d-5c37-425c-82de-e968ea64a4eb\",\"valor\":1200,\"descricao\":\"Aluguel - alterando o valor e descricao por exemplo\",\"tipoTransacao\":\"DESPESA\",\"repetirValor\":false,\"nomeCategoria\":\"Transporte\",\"nomeConta\":\"Geral\",\"nomeCartao\":\"Transação não vinculada a um cartão\"}"
+					},
+					"redirectURL": "",
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"cache": {},
+				"timings": {
+					"blocked": -1,
+					"dns": -1,
+					"connect": -1,
+					"send": 0,
+					"wait": 33.635,
+					"receive": 0,
+					"ssl": -1
+				},
+				"comment": "Editar Recorrente"
+			},
+			{
+				"startedDateTime": "2025-05-14T23:04:08.804Z",
+				"time": 22.377000000000002,
+				"request": {
+					"method": "GET",
+					"url": "http://localhost:8080/recurring/677701d5-df77-42b1-ac8d-6c0b2ed8bd40",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [
+						{
+							"name": "JSESSIONID",
+							"value": "EB253E7594B347813A6742B80CB5C92A",
+							"path": "/",
+							"domain": "localhost",
+							"httpOnly": true
+						}
+					],
+					"headers": [
+						{
+							"name": "User-Agent",
+							"value": "insomnia/11.1.0"
+						},
+						{
+							"name": "Authorization",
+							"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJtaWRhcyIsInN1YiI6IjkxMjlhNGNhLTA1ZjEtNGM2NS1hODA0LTk0MWMzOTYzYzVlOSIsImV4cCI6MTc0NzA4OTAxOX0.AgcRWP3K_tFWrIDJG5ErNafVH7BSoj1gU9TIvhtWdVc"
+						}
+					],
+					"queryString": [],
+					"postData": {
+						"mimeType": "",
+						"text": ""
+					},
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"response": {
+					"status": 200,
+					"statusText": "",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"name": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"name": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"name": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"name": "Expires",
+							"value": "0"
+						},
+						{
+							"name": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"name": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"name": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"name": "Date",
+							"value": "Mon, 12 May 2025 18:42:20 GMT"
+						}
+					],
+					"content": {
+						"size": 433,
+						"mimeType": "application/json",
+						"text": "{\"id\":\"677701d5-df77-42b1-ac8d-6c0b2ed8bd40\",\"valor\":-1500.00,\"descricao\":\"outra recorrente\",\"tipoTransacao\":\"DESPESA\",\"repetirValor\":true,\"categoria\":{\"id\":3,\"nome\":\"Transporte\",\"descricao\":\"Despesas com locomoção\"},\"conta\":{\"idConta\":1,\"nome\":\"Geral\",\"tipoConta\":\"CARTEIRA\",\"banco\":null},\"cartao\":null,\"usuario\":{\"id\":\"9129a4ca-05f1-4c65-a804-941c3963c5e9\",\"nome\":\"Exemplo\",\"email\":\"exemplo1@gmail.com\",\"telefone\":\"81988888888\"}}"
+					},
+					"redirectURL": "",
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"cache": {},
+				"timings": {
+					"blocked": -1,
+					"dns": -1,
+					"connect": -1,
+					"send": 0,
+					"wait": 22.377000000000002,
+					"receive": 0,
+					"ssl": -1
+				},
+				"comment": "Listar Específica Recorrente"
+			},
+			{
+				"startedDateTime": "2025-05-14T23:04:08.804Z",
+				"time": 804.717,
+				"request": {
+					"method": "GET",
+					"url": "http://localhost:8080/category/maior-gasto",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [
+						{
+							"name": "JSESSIONID",
+							"value": "EB253E7594B347813A6742B80CB5C92A",
+							"path": "/",
+							"domain": "localhost",
+							"httpOnly": true
+						}
+					],
+					"headers": [
+						{
+							"name": "User-Agent",
+							"value": "insomnia/11.1.0"
+						}
+					],
+					"queryString": [],
+					"postData": {
+						"mimeType": "",
+						"text": ""
+					},
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"response": {
+					"status": 400,
+					"statusText": "",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"name": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"name": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"name": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"name": "Expires",
+							"value": "0"
+						},
+						{
+							"name": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"name": "Content-Type",
+							"value": "text/plain;charset=UTF-8"
+						},
+						{
+							"name": "Content-Length",
+							"value": "1449"
+						},
+						{
+							"name": "Date",
+							"value": "Tue, 13 May 2025 20:32:14 GMT"
+						},
+						{
+							"name": "Connection",
+							"value": "close"
+						}
+					],
+					"content": {
+						"size": 1449,
+						"mimeType": "text/plain;charset=UTF-8",
+						"text": "could not prepare statement [Syntax error in SQL statement \"SELECT new CategoriaMaiorGastoDTO[*](c.nome, SUM(t.valor), COUNT(t.*), (SUM(t.valor) / (SELECT SUM(t2.valor) FROM transacao t2 WHERE t2.id_usuario = ? AND t2.tipo = 'DESPESA')) * 100) FROM transacao t JOIN categoria c ON t.categoria_id = c.id WHERE t.id_usuario = ? AND t.tipo = 'DESPESA' GROUP BY c.nome ORDER BY SUM(t.valor) DESC LIMIT 1\"; SQL statement:\nSELECT new CategoriaMaiorGastoDTO(c.nome, SUM(t.valor), COUNT(t.*), (SUM(t.valor) / (SELECT SUM(t2.valor) FROM transacao t2 WHERE t2.id_usuario = ? AND t2.tipo = 'DESPESA')) * 100) FROM transacao t JOIN categoria c ON t.categoria_id = c.id WHERE t.id_usuario = ? AND t.tipo = 'DESPESA' GROUP BY c.nome ORDER BY SUM(t.valor) DESC LIMIT 1 [42000-232]] [SELECT new CategoriaMaiorGastoDTO(c.nome, SUM(t.valor), COUNT(t.*), (SUM(t.valor) / (SELECT SUM(t2.valor) FROM transacao t2 WHERE t2.id_usuario = ? AND t2.tipo = 'DESPESA')) * 100) FROM transacao t JOIN categoria c ON t.categoria_id = c.id WHERE t.id_usuario = ? AND t.tipo = 'DESPESA' GROUP BY c.nome ORDER BY SUM(t.valor) DESC LIMIT 1]; SQL [SELECT new CategoriaMaiorGastoDTO(c.nome, SUM(t.valor), COUNT(t.*), (SUM(t.valor) / (SELECT SUM(t2.valor) FROM transacao t2 WHERE t2.id_usuario = ? AND t2.tipo = 'DESPESA')) * 100) FROM transacao t JOIN categoria c ON t.categoria_id = c.id WHERE t.id_usuario = ? AND t.tipo = 'DESPESA' GROUP BY c.nome ORDER BY SUM(t.valor) DESC LIMIT 1]"
+					},
+					"redirectURL": "",
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"cache": {},
+				"timings": {
+					"blocked": -1,
+					"dns": -1,
+					"connect": -1,
+					"send": 0,
+					"wait": 804.717,
+					"receive": 0,
+					"ssl": -1
+				},
+				"comment": "Categoria maior gasto"
+			},
+			{
+				"startedDateTime": "2025-05-14T23:04:08.804Z",
+				"time": 177.719,
+				"request": {
+					"method": "POST",
+					"url": "http://localhost:8080/recurring/many",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [
+						{
+							"name": "JSESSIONID",
+							"value": "EB253E7594B347813A6742B80CB5C92A",
+							"path": "/",
+							"domain": "localhost",
+							"httpOnly": true
+						}
+					],
+					"headers": [
+						{
+							"name": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"name": "User-Agent",
+							"value": "insomnia/11.1.0"
+						}
+					],
+					"queryString": [],
+					"postData": {
+						"mimeType": "application/json",
+						"text": ""
+					},
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"response": {
+					"status": 200,
+					"statusText": "",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"name": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"name": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"name": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"name": "Expires",
+							"value": "0"
+						},
+						{
+							"name": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"name": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"name": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"name": "Date",
+							"value": "Wed, 14 May 2025 22:57:51 GMT"
+						}
+					],
+					"content": {
+						"size": 754,
+						"mimeType": "application/json",
+						"text": "[{\"id\":\"4445c53a-dcda-4b77-9ca3-bfa589bdb52c\",\"valor\":-1500,\"descricao\":\"outra recorrente\",\"dataTransacao\":\"2025-05-14\",\"tipoTransacao\":\"DESPESA\",\"nomeCategoria\":\"Alimentação\",\"nomeConta\":\"Geral\",\"nomeCartao\":\"Transação não vinculada a um cartão\"},{\"id\":\"bb7d78e5-83d4-45df-adeb-72e7f89da529\",\"valor\":10,\"descricao\":\"outra recorrente\",\"dataTransacao\":\"2025-05-14\",\"tipoTransacao\":\"RECEITA\",\"nomeCategoria\":\"Alimentação\",\"nomeConta\":\"Geral\",\"nomeCartao\":\"Transação não vinculada a um cartão\"},{\"id\":\"27c3875b-145b-4674-80f9-aeb7ec52721a\",\"valor\":20,\"descricao\":\"outra recorrente\",\"dataTransacao\":\"2025-05-14\",\"tipoTransacao\":\"RECEITA\",\"nomeCategoria\":\"Alimentação\",\"nomeConta\":\"Geral\",\"nomeCartao\":\"Transação não vinculada a um cartão\"}]"
+					},
+					"redirectURL": "",
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"cache": {},
+				"timings": {
+					"blocked": -1,
+					"dns": -1,
+					"connect": -1,
+					"send": 0,
+					"wait": 177.719,
+					"receive": 0,
+					"ssl": -1
+				},
+				"comment": "Converter Recorrentes em Transações"
+			},
+			{
+				"startedDateTime": "2025-05-14T23:04:08.804Z",
+				"time": 0,
+				"request": {
+					"method": "POST",
+					"url": "http://localhost:8080/recurring/new",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [
+						{
+							"name": "JSESSIONID",
+							"value": "EB253E7594B347813A6742B80CB5C92A",
+							"path": "/",
+							"domain": "localhost",
+							"httpOnly": true
+						}
+					],
+					"headers": [
+						{
+							"name": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"name": "User-Agent",
+							"value": "insomnia/11.1.0"
+						}
+					],
+					"queryString": [],
+					"postData": {
+						"mimeType": "application/json",
+						"text": "{\n  \"descricao\": \"Conta de luz\",\n  \"tipoTransacao\": \"DESPESA\",\n\t\"valor\": null,\n  \"idCategoria\": 3,\n  \"idConta\": 1,\n  \"idCartao\": null,\n  \"repetirValor\": false\n}\n"
+					},
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"response": {
+					"status": 0,
+					"statusText": "",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [],
+					"content": {
+						"size": 0,
+						"mimeType": ""
+					},
+					"redirectURL": "",
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"cache": {},
+				"timings": {
+					"blocked": -1,
+					"dns": -1,
+					"connect": -1,
+					"send": 0,
+					"wait": 0,
+					"receive": 0,
+					"ssl": -1
+				},
+				"comment": "Criar Recorrente"
+			},
+			{
+				"startedDateTime": "2025-05-14T23:04:08.804Z",
+				"time": 54.868,
+				"request": {
+					"method": "GET",
+					"url": "http://localhost:8080/recurring",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [
+						{
+							"name": "JSESSIONID",
+							"value": "EB253E7594B347813A6742B80CB5C92A",
+							"path": "/",
+							"domain": "localhost",
+							"httpOnly": true
+						}
+					],
+					"headers": [
+						{
+							"name": "User-Agent",
+							"value": "insomnia/11.1.0"
+						}
+					],
+					"queryString": [],
+					"postData": {
+						"mimeType": "",
+						"text": ""
+					},
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"response": {
+					"status": 200,
+					"statusText": "",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"name": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"name": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"name": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"name": "Expires",
+							"value": "0"
+						},
+						{
+							"name": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"name": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"name": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"name": "Date",
+							"value": "Wed, 14 May 2025 22:57:34 GMT"
+						}
+					],
+					"content": {
+						"size": 440,
+						"mimeType": "application/json",
+						"text": "[{\"descricao\":\"outra recorrente\",\"dataTransacao\":\"2025-05-14\",\"valor\":-1500.00,\"tipoTransacao\":\"DESPESA\",\"idCategoria\":3,\"idConta\":1,\"idCartao\":null},{\"descricao\":\"outra recorrente\",\"dataTransacao\":\"2025-05-14\",\"valor\":null,\"tipoTransacao\":\"RECEITA\",\"idCategoria\":3,\"idConta\":1,\"idCartao\":null},{\"descricao\":\"outra recorrente\",\"dataTransacao\":\"2025-05-14\",\"valor\":null,\"tipoTransacao\":\"RECEITA\",\"idCategoria\":3,\"idConta\":1,\"idCartao\":null}]"
+					},
+					"redirectURL": "",
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"cache": {},
+				"timings": {
+					"blocked": -1,
+					"dns": -1,
+					"connect": -1,
+					"send": 0,
+					"wait": 54.868,
+					"receive": 0,
+					"ssl": -1
+				},
+				"comment": "Listar Recorrentes"
+			},
+			{
+				"startedDateTime": "2025-05-14T23:04:08.804Z",
+				"time": 136.768,
+				"request": {
+					"method": "DELETE",
+					"url": "http://localhost:8080/transaction/e003679a-adc7-4689-bda3-7d9aeb7fca85",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [
+						{
+							"name": "JSESSIONID",
+							"value": "EB253E7594B347813A6742B80CB5C92A",
+							"path": "/",
+							"domain": "localhost",
+							"httpOnly": true
+						}
+					],
+					"headers": [
+						{
+							"name": "User-Agent",
+							"value": "insomnia/11.0.2"
+						},
+						{
+							"name": "Authorization",
+							"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJtaWRhcyIsInN1YiI6IjkxMjlhNGNhLTA1ZjEtNGM2NS1hODA0LTk0MWMzOTYzYzVlOSIsImV4cCI6MTc0NzA4OTAxOX0.AgcRWP3K_tFWrIDJG5ErNafVH7BSoj1gU9TIvhtWdVc"
+						}
+					],
+					"queryString": [],
+					"postData": {
+						"mimeType": "",
+						"text": ""
+					},
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"response": {
+					"status": 200,
+					"statusText": "",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"name": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"name": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"name": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"name": "Expires",
+							"value": "0"
+						},
+						{
+							"name": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"name": "Content-Length",
+							"value": "0"
+						},
+						{
+							"name": "Date",
+							"value": "Mon, 12 May 2025 18:32:30 GMT"
+						}
+					],
+					"content": {
+						"size": 0,
+						"mimeType": "",
+						"text": ""
+					},
+					"redirectURL": "",
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"cache": {},
+				"timings": {
+					"blocked": -1,
+					"dns": -1,
+					"connect": -1,
+					"send": 0,
+					"wait": 136.768,
+					"receive": 0,
+					"ssl": -1
+				},
+				"comment": "Deletar Transação"
+			},
+			{
+				"startedDateTime": "2025-05-14T23:04:08.804Z",
+				"time": 143.297,
+				"request": {
+					"method": "PUT",
+					"url": "http://localhost:8080/transaction/4b8e26b7-b203-4922-8170-882869464cae",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [
+						{
+							"name": "JSESSIONID",
+							"value": "EB253E7594B347813A6742B80CB5C92A",
+							"path": "/",
+							"domain": "localhost",
+							"httpOnly": true
+						}
+					],
+					"headers": [
+						{
+							"name": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"name": "User-Agent",
+							"value": "insomnia/11.0.2"
+						},
+						{
+							"name": "Authorization",
+							"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJtaWRhcyIsInN1YiI6IjkxMjlhNGNhLTA1ZjEtNGM2NS1hODA0LTk0MWMzOTYzYzVlOSIsImV4cCI6MTc0NzA4OTAxOX0.AgcRWP3K_tFWrIDJG5ErNafVH7BSoj1gU9TIvhtWdVc"
+						}
+					],
+					"queryString": [],
+					"postData": {
+						"mimeType": "application/json",
+						"text": "{\n\t\"descricao\": \"Alterando a transação\",\n\t\"dataTransacao\":\"2023-08-30\",\n\t\"valor\": 1,\n\t\"tipoTransacao\": \"DESPESA\",\n  \"idCategoria\": 3,\n\t\"idConta\": null,\n\t\"idCartao\": null\n}"
+					},
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"response": {
+					"status": 200,
+					"statusText": "",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"name": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"name": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"name": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"name": "Expires",
+							"value": "0"
+						},
+						{
+							"name": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"name": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"name": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"name": "Date",
+							"value": "Mon, 12 May 2025 18:33:24 GMT"
+						}
+					],
+					"content": {
+						"size": 255,
+						"mimeType": "application/json",
+						"text": "{\"id\":\"4b8e26b7-b203-4922-8170-882869464cae\",\"valor\":1,\"descricao\":\"Alterando a transação\",\"dataTransacao\":\"2023-08-30\",\"tipoTransacao\":\"DESPESA\",\"nomeCategoria\":\"Alimentação\",\"nomeConta\":\"Geral\",\"nomeCartao\":\"Transação não vinculada a um cartão\"}"
+					},
+					"redirectURL": "",
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"cache": {},
+				"timings": {
+					"blocked": -1,
+					"dns": -1,
+					"connect": -1,
+					"send": 0,
+					"wait": 143.297,
+					"receive": 0,
+					"ssl": -1
+				},
+				"comment": "Alterar Transação"
+			},
+			{
+				"startedDateTime": "2025-05-14T23:04:08.804Z",
+				"time": 20.327,
+				"request": {
+					"method": "GET",
+					"url": "http://localhost:8080/transaction/e003679a-adc7-4689-bda3-7d9aeb7fca85",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [
+						{
+							"name": "JSESSIONID",
+							"value": "EB253E7594B347813A6742B80CB5C92A",
+							"path": "/",
+							"domain": "localhost",
+							"httpOnly": true
+						}
+					],
+					"headers": [
+						{
+							"name": "User-Agent",
+							"value": "insomnia/11.0.2"
+						},
+						{
+							"name": "Authorization",
+							"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJtaWRhcyIsInN1YiI6IjkxMjlhNGNhLTA1ZjEtNGM2NS1hODA0LTk0MWMzOTYzYzVlOSIsImV4cCI6MTc0NzA4OTAxOX0.AgcRWP3K_tFWrIDJG5ErNafVH7BSoj1gU9TIvhtWdVc"
+						}
+					],
+					"queryString": [],
+					"postData": {
+						"mimeType": "",
+						"text": ""
+					},
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"response": {
+					"status": 200,
+					"statusText": "",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"name": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"name": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"name": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"name": "Expires",
+							"value": "0"
+						},
+						{
+							"name": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"name": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"name": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"name": "Date",
+							"value": "Mon, 12 May 2025 18:32:10 GMT"
+						}
+					],
+					"content": {
+						"size": 448,
+						"mimeType": "application/json",
+						"text": "{\"id\":\"e003679a-adc7-4689-bda3-7d9aeb7fca85\",\"valor\":20.00,\"descricao\":\"Comprei um norget\",\"dataTransacao\":\"2025-04-20\",\"tipoTransacao\":\"RECEITA\",\"categoria\":{\"id\":2,\"nome\":\"Alimentação\",\"descricao\":\"Despesas com comida e bebidas\"},\"conta\":{\"idConta\":1,\"nome\":\"Geral\",\"tipoConta\":\"CARTEIRA\",\"banco\":null},\"cartao\":null,\"usuario\":{\"id\":\"9129a4ca-05f1-4c65-a804-941c3963c5e9\",\"nome\":\"Exemplo\",\"email\":\"exemplo1@gmail.com\",\"telefone\":\"81988888888\"}}"
+					},
+					"redirectURL": "",
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"cache": {},
+				"timings": {
+					"blocked": -1,
+					"dns": -1,
+					"connect": -1,
+					"send": 0,
+					"wait": 20.327,
+					"receive": 0,
+					"ssl": -1
+				},
+				"comment": "Listar Específica"
+			},
+			{
+				"startedDateTime": "2025-05-14T23:04:08.804Z",
+				"time": 38.432,
+				"request": {
+					"method": "DELETE",
+					"url": "http://localhost:8080/account/2",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [
+						{
+							"name": "JSESSIONID",
+							"value": "EB253E7594B347813A6742B80CB5C92A",
+							"path": "/",
+							"domain": "localhost",
+							"httpOnly": true
+						}
+					],
+					"headers": [
+						{
+							"name": "User-Agent",
+							"value": "insomnia/11.0.2"
+						}
+					],
+					"queryString": [],
+					"postData": {
+						"mimeType": "",
+						"text": ""
+					},
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"response": {
+					"status": 200,
+					"statusText": "",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"name": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"name": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"name": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"name": "Expires",
+							"value": "0"
+						},
+						{
+							"name": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"name": "Content-Length",
+							"value": "0"
+						},
+						{
+							"name": "Date",
+							"value": "Mon, 12 May 2025 20:12:08 GMT"
+						}
+					],
+					"content": {
+						"size": 0,
+						"mimeType": "",
+						"text": ""
+					},
+					"redirectURL": "",
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"cache": {},
+				"timings": {
+					"blocked": -1,
+					"dns": -1,
+					"connect": -1,
+					"send": 0,
+					"wait": 38.432,
+					"receive": 0,
+					"ssl": -1
+				},
+				"comment": "Deletar Conta"
+			},
+			{
+				"startedDateTime": "2025-05-14T23:04:08.804Z",
+				"time": 33.508,
+				"request": {
+					"method": "GET",
+					"url": "http://localhost:8080/account",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [
+						{
+							"name": "JSESSIONID",
+							"value": "EB253E7594B347813A6742B80CB5C92A",
+							"path": "/",
+							"domain": "localhost",
+							"httpOnly": true
+						}
+					],
+					"headers": [
+						{
+							"name": "User-Agent",
+							"value": "insomnia/11.0.2"
+						}
+					],
+					"queryString": [],
+					"postData": {
+						"mimeType": "",
+						"text": ""
+					},
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"response": {
+					"status": 200,
+					"statusText": "",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"name": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"name": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"name": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"name": "Expires",
+							"value": "0"
+						},
+						{
+							"name": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"name": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"name": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"name": "Date",
+							"value": "Mon, 12 May 2025 18:35:13 GMT"
+						}
+					],
+					"content": {
+						"size": 156,
+						"mimeType": "application/json",
+						"text": "[{\"idConta\":1,\"nome\":\"Geral\",\"tipoConta\":\"CARTEIRA\",\"banco\":null},{\"idConta\":2,\"nome\":\"Conta exemplo\",\"tipoConta\":\"CORRENTE\",\"banco\":\"001 - Banco exemplo\"}]"
+					},
+					"redirectURL": "",
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"cache": {},
+				"timings": {
+					"blocked": -1,
+					"dns": -1,
+					"connect": -1,
+					"send": 0,
+					"wait": 33.508,
+					"receive": 0,
+					"ssl": -1
+				},
+				"comment": "Listar Contas"
+			},
+			{
+				"startedDateTime": "2025-05-14T23:04:08.804Z",
+				"time": 36.35,
+				"request": {
+					"method": "DELETE",
+					"url": "http://localhost:8080/category/8",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [
+						{
+							"name": "JSESSIONID",
+							"value": "EB253E7594B347813A6742B80CB5C92A",
+							"path": "/",
+							"domain": "localhost",
+							"httpOnly": true
+						}
+					],
+					"headers": [
+						{
+							"name": "User-Agent",
+							"value": "insomnia/11.0.2"
+						}
+					],
+					"queryString": [],
+					"postData": {
+						"mimeType": "",
+						"text": ""
+					},
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"response": {
+					"status": 200,
+					"statusText": "",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"name": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"name": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"name": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"name": "Expires",
+							"value": "0"
+						},
+						{
+							"name": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"name": "Content-Length",
+							"value": "0"
+						},
+						{
+							"name": "Date",
+							"value": "Mon, 12 May 2025 20:03:05 GMT"
+						}
+					],
+					"content": {
+						"size": 0,
+						"mimeType": "",
+						"text": ""
+					},
+					"redirectURL": "",
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"cache": {},
+				"timings": {
+					"blocked": -1,
+					"dns": -1,
+					"connect": -1,
+					"send": 0,
+					"wait": 36.35,
+					"receive": 0,
+					"ssl": -1
+				},
+				"comment": "Deletar Categoria"
+			},
+			{
+				"startedDateTime": "2025-05-14T23:04:08.804Z",
+				"time": 109.872,
+				"request": {
+					"method": "PUT",
+					"url": "http://localhost:8080/category/",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [
+						{
+							"name": "JSESSIONID",
+							"value": "EB253E7594B347813A6742B80CB5C92A",
+							"path": "/",
+							"domain": "localhost",
+							"httpOnly": true
+						}
+					],
+					"headers": [
+						{
+							"name": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"name": "User-Agent",
+							"value": "insomnia/11.0.2"
+						}
+					],
+					"queryString": [],
+					"postData": {
+						"mimeType": "application/json",
+						"text": "{\n\t\"nome\":\"Categoria para games\",\n\t\"descricao\":\"Categoria dedicada para gasto com jogos\",\n\t\"tipoTransacao\":\"DESPESA\"\n}"
+					},
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"response": {
+					"status": 200,
+					"statusText": "",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"name": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"name": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"name": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"name": "Expires",
+							"value": "0"
+						},
+						{
+							"name": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"name": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"name": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"name": "Date",
+							"value": "Mon, 12 May 2025 20:03:55 GMT"
+						}
+					],
+					"content": {
+						"size": 241,
+						"mimeType": "application/json",
+						"text": "{\"id\":9,\"nome\":\"Tigrinho e bets nacionais\",\"descricao\":\"dedicada pra apostar alterando\",\"tipoTransacao\":\"DESPESA\",\"usuario\":{\"id\":\"d9603bc4-adf9-4dc4-bbf4-c1a953663133\",\"nome\":\"Exemplo\",\"email\":\"exemplo1@gmail.com\",\"telefone\":\"81988888888\"}}"
+					},
+					"redirectURL": "",
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"cache": {},
+				"timings": {
+					"blocked": -1,
+					"dns": -1,
+					"connect": -1,
+					"send": 0,
+					"wait": 109.872,
+					"receive": 0,
+					"ssl": -1
+				},
+				"comment": "Atualizar Categoria"
+			},
+			{
+				"startedDateTime": "2025-05-14T23:04:08.804Z",
+				"time": 13.207999999999998,
+				"request": {
+					"method": "GET",
+					"url": "http://localhost:8080/category",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [
+						{
+							"name": "JSESSIONID",
+							"value": "EB253E7594B347813A6742B80CB5C92A",
+							"path": "/",
+							"domain": "localhost",
+							"httpOnly": true
+						}
+					],
+					"headers": [
+						{
+							"name": "User-Agent",
+							"value": "insomnia/11.0.2"
+						}
+					],
+					"queryString": [],
+					"postData": {
+						"mimeType": "",
+						"text": ""
+					},
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"response": {
+					"status": 200,
+					"statusText": "",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"name": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"name": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"name": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"name": "Expires",
+							"value": "0"
+						},
+						{
+							"name": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"name": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"name": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"name": "Date",
+							"value": "Mon, 12 May 2025 20:02:32 GMT"
+						}
+					],
+					"content": {
+						"size": 678,
+						"mimeType": "application/json",
+						"text": "[{\"id\":1,\"nome\":\"Lazer\",\"descricao\":\"Despesas com entretenimento\",\"tipoTransacao\":null},{\"id\":2,\"nome\":\"Alimentação\",\"descricao\":\"Despesas com comida e bebidas\",\"tipoTransacao\":null},{\"id\":3,\"nome\":\"Transporte\",\"descricao\":\"Despesas com locomoção\",\"tipoTransacao\":null},{\"id\":4,\"nome\":\"Mercado\",\"descricao\":\"Despesas com compras de supermercado\",\"tipoTransacao\":null},{\"id\":5,\"nome\":\"Saúde\",\"descricao\":\"Despesas com cuidados médicos e remédios\",\"tipoTransacao\":null},{\"id\":6,\"nome\":\"Freelance\",\"descricao\":\"Receitas obtidas com trabalhos autônomos\",\"tipoTransacao\":null},{\"id\":8,\"nome\":\"Tigrinho e relacionados\",\"descricao\":\"Despesas com apostas\",\"tipoTransacao\":null}]"
+					},
+					"redirectURL": "",
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"cache": {},
+				"timings": {
+					"blocked": -1,
+					"dns": -1,
+					"connect": -1,
+					"send": 0,
+					"wait": 13.207999999999998,
+					"receive": 0,
+					"ssl": -1
+				},
+				"comment": "Listar Categorias"
+			},
+			{
+				"startedDateTime": "2025-05-14T23:04:08.804Z",
+				"time": 80.937,
+				"request": {
+					"method": "POST",
+					"url": "http://localhost:8080/card/new",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [
+						{
+							"name": "JSESSIONID",
+							"value": "EB253E7594B347813A6742B80CB5C92A",
+							"path": "/",
+							"domain": "localhost",
+							"httpOnly": true
+						}
+					],
+					"headers": [
+						{
+							"name": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"name": "User-Agent",
+							"value": "insomnia/11.0.2"
+						}
+					],
+					"queryString": [],
+					"postData": {
+						"mimeType": "application/json",
+						"text": "{\n    \"nome\": \"Cartão exemplo\",\n    \"dataVencimento\": \"25/12/2025\",\n    \"idConta\": 2\n}"
+					},
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"response": {
+					"status": 200,
+					"statusText": "",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"name": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"name": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"name": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"name": "Expires",
+							"value": "0"
+						},
+						{
+							"name": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"name": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"name": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"name": "Date",
+							"value": "Mon, 12 May 2025 20:12:01 GMT"
+						}
+					],
+					"content": {
+						"size": 325,
+						"mimeType": "application/json",
+						"text": "{\"id\":\"5d035dbe-817c-4e3a-b0b5-4488a8223046\",\"nome\":\"Cartão exemplo\",\"dataVencimento\":\"2025-12-25\",\"conta\":{\"idConta\":3,\"nome\":\"Conta exemplo\",\"tipoConta\":\"CORRENTE\",\"banco\":\"001 - Banco exemplo\"},\"usuario\":{\"id\":\"2b17e660-1c29-4da9-8169-6393f925e90c\",\"nome\":\"Exemplo\",\"email\":\"exemplo1@gmail.com\",\"telefone\":\"81988888888\"}}"
+					},
+					"redirectURL": "",
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"cache": {},
+				"timings": {
+					"blocked": -1,
+					"dns": -1,
+					"connect": -1,
+					"send": 0,
+					"wait": 80.937,
+					"receive": 0,
+					"ssl": -1
+				},
+				"comment": "Criar Cartão"
+			},
+			{
+				"startedDateTime": "2025-05-14T23:04:08.804Z",
+				"time": 110.266,
+				"request": {
+					"method": "POST",
+					"url": "http://localhost:8080/account/new",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [
+						{
+							"name": "JSESSIONID",
+							"value": "EB253E7594B347813A6742B80CB5C92A",
+							"path": "/",
+							"domain": "localhost",
+							"httpOnly": true
+						}
+					],
+					"headers": [
+						{
+							"name": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"name": "User-Agent",
+							"value": "insomnia/11.0.2"
+						}
+					],
+					"queryString": [],
+					"postData": {
+						"mimeType": "application/json",
+						"text": "{\n  \"nome\": \"Conta exemplo\",\n  \"tipoConta\": \"CORRENTE\",\n  \"banco\": \"001 - Banco exemplo\"\n}"
+					},
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"response": {
+					"status": 200,
+					"statusText": "",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"name": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"name": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"name": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"name": "Expires",
+							"value": "0"
+						},
+						{
+							"name": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"name": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"name": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"name": "Date",
+							"value": "Tue, 13 May 2025 20:36:00 GMT"
+						}
+					],
+					"content": {
+						"size": 216,
+						"mimeType": "application/json",
+						"text": "{\"idConta\":2,\"nome\":\"Conta exemplo\",\"tipoConta\":\"CORRENTE\",\"banco\":\"001 - Banco exemplo\",\"usuario\":{\"id\":\"5b91c6a3-e67c-4145-9cb6-c99b64c00b5a\",\"nome\":\"Exemplo\",\"email\":\"exemplo1@gmail.com\",\"telefone\":\"81988888888\"}}"
+					},
+					"redirectURL": "",
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"cache": {},
+				"timings": {
+					"blocked": -1,
+					"dns": -1,
+					"connect": -1,
+					"send": 0,
+					"wait": 110.266,
+					"receive": 0,
+					"ssl": -1
+				},
+				"comment": "Criar conta"
+			},
+			{
+				"startedDateTime": "2025-05-14T23:04:08.804Z",
+				"time": 24.105,
+				"request": {
+					"method": "POST",
+					"url": "http://localhost:8080/category/new",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [
+						{
+							"name": "JSESSIONID",
+							"value": "EB253E7594B347813A6742B80CB5C92A",
+							"path": "/",
+							"domain": "localhost",
+							"httpOnly": true
+						}
+					],
+					"headers": [
+						{
+							"name": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"name": "User-Agent",
+							"value": "insomnia/11.0.2"
+						}
+					],
+					"queryString": [],
+					"postData": {
+						"mimeType": "application/json",
+						"text": "{\n\t\"nome\":\"Categoria exemplo\",\n\t\"descricao\":\"descricao exemplo\",\n\t\"tipoTransacao\":\"DESPESA\"\n}"
+					},
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"response": {
+					"status": 200,
+					"statusText": "",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"name": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"name": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"name": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"name": "Expires",
+							"value": "0"
+						},
+						{
+							"name": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"name": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"name": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"name": "Date",
+							"value": "Mon, 12 May 2025 20:03:14 GMT"
+						}
+					],
+					"content": {
+						"size": 229,
+						"mimeType": "application/json",
+						"text": "{\"id\":9,\"nome\":\"Tigrinho e relacionados\",\"descricao\":\"Despesas com apostas\",\"tipoTransacao\":\"DESPESA\",\"usuario\":{\"id\":\"d9603bc4-adf9-4dc4-bbf4-c1a953663133\",\"nome\":\"Exemplo\",\"email\":\"exemplo1@gmail.com\",\"telefone\":\"81988888888\"}}"
+					},
+					"redirectURL": "",
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"cache": {},
+				"timings": {
+					"blocked": -1,
+					"dns": -1,
+					"connect": -1,
+					"send": 0,
+					"wait": 24.105,
+					"receive": 0,
+					"ssl": -1
+				},
+				"comment": "Criar Categoria"
+			},
+			{
+				"startedDateTime": "2025-05-14T23:04:08.804Z",
+				"time": 15.995,
+				"request": {
+					"method": "POST",
+					"url": "http://localhost:8080/transaction/search",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [
+						{
+							"name": "JSESSIONID",
+							"value": "EB253E7594B347813A6742B80CB5C92A",
+							"path": "/",
+							"domain": "localhost",
+							"httpOnly": true
+						}
+					],
+					"headers": [
+						{
+							"name": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"name": "User-Agent",
+							"value": "insomnia/11.0.2"
+						},
+						{
+							"name": "Authorization",
+							"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJtaWRhcyIsInN1YiI6IjViOTFjNmEzLWU2N2MtNDE0NS05Y2I2LWM5OWI2NGMwMGI1YSIsImV4cCI6MTc0NzE4MzM0OX0.pdWJ6X46B3t3oSamFnfTvas5dgWCs6Uckv0W3VqEZDE"
+						}
+					],
+					"queryString": [],
+					"postData": {
+						"mimeType": "application/json",
+						"text": "{\n\t\"dataInicio\": null,\n\t\"dataFim\": null,\n\t\"idCategoria\": 2,\n\t\"tipoTransacao\": \"RECEITA\",\n\t\"possuiCartao\": null,\n\t\"idConta\": null,\n\t\"valorMin\": null,\n\t\"valorMax\": null\n}"
+					},
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"response": {
+					"status": 200,
+					"statusText": "",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"name": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"name": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"name": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"name": "Expires",
+							"value": "0"
+						},
+						{
+							"name": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"name": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"name": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"name": "Date",
+							"value": "Tue, 13 May 2025 20:48:49 GMT"
+						}
+					],
+					"content": {
+						"size": 2,
+						"mimeType": "application/json",
+						"text": "[]"
+					},
+					"redirectURL": "",
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"cache": {},
+				"timings": {
+					"blocked": -1,
+					"dns": -1,
+					"connect": -1,
+					"send": 0,
+					"wait": 15.995,
+					"receive": 0,
+					"ssl": -1
+				},
+				"comment": "Listar/Filtrar Transações"
+			},
+			{
+				"startedDateTime": "2025-05-14T23:04:08.804Z",
+				"time": 40.192,
+				"request": {
+					"method": "POST",
+					"url": "http://localhost:8080/transaction/new",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [
+						{
+							"name": "JSESSIONID",
+							"value": "EB253E7594B347813A6742B80CB5C92A",
+							"path": "/",
+							"domain": "localhost",
+							"httpOnly": true
+						}
+					],
+					"headers": [
+						{
+							"name": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"name": "User-Agent",
+							"value": "insomnia/11.0.2"
+						}
+					],
+					"queryString": [],
+					"postData": {
+						"mimeType": "application/json",
+						"text": "{\n\t\t\"descricao\": \"Transacao exemplo\",\n\t\t\"dataTransacao\": \"2025-04-20\",\n\t\t\"valor\": 1000,\n\t\t\"tipoTransacao\": \"DESPESA\",\n\t\t\"idCategoria\": 3,\n\t\t\"idConta\": 1,\n\t\t\"idCartao\": null\n\t}"
+					},
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"response": {
+					"status": 200,
+					"statusText": "",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"name": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"name": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"name": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"name": "Expires",
+							"value": "0"
+						},
+						{
+							"name": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"name": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"name": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"name": "Date",
+							"value": "Tue, 13 May 2025 20:41:15 GMT"
+						}
+					],
+					"content": {
+						"size": 478,
+						"mimeType": "application/json",
+						"text": "{\"id\":\"3555bf25-5d85-4197-89f5-9ab7b615c93c\",\"valor\":-1000,\"descricao\":\"TOP 10\",\"dataTransacao\":\"2025-04-20\",\"tipoTransacao\":\"DESPESA\",\"categoria\":{\"id\":1,\"nome\":\"Lazer\",\"descricao\":\"Despesas com entretenimento\",\"tipoTransacao\":\"DESPESA\"},\"conta\":{\"idConta\":2,\"nome\":\"Conta exemplo\",\"tipoConta\":\"CORRENTE\",\"banco\":\"001 - Banco exemplo\"},\"cartao\":null,\"usuario\":{\"id\":\"5b91c6a3-e67c-4145-9cb6-c99b64c00b5a\",\"nome\":\"Exemplo\",\"email\":\"exemplo1@gmail.com\",\"telefone\":\"81988888888\"}}"
+					},
+					"redirectURL": "",
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"cache": {},
+				"timings": {
+					"blocked": -1,
+					"dns": -1,
+					"connect": -1,
+					"send": 0,
+					"wait": 40.192,
+					"receive": 0,
+					"ssl": -1
+				},
+				"comment": "Criar Transacao"
+			},
+			{
+				"startedDateTime": "2025-05-14T23:04:08.804Z",
+				"time": 134.47,
+				"request": {
+					"method": "POST",
+					"url": "http://localhost:8080/transaction/import",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [
+						{
+							"name": "JSESSIONID",
+							"value": "EB253E7594B347813A6742B80CB5C92A",
+							"path": "/",
+							"domain": "localhost",
+							"httpOnly": true
+						}
+					],
+					"headers": [
+						{
+							"name": "Content-Type",
+							"value": "multipart/form-data"
+						},
+						{
+							"name": "User-Agent",
+							"value": "insomnia/11.0.2"
+						},
+						{
+							"name": "Authorization",
+							"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJtaWRhcyIsInN1YiI6IjkxMjlhNGNhLTA1ZjEtNGM2NS1hODA0LTk0MWMzOTYzYzVlOSIsImV4cCI6MTc0NzA4ODQ4Nn0.rsXxf7LqMo2eoU4VZdu9qo6V1UFas5_-F0KsJdZCRNE"
+						}
+					],
+					"queryString": [],
+					"postData": {
+						"mimeType": "multipart/form-data",
+						"params": [
+							{
+								"name": "file",
+								"fileName": "C:\\Users\\guilh\\Downloads\\importar.csv"
+							}
+						]
+					},
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"response": {
+					"status": 200,
+					"statusText": "",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"name": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"name": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"name": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"name": "Expires",
+							"value": "0"
+						},
+						{
+							"name": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"name": "Content-Type",
+							"value": "text/plain;charset=UTF-8"
+						},
+						{
+							"name": "Content-Length",
+							"value": "34"
+						},
+						{
+							"name": "Date",
+							"value": "Mon, 12 May 2025 18:28:41 GMT"
+						}
+					],
+					"content": {
+						"size": 34,
+						"mimeType": "text/plain;charset=UTF-8",
+						"text": "Arquivo CSV importado com sucesso!"
+					},
+					"redirectURL": "",
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"cache": {},
+				"timings": {
+					"blocked": -1,
+					"dns": -1,
+					"connect": -1,
+					"send": 0,
+					"wait": 134.47,
+					"receive": 0,
+					"ssl": -1
+				},
+				"comment": "Importar Extrato CSV"
+			},
+			{
+				"startedDateTime": "2025-05-14T23:04:08.804Z",
+				"time": 972.501,
+				"request": {
+					"method": "POST",
+					"url": "http://localhost:8080/user/new",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [
+						{
+							"name": "JSESSIONID",
+							"value": "EB253E7594B347813A6742B80CB5C92A",
+							"path": "/",
+							"domain": "localhost",
+							"httpOnly": true
+						}
+					],
+					"headers": [
+						{
+							"name": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"name": "User-Agent",
+							"value": "insomnia/11.0.2"
+						}
+					],
+					"queryString": [],
+					"postData": {
+						"mimeType": "application/json",
+						"text": "{\n\t\"nome\":\"Exemplo\",\n\t\"cpf\":\"434.184.400-88\",\n\t\"email\": \"exemplo1@gmail.com\",\n\t\"telefone\":\"81988888888\",\n\t\"senha\":\"123456\"\n}"
+					},
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"response": {
+					"status": 200,
+					"statusText": "",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"name": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"name": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"name": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"name": "Expires",
+							"value": "0"
+						},
+						{
+							"name": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"name": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"name": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"name": "Date",
+							"value": "Wed, 14 May 2025 22:56:09 GMT"
+						}
+					],
+					"content": {
+						"size": 210,
+						"mimeType": "application/json",
+						"text": "{\"id\":\"e069c63e-3853-4256-9632-155d137aff28\",\"nome\":\"Exemplo\",\"cpf\":\"434.184.400-88\",\"email\":\"exemplo1@gmail.com\",\"telefone\":\"81988888888\",\"senha\":\"$2a$10$wW.f/ap3n/hlpbYpxkf2EOt5P5Lu/leUvclbZTahVqdSuTdSXH9ZG\"}"
+					},
+					"redirectURL": "",
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"cache": {},
+				"timings": {
+					"blocked": -1,
+					"dns": -1,
+					"connect": -1,
+					"send": 0,
+					"wait": 972.501,
+					"receive": 0,
+					"ssl": -1
+				},
+				"comment": "Criar usuario"
+			},
+			{
+				"startedDateTime": "2025-05-14T23:04:08.804Z",
+				"time": 295.84700000000004,
+				"request": {
+					"method": "POST",
+					"url": "http://localhost:8080/user/auth",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [
+						{
+							"name": "JSESSIONID",
+							"value": "EB253E7594B347813A6742B80CB5C92A",
+							"path": "/",
+							"domain": "localhost",
+							"httpOnly": true
+						}
+					],
+					"headers": [
+						{
+							"name": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"name": "User-Agent",
+							"value": "insomnia/11.0.2"
+						}
+					],
+					"queryString": [],
+					"postData": {
+						"mimeType": "application/json",
+						"text": "{\n\t\"cpf\":\"434.184.400-88\",\n\t\"senha\":\"123456\"\n}"
+					},
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"response": {
+					"status": 200,
+					"statusText": "",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"name": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"name": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"name": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"name": "Expires",
+							"value": "0"
+						},
+						{
+							"name": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"name": "Content-Type",
+							"value": "text/plain;charset=UTF-8"
+						},
+						{
+							"name": "Content-Length",
+							"value": "184"
+						},
+						{
+							"name": "Date",
+							"value": "Wed, 14 May 2025 22:56:15 GMT"
+						}
+					],
+					"content": {
+						"size": 184,
+						"mimeType": "text/plain;charset=UTF-8",
+						"text": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJtaWRhcyIsInN1YiI6ImUwNjljNjNlLTM4NTMtNDI1Ni05NjMyLTE1NWQxMzdhZmYyOCIsImV4cCI6MTc0NzI3Nzc3NX0.7KXUw7DIxNA49n64VSL6tMw85IZDsfKv3vot25XURpI"
+					},
+					"redirectURL": "",
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"cache": {},
+				"timings": {
+					"blocked": -1,
+					"dns": -1,
+					"connect": -1,
+					"send": 0,
+					"wait": 295.84700000000004,
+					"receive": 0,
+					"ssl": -1
+				},
+				"comment": "Autenticar usuario"
+			}
+		]
+	}
+}
