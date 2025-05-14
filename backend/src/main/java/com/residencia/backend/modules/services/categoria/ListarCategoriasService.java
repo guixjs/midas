@@ -1,7 +1,6 @@
 package com.residencia.backend.modules.services.categoria;
 
 import com.residencia.backend.modules.dto.categoria.CategoriaResponseResumidoDTO;
-import com.residencia.backend.modules.mapper.CategoriaMapper;
 import com.residencia.backend.modules.models.CategoriaEntity;
 import com.residencia.backend.modules.repositories.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;

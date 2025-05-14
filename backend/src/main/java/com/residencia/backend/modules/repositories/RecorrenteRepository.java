@@ -4,8 +4,10 @@ import com.residencia.backend.modules.models.RecorrenteEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface RecorrenteRepository extends JpaRepository<RecorrenteEntity, UUID> {
   List<RecorrenteEntity> findAllByIdUsuario(UUID idUsuario);
+  Optional<RecorrenteEntity> findByIdAndIdUsuario(UUID idUsuario, UUID idRecorrente);
 }

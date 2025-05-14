@@ -1,5 +1,6 @@
 package com.residencia.backend.modules.dto.categoria;
 
+import com.residencia.backend.modules.enums.TipoTransacao;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,4 +14,5 @@ public class CategoriaResponseResumidoDTO {
   private Integer id;
   private String nome;
   private String descricao;
+  private TipoTransacao tipoTransacao;
 }

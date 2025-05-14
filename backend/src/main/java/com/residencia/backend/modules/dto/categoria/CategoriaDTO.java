@@ -1,5 +1,6 @@
 package com.residencia.backend.modules.dto.categoria;
 
+import com.residencia.backend.modules.enums.TipoTransacao;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -10,4 +11,6 @@ public class CategoriaDTO {
   private String nome;
   @Schema(description = "Descrição da nova categoria", example = "Despesas feitas com jogos digitais")
   private String descricao;
+  @Schema(description = "Tipo de transação da categoria",example = "DESPESA")
+  private TipoTransacao tipoTransacao;
 }

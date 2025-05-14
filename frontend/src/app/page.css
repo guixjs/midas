@@ -1,0 +1,182 @@
+@import url('https://fonts.googleapis.com/css2?family=Jomolhari&display=swap');
+
+:root {
+  --fonte-titulo: 'Jomolhari', serif;
+  --cor-botoes: #D0BD80;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+
+}
+
+.global {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(to bottom right, black, #07033B);
+
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 40px;
+}
+
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+
+}
+
+
+
+.container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  max-width: 879px;
+  max-height: 876px;
+  background-color: #6F7F9A;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.titulo p {
+  font-family: var(--fonte-titulo);
+  font-size: 40px;
+  margin: 0;
+  color: #D0BD80;
+}
+
+.text-acess {
+  font-family: var(--fonte-titulo);
+  margin: 10px 0;
+  font-size: 15px;
+  font-weight: 900;
+  text-align: center;
+  color: #D0BD80
+}
+
+.formulario {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 80%;
+}
+
+.form {
+  width: 100%;
+}
+
+input {
+  border: solid 1px gray;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 16px;
+  width: 100%;
+  background-color: #ebe9e9;
+  box-sizing: border-box;
+  margin-top: 10px;
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--cor-botoes);
+  background-color: white;
+  box-shadow: #07033B 1px 2px;
+}
+
+button {
+  cursor: pointer;
+  background-color: var(--cor-botoes);
+  border-radius: 5px;
+  border: none;
+  padding: 10px;
+  font-size: 16px;
+  width: 60%;
+  margin-top: 10px;
+}
+
+button:hover {
+  background-color: #07033B;
+  color: white;
+}
+
+.forgot {
+  text-align: right;
+  font-size: 12px;
+  color: blue;
+  cursor: pointer;
+  margin-top: 5px;
+}
+
+.confirm-login,
+.cadastrar {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+.cadastrar button {
+  max-width: 200px;
+}
+
+.campo-senha {
+  position: relative;
+  width: 100%;
+}
+
+.campo-senha input {
+  padding-right: 50px;
+}
+
+.icone-placeholder-senha {
+  position: absolute;
+  top: 50%;
+  transform: translateY(20px);
+  height: 20px;
+  cursor: pointer;
+}
+
+.icone-placeholder-senha {
+  right: 10px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+@media (max-width: 480px) {
+  .container {
+    max-width: 90%;
+  }
+
+  .titulo p {
+    font-size: 32px;
+  }
+
+  .text-acess {
+    font-size: 12px;
+  }
+
+  input,
+  button {
+    font-size: 14px;
+  }
+
+  .icone-placeholder-senha {
+    height: 16px;
+  }
+}

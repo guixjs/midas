@@ -6,6 +6,7 @@ import com.residencia.backend.modules.dto.conta.ContaResponseResumidoDTO;
 import com.residencia.backend.modules.dto.recorrente.RecorrenteDTO;
 
 import com.residencia.backend.modules.dto.recorrente.RecorrenteResponseDTO;
+import com.residencia.backend.modules.dto.recorrente.RecorrenteResponseResumidoDTO;
 import com.residencia.backend.modules.dto.transacao.TransacaoDTO;
 import com.residencia.backend.modules.dto.usuario.UsuarioResponseResumidoDTO;
 import com.residencia.backend.modules.enums.TipoTransacao;
@@ -66,6 +67,21 @@ public class RecorrenteMapper {
         .build();
   }
 
+
+  public static RecorrenteResponseResumidoDTO toResponseResumidoDTO(RecorrenteEntity resultado){
+    String nomeCartao = resultado.getCartao() != null ? resultado.getCartao().getNome() : "Transação não vinculada a um cartão";
+    String nomeCategoria = resultado.getCategoria() != null ? resultado.getCategoria().getNome() : "Sem categoria";
+
+    return RecorrenteResponseResumidoDTO.builder()
+        .id(resultado.getId())
+        .valor(resultado.getValor())
+        .descricao(resultado.getDescricao())
+        .tipoTransacao(resultado.getTipoTransacao())
+        .nomeConta(resultado.getConta().getNome())
+        .nomeCategoria(nomeCategoria)
+        .nomeCartao(nomeCartao)
+        .build();
+  }
 
   public static TransacaoDTO toTransacaoDTO(RecorrenteEntity recorrente){
 
