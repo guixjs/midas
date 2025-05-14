@@ -1,3 +1,9 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #718096;
+}
+
 .conteudo {
     background-color: white;
     flex: 1;
@@ -5,11 +11,13 @@
     display: flex;
     flex-direction: column;
     gap: 48px;
+    border-radius: 10px;
+    max-width: 1200px;
+    margin: 20px auto;
 }
 
 .resumo h2,
-.transacoes h2,
-.dicas h2 {
+.transacoes h2 {
     text-align: center;
     font-size: 24px;
     color: #333;
@@ -31,10 +39,9 @@
     text-align: center;
 }
 
-.card img {
-    width: 100%;
-    max-height: 80px;
-    object-fit: contain;
+.card h3 {
+    font-size: 22px;
+    margin: 10px 0;
 }
 
 .card p {
@@ -43,21 +50,18 @@
     margin: 0;
 }
 
-.card h3 {
-    font-size: 22px;
-    margin: 10px 0;
-}
-
 .negativo {
     color: red;
     font-weight: bold;
 }
 
+/* Transações */
 .transacoes .filtros {
     display: flex;
     justify-content: center;
     gap: 16px;
     margin-bottom: 24px;
+    flex-wrap: wrap;
 }
 
 .filtros select {
@@ -90,97 +94,126 @@
     font-weight: bold;
 }
 
+.tabela-transacoes td.valor.negative {
+    color: red;
+    font-weight: bold;
+}
+
 .tabela-transacoes a {
     color: #2a5bd7;
     text-decoration: none;
 }
 
-.dicas {
-    padding-bottom: 40px;
-}
-
-.cards-dicas {
-    display: flex;
-    justify-content: center;
-    gap: 24px;
-    flex-wrap: wrap;
-}
-
-.card-dica {
-    background-color: white;
+/* Dica lateral */
+.box-dica {
+    background-color: #d8d9fc;
+    padding: 12px 16px;
+    font-size: 14px;
     border-radius: 8px;
-    padding: 20px;
-    width: 280px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    max-width: 280px;
+    color: #333;
+    margin: 0 auto 16px auto;
     text-align: center;
 }
 
-.card-dica h4 {
-    margin-bottom: 10px;
-    font-size: 18px;
-    color: #333;
+/* Responsividade */
+@media (max-width: 768px) {
+    .cards {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card {
+        width: 90%;
+    }
+
+    .filtros {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .tabela-transacoes th,
+    .tabela-transacoes td {
+        padding: 8px 10px;
+        font-size: 14px;
+    }
+
+    .conteudo {
+        padding: 24px 12px;
+    }
+
+    .box-dica {
+        width: 90%;
+    }
 }
 
-.card-dica p {
-    font-size: 14px;
-    color: #555;
-    margin-bottom: 16px;
+@media (max-width: 480px) {
+    .card {
+        padding: 16px;
+    }
+
+    .conteudo {
+        padding: 16px 8px;
+    }
+
+    .tabela-transacoes {
+        font-size: 13px;
+    }
 }
 
-.card-dica button {
-    background-color: transparent;
-    border: 1px solid #2a5bd7;
-    color: #2a5bd7;
-    padding: 8px 16px;
-    font-size: 14px;
-    border-radius: 6px;
-    cursor: pointer;
-}
-
-.card-dica button:hover {
-    background-color: #2a5bd7;
-    color: white;
+.dashboard {
+    background-color: #718096;
+    min-height: 100vh;
 }
 
 .navbar {
     background-color: #06033b;
+    padding: 16px 32px;
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    padding: 8px 16px;
-    gap: 16px;
-    color: #ffffff;
+    color: white;
 }
 
-.navbar a {
-    color: #ffffff;
-    text-decoration: none;
-    padding: 4px 10px;
+.logo {
+    font-size: 32px;
+    font-weight: bold;
+    color: white;
 }
 
-.navbar a:nth-child(4) {
-    background-color: #1a1a5c;
-    border-radius: 4px;
-    box-shadow: 0 2px 5px #000000;
+.destaque {
+    color: gold;
 }
 
-.icones {
-    position: absolute;
-    right: 14px;
-    top: 12px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.icons {
-    font-size: 18px;
-    color: #ffffff;
+.nav-left button {
+    margin: 0 10px;
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 16px;
     cursor: pointer;
 }
 
-.user-icons {
+.nav-button.active {
+    background-color: #2D3748;
+    border-radius: 8px;
+    padding: 8px 16px;
+}
+
+.nav-right .butao {
+    margin-left: 12px;
+    cursor: pointer;
+}
+
+.perfil {
     width: 32px;
     height: 32px;
-    background-size: cover;
     border-radius: 50%;
+    object-fit: cover;
+}
+
+.card img {
+    margin-top: 12px;
+    width: 100%;
+    height: auto;
 }

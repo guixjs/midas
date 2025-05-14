@@ -4,6 +4,9 @@
     box-sizing: border-box;
 }
 
+body {
+    overflow-x: hidden;
+}
 
 .global {
     background: linear-gradient(to bottom right, black, #07033B);
@@ -14,13 +17,12 @@
     overflow: hidden;
 }
 
-
 .titulo {
     color: #D0BD80;
     font-size: 80px;
     padding: 80px;
+    text-align: left;
 }
-
 
 .container {
     background-color: #6F7F9A;
@@ -29,10 +31,9 @@
     width: 100%;
     height: 100vh;
     align-items: center;
-    padding: 20px;
+    padding: 20px 40px;
     overflow-y: auto;
 }
-
 
 input {
     width: 640px;
@@ -53,7 +54,6 @@ input:focus {
     box-shadow: #07033B 1px 2px;
 }
 
-
 .form {
     display: flex;
     flex-direction: column;
@@ -62,7 +62,6 @@ input:focus {
     gap: 10px;
     width: 100%;
 }
-
 
 .ladin {
     display: flex;
@@ -75,7 +74,6 @@ input:focus {
     gap: 10px;
 }
 
-
 .submit {
     width: 40%;
     max-width: 300px;
@@ -86,6 +84,7 @@ input:focus {
     border-radius: 8px;
     margin-top: 50px;
     border: none;
+    transition: all 0.3s ease-in-out;
 }
 
 .submit:hover {
@@ -94,8 +93,24 @@ input:focus {
     cursor: pointer;
 }
 
+@media (max-width: 1024px) {
+    .titulo {
+        font-size: 60px;
+        padding: 60px;
+        text-align: center;
+    }
+
+    .container {
+        padding: 20px 20px;
+    }
+}
 
 @media (max-width: 768px) {
+    .global {
+        flex-direction: column;
+        height: auto;
+    }
+
     .titulo {
         font-size: 48px;
         padding: 40px;
@@ -117,15 +132,13 @@ input:focus {
         height: 50px;
         margin-top: 30px;
     }
+
+    .container {
+        padding: 16px;
+    }
 }
 
-
 @media (max-width: 480px) {
-    .global {
-        flex-direction: column;
-        height: auto;
-    }
-
     .titulo {
         font-size: 36px;
         padding: 20px;
