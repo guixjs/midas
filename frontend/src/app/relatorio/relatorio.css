@@ -104,7 +104,6 @@ body {
     text-decoration: none;
 }
 
-/* Dica lateral */
 .box-dica {
     background-color: #d8d9fc;
     padding: 12px 16px;
@@ -116,7 +115,6 @@ body {
     text-align: center;
 }
 
-/* Responsividade */
 @media (max-width: 768px) {
     .cards {
         flex-direction: column;
@@ -195,9 +193,10 @@ body {
 }
 
 .nav-button.active {
-    background-color: #2D3748;
-    border-radius: 8px;
-    padding: 8px 16px;
+    background-color: #1a1a5c;
+    padding: 6px 12px;
+    border-radius: 4px;
+    box-shadow: 0 3px 5px black;
 }
 
 .nav-right .butao {
