@@ -61,18 +61,33 @@ public class TransacaoController {
           required = true,
           content = @Content(
               mediaType = MediaType.APPLICATION_JSON_VALUE,
-              examples = @ExampleObject(
-                  name = "Exemplo de transação sem cartão",
-                  value = "{\n" +
-                      "  \"descricao\": \"Viagem de uber\",\n" +
-                      "  \"dataTransacao\": \"2025-08-27\",\n" +
-                      "  \"valor\": 15.00,\n" +
-                      "  \"tipoTransacao\": \"DESPESA\",\n" +
-                      "  \"idCategoria\": 2,\n" +
-                      "  \"idConta\": 1,\n" +
-                      "  \"idCartao\": null\n" +
-                      "}"
-              )
+              examples = {
+                  @ExampleObject(
+                      name = "Exemplo de transação sem cartão",
+                      value = "{\n" +
+                          "  \"descricao\": \"Viagem de uber\",\n" +
+                          "  \"dataTransacao\": \"2025-08-27\",\n" +
+                          "  \"valor\": 15.00,\n" +
+                          "  \"tipoTransacao\": \"DESPESA\",\n" +
+                          "  \"idCategoria\": 4,\n" +
+                          "  \"idConta\": 1,\n" +
+                          "  \"idCartao\": null\n" +
+                          "}"
+                  ),
+                  @ExampleObject(
+                      name = "Exemplo de transação com cartão",
+                      description = "idCartao deve ser um UUID de um cartão já cadastrado no sistema.",
+                      value = "{\n" +
+                          "  \"descricao\": \"Compra no crédito\",\n" +
+                          "  \"dataTransacao\": \"2025-08-28\",\n" +
+                          "  \"valor\": 250.00,\n" +
+                          "  \"tipoTransacao\": \"DESPESA\",\n" +
+                          "  \"idCategoria\": 5,\n" +
+                          "  \"idConta\": 2,\n" +
+                          "  \"idCartao\": \"f47ac10b-58cc-4372-a567-0e02b2c3d479\"\n" +
+                          "}"
+                  ),
+              }
           )
       ),
       responses = {
@@ -81,7 +96,6 @@ public class TransacaoController {
           @ApiResponse(responseCode = "401", description = "Não autorizado para realizar o serviço"),
           @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
       })
-
   @PostMapping("/new")
   public ResponseEntity<Object> create(@Valid @RequestBody TransacaoDTO transacaoDTO, HttpServletRequest request){
     try{

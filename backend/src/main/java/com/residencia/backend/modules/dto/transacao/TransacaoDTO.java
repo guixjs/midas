@@ -26,11 +26,11 @@ public class TransacaoDTO {
   private BigDecimal valor;
   @Schema(description = "Tipo da transação (receita ou despesas)")
   private TipoTransacao tipoTransacao;
-  @Schema(description = "Id da categoria à qual a transação é relacionada")
+  @Schema(description = "Id da categoria à qual a transação pode ser relacionada")
   private Integer idCategoria;
   @Schema(description = "Id da conta à qual a transação pertence")
   private Integer idConta;
-  @Schema(description = "Id do cartão à qual a transação pertence",nullable = true)
+  @Schema(description = "Id do cartão à qual a transação pode pertencer",nullable = true)
   private UUID idCartao;
 }
 
