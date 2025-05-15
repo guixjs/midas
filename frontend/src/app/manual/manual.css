@@ -27,6 +27,28 @@ body {
     gap: 16px;
 }
 
+.active {
+    background-color: #1a1a5c;
+    padding: 6px 12px;
+    border-radius: 4px;
+    box-shadow: 0 3px 5px black;
+}
+
+.nav-button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.nav-button.active {
+    background-color: #1a1a5c;
+    padding: 6px 12px;
+    border-radius: 4px;
+    box-shadow: 0 3px 5px black;
+}
+
 .perfil {
     width: 40px;
     margin-right: 10px;
