@@ -1,4 +1,4 @@
-package com.residencia.backend.modules.dto.categoria;
+package com.residencia.backend.modules.dto.dashboard;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,8 +12,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CategoriaMaiorGastoDTO {
-    private String nome;
+    private String nomeCategoria;
     private BigDecimal valorTotal;
-    private Long quantidade;
-    private Double percentual;
+    private BigDecimal percentual;
 }

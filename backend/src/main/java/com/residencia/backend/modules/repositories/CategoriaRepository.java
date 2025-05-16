@@ -1,6 +1,6 @@
 package com.residencia.backend.modules.repositories;
 
-import com.residencia.backend.modules.dto.categoria.CategoriaMaiorGastoDTO;
+import com.residencia.backend.modules.dto.dashboard.CategoriaMaiorGastoDTO;
 import com.residencia.backend.modules.models.CategoriaEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -32,6 +32,7 @@ public interface CategoriaRepository extends JpaRepository<CategoriaEntity, Inte
       "ORDER BY SUM(t.valor) DESC " +
       "LIMIT 1", nativeQuery = true)
   CategoriaMaiorGastoDTO findCategoriaMaiorGasto(@Param("idUsuario") UUID idUsuario);
+
 
 }
 

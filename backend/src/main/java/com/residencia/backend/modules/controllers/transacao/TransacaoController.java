@@ -236,48 +236,48 @@ public class TransacaoController {
       return ResponseEntity.badRequest().body(e.getMessage());
     }
   }
-  @Operation(
-    summary = "Contar transações mensais",
-    description = "Retorna o número de transações em um mês específico",
-    responses = {
-        @ApiResponse(responseCode = "200", description = "Contagem realizada com sucesso"),
-        @ApiResponse(responseCode = "400", description = "Dados inválidos"),
-        @ApiResponse(responseCode = "401", description = "Não autorizado"),
-        @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
-    }
-)
-  @GetMapping("/count/{mes}/{ano}")
-  public ResponseEntity<Object> contarTransacoesMensais(
-      @PathVariable Integer mes,
-      @PathVariable Integer ano,
-      HttpServletRequest request
-  ) {
-      try {
-          var idUsuario = UUID.fromString(request.getAttribute("id_usuario").toString());
-          var resultado = contarTransacoesMensaisService.execute(idUsuario, mes, ano);
-          return ResponseEntity.ok().body(resultado);
-      } catch (Exception e) {
-          return ResponseEntity.badRequest().body(e.getMessage());
-      }
-  }
-  @Operation(
-    summary = "Listar principais despesas",
-    description = "Retorna as 10 maiores despesas do usuário",
-    responses = {
-        @ApiResponse(responseCode = "200", description = "Listagem realizada com sucesso"),
-        @ApiResponse(responseCode = "401", description = "Não autorizado"),
-        @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
-    }
-)
-  @GetMapping("/top-despesas")
-  public ResponseEntity<Object> listarPrincipaisDespesas(HttpServletRequest request) {
-      try {
-          var idUsuario = UUID.fromString(request.getAttribute("id_usuario").toString());
-          var resultado = listarPrincipaisDespesasService.execute(idUsuario);
-          return ResponseEntity.ok().body(resultado);
-      } catch (Exception e) {
-          return ResponseEntity.badRequest().body(e.getMessage());
-      }
-  }
+//  @Operation(
+//    summary = "Contar transações mensais",
+//    description = "Retorna o número de transações em um mês específico",
+//    responses = {
+//        @ApiResponse(responseCode = "200", description = "Contagem realizada com sucesso"),
+//        @ApiResponse(responseCode = "400", description = "Dados inválidos"),
+//        @ApiResponse(responseCode = "401", description = "Não autorizado"),
+//        @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+//    }
+//)
+//  @GetMapping("/count/{mes}/{ano}")
+//  public ResponseEntity<Object> contarTransacoesMensais(
+//      @PathVariable Integer mes,
+//      @PathVariable Integer ano,
+//      HttpServletRequest request
+//  ) {
+//      try {
+//          var idUsuario = UUID.fromString(request.getAttribute("id_usuario").toString());
+//          var resultado = contarTransacoesMensaisService.execute(idUsuario, mes, ano);
+//          return ResponseEntity.ok().body(resultado);
+//      } catch (Exception e) {
+//          return ResponseEntity.badRequest().body(e.getMessage());
+//      }
+//  }
+//  @Operation(
+//    summary = "Listar principais despesas",
+//    description = "Retorna as 10 maiores despesas do usuário",
+//    responses = {
+//        @ApiResponse(responseCode = "200", description = "Listagem realizada com sucesso"),
+//        @ApiResponse(responseCode = "401", description = "Não autorizado"),
+//        @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+//    }
+//)
+//  @GetMapping("/top-despesas")
+//  public ResponseEntity<Object> listarPrincipaisDespesas(HttpServletRequest request) {
+//      try {
+//          var idUsuario = UUID.fromString(request.getAttribute("id_usuario").toString());
+//          var resultado = listarPrincipaisDespesasService.execute(idUsuario);
+//          return ResponseEntity.ok().body(resultado);
+//      } catch (Exception e) {
+//          return ResponseEntity.badRequest().body(e.getMessage());
+//      }
+//  }
 }
 

@@ -1,5 +1,6 @@
 package com.residencia.backend.modules.repositories;
 
+import com.residencia.backend.modules.dto.dashboard.CategoriaValorDTO;
 import com.residencia.backend.modules.models.TransacaoEntity;
 import com.residencia.backend.modules.dto.transacao.PrincipalDespesaDTO;
 import com.residencia.backend.modules.enums.TipoTransacao;
@@ -25,6 +26,29 @@ public interface TransacaoRepository extends JpaRepository<TransacaoEntity, UUID
       "WHERE t.usuario.id = :usuarioId AND t.tipoTransacao = 'DESPESA' " +
       "ORDER BY t.valor DESC")
   List<PrincipalDespesaDTO> findTop10DespesasByValor(@Param("usuarioId") UUID usuarioId, Pageable pageable);
+
+  @Query("""
+    SELECT new com.residencia.backend.modules.dto.dashboard.CategoriaValorDTO(
+        c.nome,
+        SUM(t.valor)
+    )
+    FROM TransacaoEntity t
+    JOIN t.categoria c
+    WHERE t.usuario.id = :idUsuario
+        AND t.tipoTransacao = 'DESPESA'
+        AND MONTH(t.dataTransacao) = :mes
+        AND YEAR(t.dataTransacao) = :ano
+    GROUP BY c.nome
+    ORDER BY SUM(t.valor) ASC
+""")
+  List<CategoriaValorDTO> buscarGastosPorCategoriaNoMes(UUID idUsuario, int mes, int ano);
+
+  //esse deixa
+  @Query("SELECT SUM(t.valor) FROM TransacaoEntity t WHERE t.conta.id = :idConta AND t.tipoTransacao = 'RECEITA'")
+  BigDecimal somaReceitasPorConta(@Param("idConta") Integer idConta);
+  //esse deixa
+  @Query("SELECT SUM(t.valor) FROM TransacaoEntity t WHERE t.conta.id = :idConta AND t.tipoTransacao = 'DESPESA'")
+  BigDecimal somaDespesasPorConta(@Param("idConta") Integer idConta);
 
   // 2. Soma total de receitas por usuário
   @Query("""

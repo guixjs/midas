@@ -104,14 +104,14 @@ public class ContaController {
         }
     }
 
-    @GetMapping("/saldo-total")
-    public ResponseEntity<Object> getSaldoTotal(HttpServletRequest request) {
-        try {
-            var idUsuario = UUID.fromString(request.getAttribute("id_usuario").toString());
-            var resultado = this.calcularSaldoTotalService.execute(idUsuario);
-            return ResponseEntity.ok().body(resultado);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-    }
+//    @GetMapping("/saldo-total")
+//    public ResponseEntity<Object> getSaldoTotal(HttpServletRequest request) {
+//        try {
+//            var idUsuario = UUID.fromString(request.getAttribute("id_usuario").toString());
+//            var resultado = this.calcularSaldoTotalService.execute(idUsuario);
+//            return ResponseEntity.ok().body(resultado);
+//        } catch (Exception e) {
+//            return ResponseEntity.badRequest().body(e.getMessage());
+//        }
+//    }
 }
