@@ -38,6 +38,9 @@ public class MontarDashboardService {
     if(mesEAno==null){
       mesEAno = YearMonth.now();
     }
+    if(qtdMeses==null){
+      qtdMeses = 6;
+    }
 
     UsuarioEntity usuario = usuarioRepository.findById(idUsuario)
         .orElseThrow(()-> new OperacaoNaoPermitidaException("Usuário não encontrado"));
