@@ -4,6 +4,7 @@ package com.residencia.backend.modules.services.dashboard;
 import com.residencia.backend.modules.dto.dashboard.CategoriaMaiorGastoDTO;
 import com.residencia.backend.modules.dto.dashboard.ContaInfoDTO;
 import com.residencia.backend.modules.dto.dashboard.DashboardDTO;
+import com.residencia.backend.modules.dto.dashboard.ResumoMensalDTO;
 import com.residencia.backend.modules.dto.transacao.TransacaoResponseResumidoDTO;
 import com.residencia.backend.modules.dto.usuario.UsuarioResponseResumidoDTO;
 import com.residencia.backend.modules.enums.TopTransacoes;
@@ -30,8 +31,10 @@ public class MontarDashboardService {
   private CategoriaMaiorGastoService categoriaMaiorGastoService;
   @Autowired
   private TopTransacoesService topTransacoesService;
+  @Autowired
+  private ResumoMensalService resumoMensalService;
 
-  public DashboardDTO execute(UUID idUsuario, Integer idConta, TopTransacoes topCriterio,YearMonth mesEAno) {
+  public DashboardDTO execute(UUID idUsuario, Integer idConta, TopTransacoes topCriterio,YearMonth mesEAno, Integer qtdMeses) {
     if(mesEAno==null){
       mesEAno = YearMonth.now();
     }
@@ -44,12 +47,14 @@ public class MontarDashboardService {
     ContaInfoDTO contaInfo = contaInfoService.montarContaInfo(idUsuario,idConta,mesEAno);
     List<CategoriaMaiorGastoDTO> categorias = categoriaMaiorGastoService.montarCategoriasMaisGastas(idUsuario,mesEAno);
     List<TransacaoResponseResumidoDTO> topTransacoes = topTransacoesService.montarListaTransacoesDashboard(idUsuario,topCriterio, mesEAno);
+    List<ResumoMensalDTO> listaResumoMensal = resumoMensalService.montarListaResumo(idUsuario,qtdMeses);
 
     return DashboardDTO.builder()
         .usuarioInfo(usuarioResponse)
         .contaInfo(contaInfo)
         .categoriasMaisGastas(categorias)
         .topTransacoes(topTransacoes)
+        .listaResumoMeses(listaResumoMensal)
         .build();
   }
 }

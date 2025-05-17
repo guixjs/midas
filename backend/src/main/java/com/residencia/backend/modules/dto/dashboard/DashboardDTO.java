@@ -18,5 +18,6 @@ public class DashboardDTO {
   private ContaInfoDTO contaInfo;
   private List<CategoriaMaiorGastoDTO> categoriasMaisGastas;
   private List<TransacaoResponseResumidoDTO> topTransacoes;
+  private List<ResumoMensalDTO> listaResumoMeses;
 
 }
