@@ -2,7 +2,6 @@ package com.residencia.backend.modules.controllers.conta;
 
 
 import com.residencia.backend.modules.dto.conta.ContaDTO;
-import com.residencia.backend.modules.services.conta.CalcularSaldoTotalService;
 import com.residencia.backend.modules.services.conta.CriarContaService;
 import com.residencia.backend.modules.services.conta.ExcluirContaService;
 import com.residencia.backend.modules.services.conta.ListarContasService;
@@ -37,9 +36,6 @@ public class ContaController {
 
     @Autowired
     private ExcluirContaService excluirContaService;
-
-    @Autowired
-    private CalcularSaldoTotalService calcularSaldoTotalService;
 
 @Operation(
     summary = "Criar conta bancária",
@@ -103,15 +99,4 @@ public class ContaController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-
-//    @GetMapping("/saldo-total")
-//    public ResponseEntity<Object> getSaldoTotal(HttpServletRequest request) {
-//        try {
-//            var idUsuario = UUID.fromString(request.getAttribute("id_usuario").toString());
-//            var resultado = this.calcularSaldoTotalService.execute(idUsuario);
-//            return ResponseEntity.ok().body(resultado);
-//        } catch (Exception e) {
-//            return ResponseEntity.badRequest().body(e.getMessage());
-//        }
-//    }
 }

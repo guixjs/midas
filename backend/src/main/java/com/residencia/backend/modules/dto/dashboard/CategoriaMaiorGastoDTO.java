@@ -13,6 +13,6 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class CategoriaMaiorGastoDTO {
     private String nomeCategoria;
-    private BigDecimal valorTotal;
+    private BigDecimal valorGasto;
     private BigDecimal percentual;
 }

@@ -27,18 +27,19 @@ public class CategoriaMaiorGastoService {
 
     BigDecimal totalGasto = valores.stream()
         .map(CategoriaValorDTO::getValor)
+        .map(BigDecimal::abs)
         .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-    BigDecimal totalGastoAbs = totalGasto.abs();
 
     return valores.stream()
         .limit(5)
         .map(cat -> {
-          BigDecimal percentual = totalGastoAbs.compareTo(BigDecimal.ZERO) > 0
-              ? cat.getValor().abs().multiply(BigDecimal.valueOf(100)).divide(totalGastoAbs, 2, RoundingMode.HALF_UP)
+          BigDecimal valorAbsoluto = cat.getValor().abs();
+          BigDecimal percentual = totalGasto.compareTo(BigDecimal.ZERO) > 0
+              ? valorAbsoluto.multiply(BigDecimal.valueOf(100)).divide(totalGasto.abs(), 2, RoundingMode.HALF_UP)
               : BigDecimal.ZERO;
 
-          return new CategoriaMaiorGastoDTO(cat.getNomeCategoria(), cat.getValor(), percentual);
+          return new CategoriaMaiorGastoDTO(cat.getNomeCategoria(), valorAbsoluto, percentual);
         })
         .collect(Collectors.toList());
   }

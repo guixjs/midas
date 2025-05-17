@@ -4,7 +4,9 @@ package com.residencia.backend.modules.services.dashboard;
 import com.residencia.backend.modules.dto.dashboard.CategoriaMaiorGastoDTO;
 import com.residencia.backend.modules.dto.dashboard.ContaInfoDTO;
 import com.residencia.backend.modules.dto.dashboard.DashboardDTO;
+import com.residencia.backend.modules.dto.transacao.TransacaoResponseResumidoDTO;
 import com.residencia.backend.modules.dto.usuario.UsuarioResponseResumidoDTO;
+import com.residencia.backend.modules.enums.TopTransacoes;
 import com.residencia.backend.modules.exceptions.OperacaoNaoPermitidaException;
 import com.residencia.backend.modules.mapper.UsuarioMapper;
 import com.residencia.backend.modules.models.UsuarioEntity;
@@ -26,22 +28,28 @@ public class MontarDashboardService {
   private UsuarioRepository usuarioRepository;
   @Autowired
   private CategoriaMaiorGastoService categoriaMaiorGastoService;
+  @Autowired
+  private TopTransacoesService topTransacoesService;
 
-  public DashboardDTO execute(UUID idUsuario, Integer idConta) {
-    YearMonth mesEAno = YearMonth.now();
+  public DashboardDTO execute(UUID idUsuario, Integer idConta, TopTransacoes topCriterio,YearMonth mesEAno) {
+    if(mesEAno==null){
+      mesEAno = YearMonth.now();
+    }
 
     UsuarioEntity usuario = usuarioRepository.findById(idUsuario)
         .orElseThrow(()-> new OperacaoNaoPermitidaException("Usuário não encontrado"));
-    List<CategoriaMaiorGastoDTO> categorias = categoriaMaiorGastoService.montarCategoriasMaisGastas(idUsuario,mesEAno);
 
 
     UsuarioResponseResumidoDTO usuarioResponse = UsuarioMapper.toResponseResumidoDTO(usuario);
-    ContaInfoDTO contaInfo = contaInfoService.montarContaInfo(idUsuario,idConta);
+    ContaInfoDTO contaInfo = contaInfoService.montarContaInfo(idUsuario,idConta,mesEAno);
+    List<CategoriaMaiorGastoDTO> categorias = categoriaMaiorGastoService.montarCategoriasMaisGastas(idUsuario,mesEAno);
+    List<TransacaoResponseResumidoDTO> topTransacoes = topTransacoesService.montarListaTransacoesDashboard(idUsuario,topCriterio, mesEAno);
 
     return DashboardDTO.builder()
         .usuarioInfo(usuarioResponse)
-        .contaInfoDTO(contaInfo)
+        .contaInfo(contaInfo)
         .categoriasMaisGastas(categorias)
+        .topTransacoes(topTransacoes)
         .build();
   }
 }

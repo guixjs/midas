@@ -1,5 +1,6 @@
 package com.residencia.backend.modules.dto.dashboard;
 
+import com.residencia.backend.modules.dto.transacao.TransacaoResponseResumidoDTO;
 import com.residencia.backend.modules.dto.usuario.UsuarioResponseResumidoDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,7 +15,8 @@ import java.util.List;
 @NoArgsConstructor
 public class DashboardDTO {
   private UsuarioResponseResumidoDTO usuarioInfo;
-  private ContaInfoDTO contaInfoDTO;
+  private ContaInfoDTO contaInfo;
   private List<CategoriaMaiorGastoDTO> categoriasMaisGastas;
+  private List<TransacaoResponseResumidoDTO> topTransacoes;
 
 }

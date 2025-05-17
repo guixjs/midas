@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.YearMonth;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -21,7 +22,9 @@ public class ContaInfoService {
   @Autowired
   private ContaRepository contaRepository;
 
-  public ContaInfoDTO montarContaInfo(UUID idUsuario, Integer idConta){
+  public ContaInfoDTO montarContaInfo(UUID idUsuario, Integer idConta, YearMonth mesAtual){
+    int mes = mesAtual.getMonthValue();
+    int ano = mesAtual.getYear();
 
     List<ContaEntity> contas;
     String nomeConta;
@@ -41,8 +44,8 @@ public class ContaInfoService {
     BigDecimal totalDespesas = BigDecimal.ZERO;
 
     for (ContaEntity conta : contas) {
-      BigDecimal receitas = Optional.ofNullable(transacaoRepository.somaReceitasPorConta(conta.getId())).orElse(BigDecimal.ZERO);
-      BigDecimal despesas = Optional.ofNullable(transacaoRepository.somaDespesasPorConta(conta.getId())).orElse(BigDecimal.ZERO);
+      BigDecimal receitas = Optional.ofNullable(transacaoRepository.somaReceitasPorContaMes(conta.getId(),mes,ano)).orElse(BigDecimal.ZERO);
+      BigDecimal despesas = Optional.ofNullable(transacaoRepository.somaDespesasPorContaMes(conta.getId(),mes,ano)).orElse(BigDecimal.ZERO);
 
       saldoTotal = saldoTotal.add(receitas).subtract(despesas.abs());
       totalReceitas = totalReceitas.add(receitas);

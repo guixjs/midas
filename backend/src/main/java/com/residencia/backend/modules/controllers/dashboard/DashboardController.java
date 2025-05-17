@@ -2,6 +2,7 @@ package com.residencia.backend.modules.controllers.dashboard;
 
 
 import com.residencia.backend.modules.dto.dashboard.DashboardDTO;
+import com.residencia.backend.modules.enums.TopTransacoes;
 import com.residencia.backend.modules.services.dashboard.MontarDashboardService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.YearMonth;
 import java.util.UUID;
 
 @RestController
@@ -35,12 +37,13 @@ public class DashboardController {
   @GetMapping
   public ResponseEntity<Object> dashboard(
       HttpServletRequest request,
-      @RequestParam(required = false) Integer idConta
-
-  ){
+      @RequestParam(required = false) Integer idConta,
+      @RequestParam(required = false) TopTransacoes top,
+      @RequestParam(required = false) YearMonth yearMonth
+      ){
     try {
       var idUsuario = UUID.fromString(request.getAttribute("id_usuario").toString());
-      DashboardDTO dashboardDTO =  montarDashboardService.execute(idUsuario,idConta);
+      DashboardDTO dashboardDTO =  montarDashboardService.execute(idUsuario,idConta,top,yearMonth);
       return ResponseEntity.ok().body(dashboardDTO);
     }catch (Exception e){
       return ResponseEntity.badRequest().body(e.getMessage());
