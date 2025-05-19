@@ -22,8 +22,8 @@ public class TopTransacoesService {
   @Autowired
   private TransacaoRepository transacaoRepository;
 
-  public List<TransacaoResponseResumidoDTO> montarListaTransacoesDashboard(UUID idUsuario, TopTransacoes top, YearMonth mesAtual){
-    Pageable qtdTransacoes = PageRequest.of(0,5);
+  public List<TransacaoResponseResumidoDTO> montarListaTransacoesDashboard(UUID idUsuario, TopTransacoes top, YearMonth mesAtual,Integer qtdTransacoes){
+    Pageable qtdTop = PageRequest.of(0,qtdTransacoes);
     List<TransacaoEntity> transacoes;
     int mes = mesAtual.getMonthValue();
     int ano = mesAtual.getYear();
@@ -35,14 +35,14 @@ public class TopTransacoesService {
 
     switch (top){
       case DESPESAS_MES:
-        transacoes = transacaoRepository.buscarTopTransacoesPorTipoEMes(idUsuario, TipoTransacao.DESPESA,ano,mes, qtdTransacoes);
+        transacoes = transacaoRepository.buscarTopTransacoesPorTipoEMes(idUsuario, TipoTransacao.DESPESA,ano,mes, qtdTop);
         break;
       case RECEITAS_MES:
-        transacoes = transacaoRepository.buscarTopTransacoesPorTipoEMes(idUsuario, TipoTransacao.RECEITA,ano,mes, qtdTransacoes);
+        transacoes = transacaoRepository.buscarTopTransacoesPorTipoEMes(idUsuario, TipoTransacao.RECEITA,ano,mes, qtdTop);
         break;
       case RECENTES:
       default:
-        transacoes = transacaoRepository.findByUsuarioIdOrderByDataCriacaoDesc(idUsuario, qtdTransacoes);
+        transacoes = transacaoRepository.findByUsuarioIdOrderByDataCriacaoDesc(idUsuario, qtdTop);
         break;
     }
 

@@ -34,12 +34,18 @@ public class MontarDashboardService {
   @Autowired
   private ResumoMensalService resumoMensalService;
 
-  public DashboardDTO execute(UUID idUsuario, Integer idConta, TopTransacoes topCriterio,YearMonth mesEAno, Integer qtdMeses) {
+  public DashboardDTO execute(UUID idUsuario, Integer idConta, TopTransacoes topCriterio,YearMonth mesEAno, Integer qtdMeses, Integer qtdTransacoes) {
     if(mesEAno==null){
       mesEAno = YearMonth.now();
     }
     if(qtdMeses==null){
       qtdMeses = 6;
+    }
+    if(qtdTransacoes==null || qtdTransacoes<=0){
+      qtdTransacoes = 5;
+    }
+    if(qtdTransacoes>10){
+      qtdTransacoes = 10;
     }
 
     UsuarioEntity usuario = usuarioRepository.findById(idUsuario)
@@ -49,7 +55,7 @@ public class MontarDashboardService {
     UsuarioResponseResumidoDTO usuarioResponse = UsuarioMapper.toResponseResumidoDTO(usuario);
     ContaInfoDTO contaInfo = contaInfoService.montarContaInfo(idUsuario,idConta,mesEAno);
     List<CategoriaMaiorGastoDTO> categorias = categoriaMaiorGastoService.montarCategoriasMaisGastas(idUsuario,mesEAno);
-    List<TransacaoResponseResumidoDTO> topTransacoes = topTransacoesService.montarListaTransacoesDashboard(idUsuario,topCriterio, mesEAno);
+    List<TransacaoResponseResumidoDTO> topTransacoes = topTransacoesService.montarListaTransacoesDashboard(idUsuario,topCriterio, mesEAno,qtdTransacoes);
     List<ResumoMensalDTO> listaResumoMensal = resumoMensalService.montarListaResumo(idUsuario,qtdMeses);
 
     return DashboardDTO.builder()
