@@ -1,6 +1,5 @@
 package com.residencia.backend.modules.repositories;
 
-import com.residencia.backend.modules.dto.categoria.CategoriaMaiorGastoDTO;
 import com.residencia.backend.modules.models.CategoriaEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -21,17 +20,5 @@ public interface CategoriaRepository extends JpaRepository<CategoriaEntity, Inte
   List<CategoriaEntity> findCategoriasDisponiveis(@Param("idUsuario") UUID idUsuario);
 
   Optional<CategoriaEntity> findByNomeAndIdUsuario(String nome, UUID idUsuario);
-
-  @Query(value = "SELECT new CategoriaMaiorGastoDTO(" +
-      "c.nome, SUM(t.valor), COUNT(t.*), " +
-      "(SUM(t.valor) / (SELECT SUM(t2.valor) FROM transacao t2 WHERE t2.id_usuario = :idUsuario AND t2.tipo = 'DESPESA')) * 100) " +
-      "FROM transacao t " +
-      "JOIN categoria c ON t.categoria_id = c.id " +
-      "WHERE t.id_usuario = :idUsuario AND t.tipo = 'DESPESA' " +
-      "GROUP BY c.nome " +
-      "ORDER BY SUM(t.valor) DESC " +
-      "LIMIT 1", nativeQuery = true)
-  CategoriaMaiorGastoDTO findCategoriaMaiorGasto(@Param("idUsuario") UUID idUsuario);
-
 }
 

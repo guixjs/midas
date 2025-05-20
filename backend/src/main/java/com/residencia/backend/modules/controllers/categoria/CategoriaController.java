@@ -4,7 +4,6 @@ import com.residencia.backend.modules.dto.categoria.CategoriaDTO;
 import com.residencia.backend.modules.services.categoria.CriarCategoriaService;
 import com.residencia.backend.modules.services.categoria.EditarCategoriaService;
 import com.residencia.backend.modules.services.categoria.ExcluirCategoriaService;
-import com.residencia.backend.modules.services.categoria.IdentificarCategoriaMaiorGastoService;
 import com.residencia.backend.modules.services.categoria.ListarCategoriasService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -42,9 +41,6 @@ public class CategoriaController {
 
   @Autowired
   private ListarCategoriasService listarCategoriasService;
-
-  @Autowired
-  private IdentificarCategoriaMaiorGastoService identificarCategoriaMaiorGastoService;
 
   @Operation(
           summary = "Criar nova categoria",
@@ -129,23 +125,4 @@ public class CategoriaController {
       return ResponseEntity.badRequest().body(e.getMessage());
     }
   }
-  @Operation(
-    summary = "Identificar categoria com maior gasto",
-    description = "Retorna a categoria que possui o maior gasto total",
-    responses = {
-        @ApiResponse(responseCode = "200", description = "Categoria identificada com sucesso"),
-        @ApiResponse(responseCode = "401", description = "Não autorizado"),
-        @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
-    }
-)
-@GetMapping("/maior-gasto")
-public ResponseEntity<Object> identificarCategoriaMaiorGasto(HttpServletRequest request) {
-    try {
-        var idUsuario = UUID.fromString(request.getAttribute("id_usuario").toString());
-        var resultado = identificarCategoriaMaiorGastoService.execute(idUsuario);
-        return ResponseEntity.ok().body(resultado);
-    } catch (Exception e) {
-        return ResponseEntity.badRequest().body(e.getMessage());
-    }
-}
 }

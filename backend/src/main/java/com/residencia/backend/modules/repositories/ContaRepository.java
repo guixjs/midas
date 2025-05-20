@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface ContaRepository extends JpaRepository<ContaEntity, Integer>{
+  List<ContaEntity> findAllByIdUsuario(UUID idUsuario);
   Optional<ContaEntity> findById(Integer idConta);
   Optional<ContaEntity> findByIdUsuarioAndNome(UUID usuario,String nome);
   Optional<ContaEntity> findByIdAndIdUsuario(Integer id,UUID idUsuario);

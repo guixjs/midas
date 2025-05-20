@@ -1,0 +1,143 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+.global-termos {
+    background: linear-gradient(to bottom, #fafafc, #D3D3D3);
+    min-height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+}
+
+.container-termos {
+    background-color: #f5f5f5;
+    width: 100%;
+    max-width: 800px;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.titulo {
+    color: black;
+    font-size: 36px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.subtitulo {
+    color: #666;
+    font-size: 16px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.termos-content {
+    max-height: 60vh;
+    overflow-y: auto;
+    padding: 10px;
+    margin-bottom: 30px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    background-color: #ffffff;
+}
+
+.termos-section {
+    margin-bottom: 20px;
+}
+
+.termos-section h2 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.termos-section p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.termos-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.termos-button {
+    width: 200%;
+    max-width: 300px;
+    height: 50px;
+    background-color: #fbc02d;
+    color: #333;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.termos-button:hover {
+    background-color: black;
+    color: #fbc02d;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .container-termos {
+        padding: 30px 20px;
+    }
+    
+    .titulo {
+        font-size: 28px;
+    }
+    
+    .termos-content {
+        max-height: 50vh;
+    }
+}
+
+@media (max-width: 480px) {
+    .global-termos {
+        padding: 20px 10px;
+    }
+    
+    .container-termos {
+        padding: 20px 15px;
+    }
+    
+    .titulo {
+        font-size: 24px;
+    }
+    
+    .subtitulo {
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+    
+    .termos-section h2 {
+        font-size: 16px;
+    }
+    
+    .termos-section p {
+        font-size: 13px;
+    }
+    
+    .termos-button {
+        height: 45px;
+        font-size: 14px;
+    }
+}
