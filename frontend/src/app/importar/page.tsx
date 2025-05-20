@@ -5,28 +5,43 @@ import "./import.css"
 
 
 
-export default function manual() {
+export default function importarCsv() {
     return (
-        <div className="dashboard">
-            <nav className="navbar">
-                <img src="imgs/logo.png" alt="" width={150} />
-                <div className="nav-left">
+        <div className="tela">
+      
+      <div>
+        
+      </div>
+        <nav className="menu">
+          <span className="item">Dashboard</span>
+          <span className="ativo">Transações</span>
+          <span className="item">Recorrentes</span>
+          <span className="item">Categorias</span>
+          <span className="item">Contas</span>
+        </nav>
+    
+     
 
-                    <button className="nav-button" onClick={() => window.location.href = '/home'}>Home</button>
-                    <button className="nav-button  active" onClick={() => window.location.href = '/importar'}>Importar</button>
-                    <button className="nav-button " onClick={() => window.location.href = '/relatorio'}>Relatórios</button>
-                </div>
-                <div className="nav-right">
-                    <img className="butao" src="imgs/settings_24dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png" alt="settings" />
-                    <img className="butao" src="imgs/search_24dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png" alt="search" />
-                    <img className="perfil butao" src="imgs/393b31d598db67553a2b00d95c6746ae43dfdc1f (1).png" alt="" />
-                </div>
-            </nav>
+      <main className="conteudo">
+        <div className="cartao">
+          <div className="area-upload">
+            <h2 className="titulo">Carregue seu extrato bancário</h2>
+            <p className="descricao">Arraste e solte seu extrato bancário CSV aqui </p>
+             <p className="descricao">ou</p>
+            <label className="botao-upload">
+              <span>Selecione arquivo</span>
+              <input type="file" accept=".csv" className="hidden" />
+            </label>
+            <p className="info">Formatos suportados: <strong>.CSV</strong>.</p>
+            <p className="subinfo">Importe suas transações bancárias carregando seu arquivo CSV.</p>
+          </div>
 
-            <main className="botoes">
-                <button className="btn">Enviar extrato</button>
-                <button className="btn">Enviar</button>
-            </main>
+          <div className="botoes">
+            <button className="botao">Voltar</button>
+            <button className="botao">Nova Transação</button>
+          </div>
         </div>
-    );
+      </main>
+    </div>
+  );
 }
