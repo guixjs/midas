@@ -1,0 +1,449 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.dashboard {
+    min-height: 100vh;
+    background-color: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.navbar {
+    background-color: black;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0 16px;
+    flex-wrap: wrap;
+    height: 60px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative; 
+    overflow: visible; 
+}
+
+.logo-container {
+    position: relative;
+    height: 60px;
+    overflow: visible;
+    margin-right: 40px;
+    z-index: 10; 
+}
+
+.user-profile {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    position: relative;
+    z-index: 10; 
+}
+
+.logo {
+    position: absolute;
+    height: 300px;
+    top: -120px; 
+    left: 0;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    gap: 30px;
+    height: 100%;
+    margin: 0 auto; 
+    position: absolute; 
+    left: 0;
+    right: 0;
+}
+
+.nav-link {
+    color: #ffffff; 
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 0 10px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    position: relative;
+    transition: color 0.3s;
+    text-align: center; 
+}
+
+.nav-link.active {
+    color: #fbc02d; 
+}
+
+.nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: #fbc02d;
+}
+
+.user-profile {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+}
+
+.user-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    cursor: pointer;
+}
+
+.nav-left,
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.nav-button {
+    background: none;
+    border: none;
+    color: #fbc02d;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.nav-button.active {
+    background-color: #1a1a5c;
+    padding: 6px 12px;
+    border-radius: 4px;
+    box-shadow: 0 3px 5px black;
+}
+
+.perfil {
+    width: 40px;
+    margin-right: 10px;
+    border-radius: 50%;
+}
+
+.butao {
+    cursor: pointer;
+}
+
+
+.recorrentes-container {
+    padding: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.recorrentes-header {
+    text-align: center;
+    margin-bottom: 30px;
+    color: black;
+}
+
+.recorrentes-header h1 {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.recorrentes-header p {
+    font-size: 16px;
+    opacity: 0.8;
+}
+
+.recorrentes-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.recorrentes-form-container,
+.recorrentes-list-container {
+    background-color: white;
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.recorrentes-form-container h2,
+.recorrentes-list-container h2 {
+    color: #333;
+    font-size: 22px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Formulário */
+.recorrentes-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-row {
+    display: flex;
+    gap: 20px;
+}
+
+.form-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-size: 14px;
+    color: #555;
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group select {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    font-size: 16px;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #d9c682;
+    box-shadow: 0 0 0 2px rgba(130, 192, 217, 0.2);
+}
+
+.radio-group {
+    display: flex;
+    gap: 15px;
+}
+
+.radio-label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 15px;
+    border-radius: 20px;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.radio-label.active {
+    background-color: #d9c682;
+    color: white;
+}
+
+.radio-label input {
+    display: none;
+}
+
+.save-button {
+    background-color: #fbc02d;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    margin-top: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    align-self: flex-start; 
+}
+
+.save-button:hover {
+    background-color: #ffd54f;
+}
+
+
+.recorrentes-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.recorrentes-item {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.recorrentes-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.recorrentes-item-header h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #333;
+}
+
+.recorrentes-valor {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.recorrentes-valor.despesa {
+    color: #e53e3e;
+}
+
+.recorrentes-valor.receita {
+    color: #38a169;
+}
+
+.recorrentes-item-details {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    color: #666;
+}
+
+.recorrentes-categoria,
+.recorrentes-frequencia,
+.recorrentes-data {
+    background-color: #edf2f7;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.recorrentes-item-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.action-btn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.action-btn.edit {
+    background-color: #4299e1;
+    color: white;
+}
+
+.action-btn.delete {
+    background-color: #f56565;
+    color: white;
+}
+
+/* Responsividade */
+@media (max-width: 1024px) {
+    .recorrentes-container {
+        padding: 20px;
+    }
+    
+    .recorrentes-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .form-row {
+        flex-direction: column;
+        gap: 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .nav-left, 
+    .nav-right {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .recorrentes-header h1 {
+        font-size: 28px;
+    }
+    
+    .recorrentes-item-details {
+        flex-direction: column;
+        gap: 5px;
+    }
+}
+
+@media (max-width: 480px) {
+    .recorrentes-container {
+        padding: 15px;
+    }
+    
+    .recorrentes-header h1 {
+        font-size: 24px;
+    }
+    
+    .recorrentes-form-container,
+    .recorrentes-list-container {
+        padding: 15px;
+    }
+    
+    .action-btn {
+        padding: 5px 10px;
+        font-size: 12px;
+    }
+}
+
+
+.add-transaction-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end; 
+}
+
+.add-transaction-button {
+    background-color: #fbc02d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: auto; 
+}
+
+.add-transaction-button:hover {
+    background-color: #ffd54f;
+    transform: translateY(-2px);
+}
+
+.add-transaction-button:active {
+    transform: translateY(0);
+}
+
+.add-icon {
+    font-size: 20px;
+    font-weight: bold;
+}

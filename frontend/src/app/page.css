@@ -12,7 +12,7 @@
   overflow: hidden;
 }
 
-/* Seção do Logo */
+
 .logo-section {
   width: 50%;
   background: linear-gradient(to bottom, #fafafc, #D3D3D3);
@@ -34,7 +34,7 @@
   height: auto;
 }
 
-/* Seção do Formulário */
+
 .form-section {
   width: 50%;
   background-color: #f5f5f5;
@@ -149,7 +149,7 @@
   font-weight: 600;
 }
 
-/* Responsividade */
+
 @media (max-width: 768px) {
   .global {
     flex-direction: column;

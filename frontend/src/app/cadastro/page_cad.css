@@ -141,7 +141,6 @@ input[type="password"]:focus {
     color: #fbc02d;
 }
 
-/* Responsividade */
 @media (max-width: 1024px) {
     .container {
         padding: 30px;

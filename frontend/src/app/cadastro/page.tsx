@@ -8,7 +8,7 @@ import { cadastrar, UserCadastro } from "@/services/api";
 
 
 export default function Cadastro() {
-    // Estados para os campos do formulário
+    
     const [nome, setNome] = useState("");
     const [cpf, setCpf] = useState("");
     const [email, setEmail] = useState("");
@@ -32,7 +32,7 @@ export default function Cadastro() {
         return valor.replace(/(\d{3})(\d{3})(\d{3})(\d{1,2})/, "$1.$2.$3-$4");
     };
 
-    // Formatação de telefone
+    
     const formatarTelefone = (valor: string) => {
         valor = valor.replace(/\D/g, "").slice(0, 11);
         
@@ -43,11 +43,11 @@ export default function Cadastro() {
         return valor.replace(/(\d{2})(\d{5})(\d+)/, "($1) $2-$3");
     };
 
-    // Função para lidar com o envio do formulário
+    
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         
-        // Validações básicas
+        
         if (!nome || !cpf || !email || !telefone || !senha || !confirmarSenha) {
             alert("Por favor, preencha todos os campos");
             return;
