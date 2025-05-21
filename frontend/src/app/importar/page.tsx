@@ -10,18 +10,21 @@ export default function importarCsv() {
         <div className="tela">
       
       <div>
-        
+      
       </div>
-        <nav className="menu">
+      
+        <div className="cabecalho">
+          <img src="imgs/MIDA$NOME.png" alt="" width={250}/>
+             <nav className="menu">
           <span className="item">Dashboard</span>
           <span className="ativo">Transações</span>
           <span className="item">Recorrentes</span>
           <span className="item">Categorias</span>
           <span className="item">Contas</span>
         </nav>
-    
+        </div>
      
-
+  
       <main className="conteudo">
         <div className="cartao">
           <div className="area-upload">
