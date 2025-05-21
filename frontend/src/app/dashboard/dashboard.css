@@ -1,0 +1,185 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.pagina-dashboard {
+  font-family: Arial, sans-serif;
+  background-color: #f4f5f7;
+  min-height: 100vh;
+  
+  padding-top: 80px;
+}
+
+.cabecalho {
+  background-color: #000;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 80px;
+  padding: 0 32px;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.cabecalho h1 {
+  margin: 0;
+  font-size: 28px;
+  color: gold;
+}
+
+.menu {
+  list-style: none;
+  display: flex;
+  gap: 24px;
+  margin: 0;
+  padding: 0;
+}
+
+.menu li {
+  cursor: pointer;
+}
+
+.menu li.ativo {
+  border-bottom: 2px solid gold;
+  color: gold;
+}
+
+.icone-usuario {
+  font-size: 20px;
+}
+
+.container {
+  padding: 20px;
+}
+
+.topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.mensagem h2 {
+  margin: 0;
+}
+
+.mensagem span {
+  font-size: 14px;
+}
+
+.botao-nova-transacao {
+  background-color: #facc15;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.cards {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+.card-saldo, .card-categorias{
+ max-width: 30%;
+}
+.card-saldo, .card-grafico {
+  background: white;
+  border-radius: 8px;
+  padding: 16px;
+  flex: 1;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.valores h2 {
+  margin: 10px 0;
+}
+
+.positivo {
+  color: green;
+}
+
+.negativo {
+  color: red;
+}
+
+
+.cards-baixo {
+  display: flex;
+  gap: 20px;
+}
+
+.card-categorias, .card-tabela {
+  background: white;
+  border-radius: 8px;
+  padding: 16px;
+  flex: 1;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.grafico-barras {
+  background-color: #f4f4f4;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: gray;
+}
+
+.header-tabela {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #fafafa;
+}
+
+.dropdownConta{
+  display: flex;
+  flex-direction: column;
+}
+
+.valores-embaixo{
+  display: flex;
+  gap: 10%;
+  padding-top: 10px;
+}
+
+.receita,.despesa{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.topo-card-grafico{
+  display: flex;
+  justify-content:  space-between;
+}
+
+#option-mes{
+  border-radius: 10%;
+  border: none;
+  background: none;
+}
