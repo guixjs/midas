@@ -66,43 +66,43 @@ const Transacoes = () => {
     
         <div className="tabela">
 
-             <div className="topo-tabela">
+          <div className="topo-tabela">
             <button className="botao-nova-transacao">Nova Transação</button>
-        </div>
-          <table>
-            <thead>
-              <tr>
-                <th>Data</th>
-                <th>Descrição</th>
-                <th>Valor</th>
-                <th>Conta</th>
-                <th>Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              {transacoes.map((t, index) => (
-                <tr key={index}>
-                  <td>{t.data}</td>
-                  <td>{t.descricao}</td>
-                  <td className={Number(t.valor) < 0 ? 'valor-negativo' : 'valor-positivo'}>
-                     {Number(t.valor).toLocaleString('pt-BR', {
-                    style: 'currency',
-                    currency: 'BRL',
-                    })}
-                </td>
-                  <td>{t.conta}</td>
-                  <td>
-                    <div className="botoes">
-                      <button className="btn info">i</button>
-                      <button className="btn editar">✎</button>
-                      <button className="btn excluir">🗑️</button>
-                    </div>
-                  </td>
+          </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Data</th>
+                  <th>Descrição</th>
+                  <th>Valor</th>
+                  <th>Conta</th>
+                  <th>Ações</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {transacoes.map((t, index) => (
+                  <tr key={index}>
+                    <td>{t.data}</td>
+                    <td>{t.descricao}</td>
+                    <td className={Number(t.valor) < 0 ? 'valor-negativo' : 'valor-positivo'}>
+                      {Number(t.valor).toLocaleString('pt-BR', {
+                      style: 'currency',
+                      currency: 'BRL',
+                      })}
+                  </td>
+                    <td>{t.conta}</td>
+                    <td>
+                      <div className="botoes">
+                        <button className="btn info">i</button>
+                        <button className="btn editar">✎</button>
+                        <button className="btn excluir">🗑️</button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
       </div>
     
   );

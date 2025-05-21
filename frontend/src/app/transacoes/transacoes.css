@@ -34,6 +34,7 @@
 
 .menu li.ativo {
   border-bottom: 2px solid gold;
+  color: gold;
 }
 
 .conteudo {
