@@ -3,11 +3,13 @@
 import "./page.css";
 import { useState } from "react";
 import Link from 'next/link';
+import { login } from '../services/api'
 
 export default function Home() {
   const [mostrarSenha, setMostrarSenha] = useState(false);
   const [cpf, setCpf] = useState("");
   const [senha, setSenha] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const formatarCPF = (valor: string) => {
     valor = valor.replace(/\D/g, "").slice(0, 11);
@@ -21,10 +23,23 @@ export default function Home() {
     return valor.replace(/(\d{3})(\d{3})(\d{3})(\d{1,2})/, "$1.$2.$3-$4");
   };
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Aqui você implementará a lógica de login
-    console.log("Login com:", { cpf, senha });
+    setLoading(true);
+    
+    try{
+      const {token, expires_in} = await login(cpf,senha)
+      localStorage.setItem('token', token);
+      localStorage.setItem('token_expires', expires_in.toString());
+
+      window.location.href ='/transacoes'
+
+    }catch(error){
+      console.error("Erro no login", error)
+      alert("Falha no login")
+    }finally{
+      setLoading(false);
+    }
   };
 
   return (
@@ -68,8 +83,8 @@ export default function Home() {
               </span>
             </div>
                        
-            <button type="submit" className="login-button">
-              Entrar
+            <button type="submit" className="login-button" disabled={loading}>
+              {loading ? 'Carregando...' : 'Entrar'}
             </button>
             
             <div className="signup-link">

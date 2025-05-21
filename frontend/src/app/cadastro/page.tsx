@@ -3,6 +3,8 @@
 import "./page_cad.css";
 import { useState } from "react";
 import Link from 'next/link';
+import { cadastrar, UserCadastro } from "@/services/api";
+
 
 
 export default function Cadastro() {
@@ -42,7 +44,7 @@ export default function Cadastro() {
     };
 
     // Função para lidar com o envio do formulário
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         
         // Validações básicas
@@ -60,12 +62,25 @@ export default function Cadastro() {
             alert("Você precisa aceitar os termos de uso");
             return;
         }
-        
-        // Aqui você pode adicionar a lógica para enviar os dados para o backend
-        console.log("Dados do formulário:", { nome, cpf, email, telefone, senha });
-        
-        // Redirecionar para a página inicial após o cadastro
-        window.location.href = '/';
+
+        const telefoneNumerico = telefone.replace(/\D/g, '');
+
+        const novoUsuario: UserCadastro = {
+                nome,
+                cpf,
+                email,
+                telefone:telefoneNumerico,
+                senha
+            };
+
+        try{
+            const response = await cadastrar(novoUsuario)
+            console.log("Usuario cadastrado com sucesso!")
+            window.location.href = '/';
+        }catch(error){
+            console.log('Erro no cadastro:', error);
+            alert(error instanceof Error ? error.message: "Erro ao cadastrar")
+        }
     };
 
     return (

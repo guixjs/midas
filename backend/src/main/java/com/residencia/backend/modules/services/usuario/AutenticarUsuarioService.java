@@ -4,6 +4,7 @@ package com.residencia.backend.modules.services.usuario;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.residencia.backend.modules.dto.usuario.AuthUsuarioDTO;
+import com.residencia.backend.modules.dto.usuario.AuthUsuarioResponseDTO;
 import com.residencia.backend.modules.repositories.UsuarioRepository;
 import com.residencia.backend.modules.services.conta.CriarContaGeralService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class AutenticarUsuarioService {
   @Autowired
   private PasswordEncoder passwordEncoder;
 
-  public String execute(AuthUsuarioDTO authUsuarioDTO) throws AuthenticationException {
+  public AuthUsuarioResponseDTO execute(AuthUsuarioDTO authUsuarioDTO) throws AuthenticationException {
     var usuario = this.usuarioRepository.findByCpf(authUsuarioDTO.getCpf())
         .orElseThrow(()->{
           throw new UsernameNotFoundException("Usuario ou senha inválida");
@@ -44,15 +45,19 @@ public class AutenticarUsuarioService {
     if(!verificaSenha){
       throw new AuthenticationException();
     }
+
     Algorithm algorithm = Algorithm.HMAC256(secretKey);
+    var expires_in = Instant.now().plus(Duration.ofHours(4));
     var token = JWT.create()
         .withIssuer("midas")
         .withSubject(usuario.getId().toString())
-        .withExpiresAt(Instant.now().plus(Duration.ofHours(4)))
+        .withExpiresAt(expires_in)
         .sign(algorithm);
 
     criarContaGeralService.criarContaGeral(usuario);
-    System.out.println(token);
-    return token;
+    return AuthUsuarioResponseDTO.builder()
+    .token(token)
+    .expires_in(expires_in.toEpochMilli())
+    .build();
   }
 }
