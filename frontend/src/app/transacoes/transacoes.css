@@ -1,3 +1,4 @@
+
 .pagina-transacoes {
   font-family: 'Segoe UI', sans-serif;
   background-color: #f5f5f7;
@@ -111,13 +112,24 @@ body {
   display: flex;
   justify-content: center; 
   align-items: center;     
-  height: 80px;            
+  height: 70px;            
   width: 100%;
   position: fixed;         
   top: 0;
   left: 0;
   z-index: 1000;
 }
+
+.logo {
+  position: absolute;
+  left: 24px;
+}
+
+.logo img {
+  height: 500px;
+  object-fit: contain;
+}
+
 
 .cabecalho h1 {
   margin: 0;
@@ -135,6 +147,7 @@ body {
 
 .menu li.ativo {
   border-bottom: 2px solid gold;
+  color: gold;
 }
 
 .conteudo {
@@ -219,9 +232,11 @@ th, td {
   display: flex;
    justify-content: flex-end;
   margin: 20px 0 10px;
+  gap: 10px;
 }
 
 .botao-nova-transacao {
+   
   background-color: #facc15; 
   color: white;
   border: none;
@@ -230,11 +245,107 @@ th, td {
   border-radius: 6px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  
 }
 
 .botao-nova-transacao:hover {
-  background-color: #eab308; 
+  background-color: #ffc107; 
 }
+
+
+
+
+
+.btn-filtro {
+    background-color: #facc15;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: background-color 0.2s;
+  gap: 15px;
+  
+}
+
+.btn-filtro:hover {
+  background-color: #e0e0e0;
+  
+}
+
+.filtro {
+  position: fixed;
+  top: 70px;
+  right: 0;
+  width: 320px;
+  height: 90%;
+  background-color: #fff;
+  border-left: 1px solid #ddd;
+  padding: 20px;
+  z-index: 100;
+  box-shadow: -4px 0 10px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.filtro h3 {
+  font-size: 20px;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  
+}
+
+.filtro label {
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+.filtro input[type="date"],
+.filtro input[type="number"],
+.filtro select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.filtro input[type="checkbox"] {
+  margin-right: 8px;
+}
+
+.btn-aplicar-filtro {
+  background-color: #ffb703;
+  color: black;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: auto;
+  margin-bottom: 10px;
+}
+
+.btn-aplicar-filtro:hover {
+  background-color: #e4a403;
+}
+
+.btn-fechar-filtro {
+  background-color: transparent;
+  border: none;
+  color: #555;
+  font-size: 18px;
+  cursor: pointer;
+  align-self: flex-end;
+}
+
 
 
 
