@@ -32,7 +32,7 @@ export default function Home() {
       localStorage.setItem('token', token);
       localStorage.setItem('token_expires', expires_in.toString());
 
-      window.location.href ='/transacoes'
+      window.location.href ='/dashboard'
 
     }catch(error){
       console.error("Erro no login", error)
