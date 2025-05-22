@@ -74,14 +74,13 @@ body {
     display: flex;
     justify-content: center;
     margin-top: 20px;
+    gap: 20px;
 }
 
 .termos-button {
-    width: 200%;
-    max-width: 300px;
+    width: 48%;
+    max-width: 200px;
     height: 50px;
-    background-color: #fbc02d;
-    color: #333;
     font-size: 16px;
     font-weight: bold;
     border: none;
@@ -90,9 +89,24 @@ body {
     transition: all 0.3s ease;
 }
 
-.termos-button:hover {
+.termos-button.concordar {
+    background-color: #fbc02d;
+    color: #333;
+}
+
+.termos-button.voltar {
+    background-color: #f5f5f5;
+    color: #333;
+    border: 1px solid #ddd;
+}
+
+.termos-button.concordar:hover {
     background-color: black;
     color: #fbc02d;
+}
+
+.termos-button.voltar:hover {
+    background-color: #e0e0e0;
 }
 
 /* Responsividade */
@@ -139,5 +153,16 @@ body {
     .termos-button {
         height: 45px;
         font-size: 14px;
+    }
+    
+    .termos-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .termos-button {
+        width: 100%;
+        max-width: 250px;
+        margin-bottom: 10px;
     }
 }

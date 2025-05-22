@@ -2,8 +2,19 @@
 
 import "./page_termos.css";
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 export default function TermosDeUso() {
+  const router = useRouter();
+
+  const handleConcordar = () => {
+    // Armazenar a concordância no localStorage
+    localStorage.setItem('termosAceitos', 'true');
+    
+    // Redirecionar para a página de cadastro
+    router.push('/cadastro');
+  };
+
   return (
     <div className="global-termos">
       <div className="container-termos">
@@ -84,9 +95,10 @@ export default function TermosDeUso() {
         </div>
 
         <div className="termos-actions">
-          <Link href="/cadastro">
-            <button className="termos-button">Voltar</button>
-          </Link>
+          
+          <button className="termos-button concordar" onClick={handleConcordar}>
+            Concordar
+          </button>
         </div>
       </div>
     </div>

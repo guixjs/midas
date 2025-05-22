@@ -116,8 +116,9 @@ export default function Categorias() {
                                         id="cor" 
                                         value={cor}
                                         onChange={(e) => setCor(e.target.value)}
+                                        className="color-input"
                                     />
-                                    <span className="color-preview" style={{ backgroundColor: cor }}></span>
+                                    <span>Selecione uma cor para sua categoria</span>
                                 </div>
                             </div>
                             
@@ -151,4 +152,4 @@ export default function Categorias() {
             </main>
         </div>
     );
-} 
+}

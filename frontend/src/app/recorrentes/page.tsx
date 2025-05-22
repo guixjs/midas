@@ -6,48 +6,83 @@ export default function Recorrentes() {
     const [descricao, setDescricao] = useState("");
     const [valor, setValor] = useState("");
     const [categoria, setCategoria] = useState("");
-    const [dataInicio, setDataInicio] = useState("");
-    const [dataFim, setDataFim] = useState("");
     const [frequencia, setFrequencia] = useState("mensal");
     const [tipo, setTipo] = useState("despesa");
+    
+    const [transacoesSelecionadas, setTransacoesSelecionadas] = useState<number[]>([]);
+    const [mostrarConfirmacao, setMostrarConfirmacao] = useState(false);
+
+    const toggleSelecao = (id: number) => {
+        if (transacoesSelecionadas.includes(id)) {
+            setTransacoesSelecionadas(transacoesSelecionadas.filter(item => item !== id));
+        } else {
+            setTransacoesSelecionadas([...transacoesSelecionadas, id]);
+        }
+    };
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         
        
-        if (!descricao || !valor || !categoria || !dataInicio || !frequencia) {
+        if (!descricao || !valor || !categoria || !frequencia) {
             alert("Por favor, preencha todos os campos obrigatórios");
             return;
         }
         
-        // Aqui será adicionado a lógica para enviar os dados para o backend
+        //  lógica para enviar os dados para o back
         console.log("Dados da transação recorrente:", { 
             descricao, 
             valor, 
             categoria, 
-            dataInicio, 
-            dataFim, 
             frequencia, 
             tipo 
         });
         
-        // Limpar formulário após envio
         setDescricao("");
         setValor("");
         setCategoria("");
-        setDataInicio("");
-        setDataFim("");
         setFrequencia("mensal");
         setTipo("despesa");
     };
 
-    // Formatação de valor monetário
     const formatarValor = (valor: string) => {
         valor = valor.replace(/\D/g, "");
         if (valor === "") return "";
         
         valor = (parseInt(valor) / 100).toFixed(2);
         return valor.replace(".", ",");
+    };
+
+    const handleCadastrarTransacao = () => {
+        if (transacoesSelecionadas.length === 0) {
+            alert("Por favor, selecione pelo menos uma transação para cadastrar.");
+            return;
+        }
+        
+        setMostrarConfirmacao(true);
+    };
+
+    const confirmarCadastro = async () => {
+        try {
+            //  lógica para enviar as transações para o backend
+            console.log("Transações cadastradas:", transacoesSelecionadas);
+            
+            setMostrarConfirmacao(false);
+            
+            setTransacoesSelecionadas([]);
+            
+            alert("Transações cadastradas com sucesso!");
+            
+            // Recarregar a página
+            window.location.reload();
+        } catch (error) {
+            console.error("Erro ao cadastrar transações:", error);
+            alert("Erro ao cadastrar transações. Por favor, tente novamente.");
+        }
+    };
+
+    const cancelarCadastro = () => {
+        setMostrarConfirmacao(false);
     };
 
     return (
@@ -153,27 +188,6 @@ export default function Recorrentes() {
                             
                             <div className="form-row">
                                 <div className="form-group">
-                                    <label htmlFor="dataInicio">Data de Início:*</label>
-                                    <input 
-                                        type="date" 
-                                        id="dataInicio" 
-                                        value={dataInicio}
-                                        onChange={(e) => setDataInicio(e.target.value)}
-                                    />
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="dataFim">Data de Término: <small>(opcional)</small></label>
-                                    <input 
-                                        type="date" 
-                                        id="dataFim" 
-                                        value={dataFim}
-                                        onChange={(e) => setDataFim(e.target.value)}
-                                    />
-                                </div>
-                            </div>
-                            
-                            <div className="form-row">
-                                <div className="form-group">
                                     <label htmlFor="frequencia">Repetir valor:*</label>
                                     <select 
                                         id="frequencia" 
@@ -182,7 +196,6 @@ export default function Recorrentes() {
                                     >
                                         <option value="sim">Sim</option>
                                         <option value="não">Não</option>
-                                        
                                     </select>
                                 </div>
                             </div>
@@ -195,6 +208,14 @@ export default function Recorrentes() {
                         <h2>Suas Transações Recorrentes</h2>
                         <div className="recorrentes-list">
                             <div className="recorrentes-item">
+                                <div className="recorrentes-checkbox">
+                                    <input 
+                                        type="checkbox" 
+                                        id="transacao-1"
+                                        checked={transacoesSelecionadas.includes(1)}
+                                        onChange={() => toggleSelecao(1)}
+                                    />
+                                </div>
                                 <div className="recorrentes-item-header">
                                     <h3>Assinatura Netflix</h3>
                                     <span className="recorrentes-valor despesa">R$ 39,90</span>
@@ -211,6 +232,14 @@ export default function Recorrentes() {
                             </div>
                             
                             <div className="recorrentes-item">
+                                <div className="recorrentes-checkbox">
+                                    <input 
+                                        type="checkbox" 
+                                        id="transacao-2"
+                                        checked={transacoesSelecionadas.includes(2)}
+                                        onChange={() => toggleSelecao(2)}
+                                    />
+                                </div>
                                 <div className="recorrentes-item-header">
                                     <h3>Salário</h3>
                                     <span className="recorrentes-valor receita">R$ 3.500,00</span>
@@ -228,7 +257,7 @@ export default function Recorrentes() {
                         </div>
                         
                         <div className="add-transaction-container">
-                            <button className="add-transaction-button">
+                            <button className="add-transaction-button" onClick={handleCadastrarTransacao}>
                                 <span className="add-icon">+</span>
                                 Cadastrar Transação
                             </button>
@@ -236,6 +265,20 @@ export default function Recorrentes() {
                     </div>
                 </div>
             </main>
+
+            {/* Modal de confirmação */}
+            {mostrarConfirmacao && (
+                <div className="modal-overlay">
+                    <div className="modal-confirmacao">
+                        <h3>Confirmar Cadastro</h3>
+                        <p>Tem certeza que deseja cadastrar {transacoesSelecionadas.length} transação(ões)?</p>
+                        <div className="modal-buttons">
+                            <button className="btn-cancelar" onClick={cancelarCadastro}>Cancelar</button>
+                            <button className="btn-confirmar" onClick={confirmarCadastro}>Confirmar</button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

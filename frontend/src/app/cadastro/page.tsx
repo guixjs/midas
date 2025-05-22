@@ -1,7 +1,7 @@
 "use client";
 
 import "./page_cad.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from 'next/link';
 import { cadastrar, UserCadastro } from "@/services/api";
 
@@ -18,6 +18,14 @@ export default function Cadastro() {
     const [aceitouTermos, setAceitouTermos] = useState(false);
     const [mostrarSenha, setMostrarSenha] = useState(false);
     const [mostrarConfirmarSenha, setMostrarConfirmarSenha] = useState(false);
+
+    // Verificar se os termos foram aceitos ao carregar a página
+    useEffect(() => {
+        const termosAceitos = localStorage.getItem('termosAceitos') === 'true';
+        if (termosAceitos) {
+            setAceitouTermos(true);
+        }
+    }, []);
 
     // Formatação de CPF
     const formatarCPF = (valor: string) => {

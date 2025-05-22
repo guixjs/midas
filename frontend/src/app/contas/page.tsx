@@ -190,8 +190,8 @@ export default function Contas() {
                                         name="cor"
                                         value={formData.cor}
                                         onChange={handleChange}
+                                        className="color-input"
                                     />
-                                    <div className="color-preview" style={{ backgroundColor: formData.cor }}></div>
                                     <span>Selecione uma cor para identificar sua conta</span>
                                 </div>
                             </div>

@@ -203,7 +203,7 @@ body {
 }
 
 .radio-label.active {
-    background-color: #d9c682;
+    background-color: #796624;
     color: white;
 }
 
@@ -217,20 +217,35 @@ body {
     gap: 10px;
 }
 
-.color-picker input[type="color"] {
-    width: 40px;
-    height: 40px;
+.color-input {
+    width: 50px;
+    height: 50px;
     border: none;
-    border-radius: 5px;
+    border-radius: none;
     cursor: pointer;
+    overflow: hidden;
+    padding: 0;
+    appearance: none;
+    -webkit-appearance: none;
+    background: transparent;
 }
 
-.color-preview {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    border: 1px solid #ddd;
+.color-input::-webkit-color-swatch-wrapper {
+    padding: 0;
+    border: none;
 }
+
+.color-input::-webkit-color-swatch {
+    border: none;
+    border-radius: 50%;
+}
+
+.color-input::-moz-color-swatch {
+    border: none;
+    border-radius: 50%;
+}
+
+
 
 .save-button {
     background-color: #fbc02d;
