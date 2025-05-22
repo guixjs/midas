@@ -1,43 +1,92 @@
 "use client";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './categorias.css';
+import { api } from '@/services/api';
+
+interface Categoria {
+  id: number;
+  nome: string;
+  descricao?: string;
+  cor: string;
+  tipoTransacao: "DESPESA" | "RECEITA";
+}
+
+interface NovaCategoria{
+    nome:string,
+    descricao:string,
+	tipoTransacao: "DESPESA" | "RECEITA",
+    cor:string
+}
+
 
 export default function Categorias() {
     const [nome, setNome] = useState("");
-    const [tipo, setTipo] = useState("despesa");
+    const [tipo, setTipo] = useState<"DESPESA" | "RECEITA">("DESPESA");
     const [cor, setCor] = useState("#4299e1");
+    const [descricao,setDescricao] = useState("")
+    const [categorias,setCategorias] = useState<Categoria[]>([])
+    const [carregando,setCarregando] = useState(true)
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    useEffect(()=>{
+            carregarCategorias();
+        },[])
+
+        const carregarCategorias = async()=>{
+            try{
+                setCarregando(true)
+                const response = await api.get("/category");
+                setCategorias(response)
+
+            }catch(error){
+                alert("Erro ao carregar categorias")
+            }finally{
+                setCarregando(false)
+            }
+        }
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        
-        // Validações básicas
+
         if (!nome) {
             alert("Por favor, preencha o nome da categoria");
             return;
         }
-        
-        // Aqui você pode adicionar a lógica para enviar os dados para o backend
-        console.log("Dados da categoria:", { 
-            nome, 
-            tipo,
-            cor
-        });
-        
-        // Limpar formulário após envio
-        setNome("");
-        setTipo("despesa");
-        setCor("#4299e1");
+
+
+        try{
+            await api.post("/category/new",{
+                nome,
+                descricao,
+                tipoTransacao: tipo,
+                cor
+            });
+            console.log("categoria cadastrada")
+            carregarCategorias()
+
+            setNome("");
+            setTipo("DESPESA");
+            setCor("#4299e1");
+            setDescricao("")
+
+        }catch(error){
+            console.log(error)
+            alert("Erro ao criar categoria")
+        }
     };
 
-    // Lista de categorias de exemplo
-    const categorias = [
-        { id: 1, nome: "Alimentação", tipo: "despesa", cor: "#e53e3e" },
-        { id: 2, nome: "Transporte", tipo: "despesa", cor: "#dd6b20" },
-        { id: 3, nome: "Moradia", tipo: "despesa", cor: "#38a169" },
-        { id: 4, nome: "Lazer", tipo: "despesa", cor: "#3182ce" },
-        { id: 5, nome: "Salário", tipo: "receita", cor: "#805ad5" },
-        { id: 6, nome: "Freelance", tipo: "receita", cor: "#d53f8c" },
-    ];
+    const handleDelete = async (id: number) => {
+        if (!confirm("Tem certeza que deseja excluir esta categoria?")) return;
+        
+        try {
+            await api.delete("/category",id);
+            carregarCategorias();
+            alert("Categoria excluída com sucesso!");
+        } catch (error) {
+            console.error("Erro ao excluir categoria:", error);
+            alert("Erro ao excluir categoria");
+        }
+    };
+
 
     return (
         <div className="dashboard">
@@ -83,25 +132,36 @@ export default function Categorias() {
                             </div>
                             
                             <div className="form-group">
+                                <label htmlFor="descricao">Descrição:</label>
+                                <input 
+                                    type="text" 
+                                    id="descricao" 
+                                    value={descricao}
+                                    onChange={(e) => setDescricao(e.target.value)}
+                                    placeholder="Opcional"
+                                />
+                            </div>
+                            
+                            <div className="form-group">
                                 <label htmlFor="tipo">Tipo:*</label>
                                 <div className="radio-group">
-                                    <label className={`radio-label ${tipo === 'despesa' ? 'active' : ''}`}>
+                                    <label className={`radio-label ${tipo === 'DESPESA' ? 'active' : ''}`}>
                                         <input 
                                             type="radio" 
                                             name="tipo" 
-                                            value="despesa"
-                                            checked={tipo === 'despesa'}
-                                            onChange={() => setTipo('despesa')}
+                                            value="DESPESA"
+                                            checked={tipo === 'DESPESA'}
+                                            onChange={() => setTipo('DESPESA')}
                                         />
                                         Despesa
                                     </label>
-                                    <label className={`radio-label ${tipo === 'receita' ? 'active' : ''}`}>
+                                    <label className={`radio-label ${tipo === 'RECEITA' ? 'active' : ''}`}>
                                         <input 
                                             type="radio" 
                                             name="tipo" 
-                                            value="receita"
-                                            checked={tipo === 'receita'}
-                                            onChange={() => setTipo('receita')}
+                                            value="RECEITA"
+                                            checked={tipo === 'RECEITA'}
+                                            onChange={() => setTipo('RECEITA')}
                                         />
                                         Receita
                                     </label>
@@ -128,25 +188,33 @@ export default function Categorias() {
                     
                     <div className="categorias-list-container">
                         <h2>Suas Categorias</h2>
-                        <div className="categorias-list">
-                            {categorias.map((categoria) => (
-                                <div key={categoria.id} className="categoria-item">
-                                    <div className="categoria-color" style={{ backgroundColor: categoria.cor }}></div>
-                                    <div className="categoria-info">
-                                        <h3>{categoria.nome}</h3>
-                                        <span className={`categoria-tipo ${categoria.tipo}`}>
-                                            {categoria.tipo === 'despesa' ? 'Despesa' : 'Receita'}
-                                        </span>
+                        {carregando ? (
+                            <p>Carregando categorias...</p>
+                        ) : (
+                            <div className="categorias-list">
+                                {categorias.map((categoria) => (
+                                    <div key={categoria.id} className="categoria-item">
+                                        <div className="categoria-color" style={{ backgroundColor: categoria.cor }}></div>
+                                        <div className="categoria-info">
+                                            <h3>{categoria.nome}</h3>
+                                            <span className={`categoria-tipo ${categoria.tipoTransacao.toLowerCase()}`}>
+                                                {categoria.tipoTransacao === 'DESPESA' ? 'Despesa' : 'Receita'}
+                                            </span>
+                                            {categoria.descricao && <p>{categoria.descricao}</p>}
+                                        </div>
+                                        <div className="categoria-actions">
+                                            <button className="action-btn edit">✎</button>
+                                            <button 
+                                                className="action-btn delete"
+                                                onClick={() => handleDelete(categoria.id)}
+                                            >
+                                                🗑️
+                                            </button>
+                                        </div>
                                     </div>
-                                    <div className="categoria-actions">
-                                        <button className="action-btn edit">✎</button>
-                                        <button className="action-btn delete">🗑️</button>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                        
-                        
+                                ))}
+                            </div>
+                        )}
                     </div>
                 </div>
             </main>

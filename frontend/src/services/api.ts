@@ -1,3 +1,5 @@
+import { UUID } from "crypto";
+
 const API_BASE_URL = 'http://localhost:8080';
 
 export interface UserCadastro{
@@ -44,7 +46,15 @@ export const api = {
     const response = await fetch(`${API_BASE_URL}${endpoint}`,{
       headers:{
         "Authorization": `Bearer ${token}`,
-
+      },
+    });
+    return handleResponse(response);
+  },
+  getEspecifica:async (endpoint:string, id: UUID|number) =>{
+    const token = localStorage.getItem("token");
+    const response = await fetch(`${API_BASE_URL}${endpoint}${id}`,{
+      headers:{
+        "Authorization": `Bearer ${token}`,
       },
     });
     return handleResponse(response);
@@ -61,6 +71,27 @@ export const api = {
     });
     return handleResponse(response)
   },
+  put: async (endpoint:string, id: number|UUID, body:any) =>{
+    const token = localStorage.getItem("token");
+    const response = await fetch(`${API_BASE_URL}${endpoint}/${id}`,{
+      method: "PUT",
+      headers:{
+        "Content-type":"application/json",
+        "Authorization":`Bearer ${token}`,
+      },
+      body: JSON.stringify(body),
+  });
+    return handleResponse(response)
+  },
+  delete: async (endpoint: string, id: number|UUID) =>{
+    const token = localStorage.getItem("token");
+    const response = await fetch(`${API_BASE_URL}${endpoint}/${id}`,{
+      method:"DELETE",
+      headers:{
+        "Authorization": `Bearer ${token}`,
+      }
+    })
+  }
 }
 
 const handleResponse = async (response: Response) => {
