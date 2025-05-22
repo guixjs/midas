@@ -16,6 +16,7 @@ public class CategoriaResponseDTO {
   private Integer id;
   private String nome;
   private String descricao;
+  private String cor;
   private TipoTransacao tipoTransacao;
   private UsuarioResponseResumidoDTO usuario;
 }

@@ -15,4 +15,5 @@ public class CategoriaMaiorGastoDTO {
     private String nomeCategoria;
     private BigDecimal valorGasto;
     private BigDecimal percentual;
+    private String corCategoria;
 }

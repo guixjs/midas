@@ -57,7 +57,8 @@ public interface TransacaoRepository extends JpaRepository<TransacaoEntity, UUID
   @Query("""
     SELECT new com.residencia.backend.modules.dto.dashboard.CategoriaValorDTO(
         c.nome,
-        SUM(t.valor)
+        SUM(t.valor),
+        c.cor
     )
     FROM TransacaoEntity t
     JOIN t.categoria c

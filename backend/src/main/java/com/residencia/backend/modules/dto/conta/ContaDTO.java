@@ -13,4 +13,6 @@ public class ContaDTO {
   private TipoConta tipoConta;
   @Schema(description = "Nome do banco à qual a conta pertence", example = "Banco do brasil")
   private String banco;
+  @Schema(description = "Cor que representa a conta (em Hexadecimal)",example = "#FF5733")
+  private String cor;
 }

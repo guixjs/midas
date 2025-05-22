@@ -33,6 +33,10 @@ public class CartaoEntity {
   @Pattern(regexp = "^.{1,30}$", message = "O nome deve ter no máximo 30 caracteres")
   private String nome;
 
+  @NotBlank(message = "Deve adicionar uma cor")
+  @Column(length = 7)
+  private String cor;
+
   @ManyToOne
   @JoinColumn(name = "id_conta", insertable = false, updatable = false)
   private ContaEntity conta;

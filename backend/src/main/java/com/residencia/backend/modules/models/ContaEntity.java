@@ -29,6 +29,10 @@ public class ContaEntity {
   @Pattern(regexp = "^.{1,50}$",message = "O nome deve ter no máximo 50 caractéres")
   private String nome;
 
+  @NotBlank(message = "Deve adicionar uma cor")
+  @Column(length = 7)
+  private String cor;
+
   @Enumerated(EnumType.STRING)
   private TipoConta tipoConta;
 
