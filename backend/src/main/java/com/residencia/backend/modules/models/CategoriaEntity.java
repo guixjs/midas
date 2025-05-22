@@ -35,6 +35,10 @@ public class CategoriaEntity {
   @NotNull(message = "O tipo não pode ser nulo")
   private TipoTransacao tipoTransacao;
 
+  @NotBlank(message = "Deve adicionar uma cor")
+  @Column(length = 7)
+  private String cor;
+
   @ManyToOne()
   @JoinColumn(name = "id_usuario", insertable = false, updatable = false)
   private UsuarioEntity usuarioEntity;

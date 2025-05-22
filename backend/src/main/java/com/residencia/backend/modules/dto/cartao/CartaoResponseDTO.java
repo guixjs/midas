@@ -19,6 +19,7 @@ public class CartaoResponseDTO {
   private UUID id;
   private String nome;
   private LocalDate dataVencimento;
+  private String cor;
   private ContaResponseResumidoDTO conta;
   private UsuarioResponseResumidoDTO usuario;
 }

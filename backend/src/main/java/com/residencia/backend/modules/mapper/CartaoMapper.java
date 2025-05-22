@@ -14,6 +14,7 @@ public class CartaoMapper {
     return CartaoEntity.builder()
         .nome(cartaoDTO.getNome())
         .dataVencimento(cartaoDTO.getDataVencimento())
+        .cor(cartaoDTO.getCor())
         .idConta(idConta)
         .idUsuario(idUsuario)
         .build();
@@ -24,6 +25,7 @@ public class CartaoMapper {
         .id(resultado.getId())
         .nome(resultado.getNome())
         .dataVencimento(resultado.getDataVencimento())
+        .cor(resultado.getCor())
         .conta(contaResponse)
         .usuario(usuarioResponse)
         .build();
@@ -37,6 +39,7 @@ public class CartaoMapper {
         .id(cartao.getId())
         .nome(cartao.getNome())
         .dataVencimento(cartao.getDataVencimento())
+        .cor(cartao.getCor())
         .build();
   }
 }

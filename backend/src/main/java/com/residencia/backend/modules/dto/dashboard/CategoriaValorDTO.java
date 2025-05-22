@@ -10,4 +10,5 @@ import java.math.BigDecimal;
 public class CategoriaValorDTO {
   private String nomeCategoria;
   private BigDecimal valor;
+  private String cor;
 }

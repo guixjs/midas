@@ -13,4 +13,6 @@ public class CategoriaDTO {
   private String descricao;
   @Schema(description = "Tipo de transação da categoria",example = "DESPESA")
   private TipoTransacao tipoTransacao;
+  @Schema(description = "Cor que representa a categoria (em Hexadecimal)",example = "#FF5733")
+  private String cor;
 }

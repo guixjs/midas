@@ -39,7 +39,7 @@ public class CategoriaMaiorGastoService {
               ? valorAbsoluto.multiply(BigDecimal.valueOf(100)).divide(totalGasto.abs(), 2, RoundingMode.HALF_UP)
               : BigDecimal.ZERO;
 
-          return new CategoriaMaiorGastoDTO(cat.getNomeCategoria(), valorAbsoluto, percentual);
+          return new CategoriaMaiorGastoDTO(cat.getNomeCategoria(), valorAbsoluto, percentual,cat.getCor());
         })
         .collect(Collectors.toList());
   }

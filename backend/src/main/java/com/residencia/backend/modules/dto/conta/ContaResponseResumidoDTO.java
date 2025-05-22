@@ -15,4 +15,5 @@ public class ContaResponseResumidoDTO {
   private String nome;
   private TipoConta tipoConta;
   private String banco;
+  private String cor;
 }

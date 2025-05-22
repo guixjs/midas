@@ -40,6 +40,7 @@ public class EditarCategoriaService {
 
         categoria.setNome(nome);
         categoria.setDescricao(categoriaDTO.getDescricao());
+        categoria.setCor(categoriaDTO.getCor());
 
         CategoriaEntity resultado = categoriaRepository.save(categoria);
         

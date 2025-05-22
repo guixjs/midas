@@ -23,6 +23,8 @@ public class CartaoDTO {
   @JsonFormat(pattern = "dd/MM/yyyy")
   @Schema(description = "Data de vencimento do cartão",example = "2025-04-10")
   private LocalDate dataVencimento;
+  @Schema(description = "Cor que representa o cartão (em Hexadecimal)", example ="#171616")
+  private String cor;
   @Schema(description = "Id da conta à qual o cartão pertence (É PRECISO CADASTRAR A CONTA ANTES)",example = "2")
   private Integer idConta;
 }

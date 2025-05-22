@@ -21,6 +21,7 @@ public class CriarContaGeralService {
           .usuarioEntity(usuario)
           .idUsuario(usuario.getId())
           .nome("Geral")
+          .cor("#389111")
           .tipoConta(TipoConta.CARTEIRA)
           .build();
 

@@ -9,6 +9,7 @@ import com.residencia.backend.modules.models.TransacaoEntity;
 import com.residencia.backend.modules.repositories.CategoriaRepository;
 import com.residencia.backend.modules.repositories.ContaRepository;
 import com.residencia.backend.modules.repositories.TransacaoRepository;
+import com.residencia.backend.shareds.util.CorUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -175,6 +176,7 @@ public class CsvImporterService {
                                         .tipoTransacao(tipo)
                                         .idUsuario(idUsuario)
                                         .descricao("Criada automaticamente pelo importador")
+                                        .cor(CorUtil.corAletoria())
                                         .build()
                         ));
 

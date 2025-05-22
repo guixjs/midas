@@ -15,6 +15,7 @@ public class ContaMapper {
     return ContaEntity.builder()
           .nome(contaDTO.getNome())
           .banco(contaDTO.getBanco())
+          .cor(contaDTO.getCor())
           .tipoConta(contaDTO.getTipoConta())
           .idUsuario(idUsuario)
           .build();
@@ -27,6 +28,7 @@ public class ContaMapper {
     return ContaResponseDTO.builder()
         .idConta(resultado.getId())
         .nome(resultado.getNome())
+        .cor(resultado.getCor())
         .tipoConta(resultado.getTipoConta())
         .banco(resultado.getBanco())
         .usuario(usuarioResponse)
@@ -37,6 +39,7 @@ public class ContaMapper {
     return ContaResponseResumidoDTO.builder()
         .idConta(contaGeral.getId())
         .nome(contaGeral.getNome())
+        .cor(contaGeral.getCor())
         .banco(contaGeral.getBanco())
         .tipoConta(contaGeral.getTipoConta())
         .build();
