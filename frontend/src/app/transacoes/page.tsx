@@ -1,46 +1,121 @@
+
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./transacoes.css";
+import { api } from "../../services/api";
+interface Transacao {
+  id: string;
+  valor: number;
+  descricao: string;
+  dataTransacao: string;
+  tipoTransacao: string;
+  nomeCategoria: string;
+  nomeConta: string;
+  nomeCartao: string;
+}
 
-const transacoesOriginais = [
-  { data: '01/07/2024', descricao: 'Recebido', valor: 99, conta: 'nuBank' },
-  { data: '30/05/2024', descricao: 'Gasto', valor: -70, conta: 'inter' },
-  { data: '19/04/2024', descricao: 'Recebido', valor: 15, conta: 'nuBank' },
-  { data: '14/03/2024', descricao: 'Recebido', valor: 150, conta: 'nuBank' },
-  { data: '23/02/2024', descricao: 'Gasto', valor: -80, conta: 'Bradesco' },
-  { data: '20/02/2024', descricao: 'Recebido', valor: 3000, conta: 'Bradesco' },
-  { data: '15/12/2023', descricao: 'Gasto', valor: -73, conta: 'Santander' },
-];
+interface FiltrosTransacoes {
+  dataInicio?: string;
+  dataFim?: string;
+  valorMin?: number;
+  valorMax?: number;
+  idCategoria?: number;
+  tipoTransacao?: string;
+  idConta?: number;
+  possuiCartao?: boolean;
+}
 
 const Transacoes = () => {
   const [mostrarFiltro, setMostrarFiltro] = useState(false);
+  const [transacoes, setTransacoes] = useState<Transacao[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const [dataInicial, setDataInicial] = useState('');
-  const [dataFinal, setDataFinal] = useState('');
-  const [valorMin, setValorMin] = useState('');
-  const [valorMax, setValorMax] = useState('');
-  const [categoria, setCategoria] = useState('');
-  const [conta, setConta] = useState('Todas');
+  const [filtros, setFiltros] = useState<FiltrosTransacoes>({});
 
-  const aplicarFiltros = () => {
+  useEffect(() => {
+  const carregarTransacoes = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      
+      const token = localStorage.getItem("token");
+      if (!token) {
+        throw new Error("Usuário não autenticado");
+      }
+
+      const response = await fetch(`http://localhost:8080/transaction/search`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+        body: JSON.stringify(filtros),
+      });
+
+      // Verifica se o content-type é JSON
+      const contentType = response.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
+        const text = await response.text();
+        throw new Error(text || "Resposta inválida do servidor");
+      }
+
+      const data = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(data.message || "Erro ao carregar transações");
+      }
+
+      setTransacoes(data);
+    } catch (err) {
+      console.error('Erro ao carregar transações:', err);
+      
+      let errorMessage = "Erro desconhecido ao carregar transações";
+      if (err instanceof Error) {
+        // Trata erros de JSON inválido
+        if (err.message.includes("Unexpected token")) {
+          errorMessage = "Resposta inválida do servidor";
+        } else {
+          errorMessage = err.message;
+        }
+      }
+      
+      setError(errorMessage);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  carregarTransacoes();
+}, [filtros]);
+
+  const aplicarFiltros = (novosFiltros: Partial<FiltrosTransacoes>) => {
+    setFiltros(prev => ({
+      ...prev,
+      ...novosFiltros
+    }));
     setMostrarFiltro(false);
   };
 
-  const transacoes = transacoesOriginais.filter((t) => {
-    const data = new Date(t.data.split('/').reverse().join('-'));
-    const dataInicio = dataInicial ? new Date(dataInicial) : null;
-    const dataFim = dataFinal ? new Date(dataFinal) : null;
+  const formatarData = (dataString: string) => {
+    const data = new Date(dataString);
+    return data.toLocaleDateString('pt-BR');
+  };
 
-    return (
-      (!dataInicio || data >= dataInicio) &&
-      (!dataFim || data <= dataFim) &&
-      (!valorMin || t.valor >= parseFloat(valorMin)) &&
-      (!valorMax || t.valor <= parseFloat(valorMax)) &&
-      (!categoria || t.descricao === categoria) &&
-      (conta === 'Todas' || t.conta === conta)
-    );
-  });
+  const formatarMoeda = (valor: number) => {
+    return valor.toLocaleString('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
+    });
+  };
+
+  const handleFiltroChange = (campo: keyof FiltrosTransacoes, valor: any) => {
+    setFiltros(prev => ({
+      ...prev,
+      [campo]: valor
+    }));
+  };
 
   return (
     <div className="pagina-transacoes">
@@ -64,47 +139,17 @@ const Transacoes = () => {
         </div>
       </nav>
     
-      
-    
-        <div className="tabela">
-
-             <div className="topo-tabela">
-            <button className="botao-nova-transacao">Nova Transação</button>
+       <div className="tabela">
+        <div className="topo-tabela">
+          <button 
+            className="botao-nova-transacao"
+            onClick={() => setMostrarFiltro(!mostrarFiltro)}
+          >
+            {mostrarFiltro ? 'Ocultar Filtros' : 'Mostrar Filtros'}
+          </button>
+          <button className="botao-nova-transacao">Nova Transação</button>
         </div>
 
-        <table>
-          <thead>
-            <tr>
-              <th>Data</th>
-              <th>Descrição</th>
-              <th>Valor</th>
-              <th>Conta</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-            {transacoes.map((t, index) => (
-              <tr key={index}>
-                <td>{t.data}</td>
-                <td>{t.descricao}</td>
-                <td className={Number(t.valor) < 0 ? 'valor-negativo' : 'valor-positivo'}>
-                  {Number(t.valor).toLocaleString('pt-BR', {
-                    style: 'currency',
-                    currency: 'BRL',
-                  })}
-                </td>
-                <td>{t.conta}</td>
-                <td>
-                  <div className="botoes">
-                    <button className="btn info">i</button>
-                    <button className="btn editar">✎</button>
-                    <button className="btn excluir">🗑️</button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
 
         {mostrarFiltro && (
           <div className="filtro">
@@ -112,45 +157,122 @@ const Transacoes = () => {
             <h3>Filtros</h3>
 
             <label><b>Data inicial</b>
-              <input type="date" value={dataInicial} onChange={(e) => setDataInicial(e.target.value)} />
+              <input 
+                type="date" 
+                value={filtros.dataInicio || ''} 
+                onChange={(e) => handleFiltroChange('dataInicio', e.target.value)} 
+              />
             </label>
 
             <label><b>Data final</b>
-              <input type="date" value={dataFinal} onChange={(e) => setDataFinal(e.target.value)} />
+              <input 
+                type="date" 
+                value={filtros.dataFim || ''} 
+                onChange={(e) => handleFiltroChange('dataFim', e.target.value)} 
+              />
             </label>
 
             <label><b>Valor mín.</b>
-              <input type="number" placeholder="R$ 0" value={valorMin} onChange={(e) => setValorMin(e.target.value)} />
+              <input 
+                type="number" 
+                placeholder="R$ 0" 
+                value={filtros.valorMin || ''} 
+                onChange={(e) => handleFiltroChange('valorMin', parseFloat(e.target.value))} 
+              />
             </label>
 
             <label><b>Valor máx.</b>
-              <input type="number" placeholder="R$ 0" value={valorMax} onChange={(e) => setValorMax(e.target.value)} />
+              <input 
+                type="number" 
+                placeholder="R$ 0" 
+                value={filtros.valorMax || ''} 
+                onChange={(e) => handleFiltroChange('valorMax', parseFloat(e.target.value))} 
+              />
             </label>
 
-            <label><b>Categoria</b>
-              <select value={categoria} onChange={(e) => setCategoria(e.target.value)}>
-                <option value="">Todas</option>
-                <option value="Recebido">Recebido</option>
-                <option value="Gasto">Gasto</option>
+            <label><b>Tipo</b>
+              <select 
+                value={filtros.tipoTransacao || ''} 
+                onChange={(e) => handleFiltroChange('tipoTransacao', e.target.value)}
+              >
+                <option value="">Todos</option>
+                <option value="RECEITA">Receita</option>
+                <option value="DESPESA">Despesa</option>
               </select>
             </label>
 
             <label><b>Conta</b>
-              <select value={conta} onChange={(e) => setConta(e.target.value)}>
-                <option value="Todas">Todas</option>
-                <option value="inter">inter</option>
-                <option value="nuBank">nuBank</option>
-                <option value="Bradesco">Bradesco</option>
-                <option value="Santander">Santander</option>
+              <select 
+                value={filtros.idConta || ''} 
+                onChange={(e) => handleFiltroChange('idConta', parseInt(e.target.value))}
+              >
+                <option value="">Todas</option>
+                {/* Aqui você precisaria carregar as contas do usuário */}
+                <option value="1">NuBank</option>
+                <option value="2">Inter</option>
+                <option value="3">Bradesco</option>
               </select>
             </label>
 
             <label><b>Cartão</b><br />
-              <input type="checkbox" disabled /> Com cartão
+              <input 
+                type="checkbox" 
+                checked={filtros.possuiCartao || false} 
+                onChange={(e) => handleFiltroChange('possuiCartao', e.target.checked)} 
+              /> Com cartão
             </label>
 
-            <button className="btn-aplicar-filtro" onClick={aplicarFiltros}>Aplicar Filtro</button>
+            <button 
+              className="btn-aplicar-filtro" 
+              onClick={() => aplicarFiltros(filtros)}
+            >
+              Aplicar Filtro
+            </button>
           </div>
+        )}
+
+        {loading ? (
+          <div className="carregando">Carregando transações...</div>
+        ) : error ? (
+          <div className="erro">
+            {error}
+            <button onClick={() => window.location.reload()}>Tentar novamente</button>
+          </div>
+        ) : transacoes.length === 0 ? (
+          <div className="sem-dados">Nenhuma transação encontrada</div>
+        ) : (
+          <table>
+            <thead>
+              <tr>
+                <th>Data</th>
+                <th>Descrição</th>
+                <th>Valor</th>
+                <th>Conta</th>
+                <th>Categoria</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              {transacoes.map((transacao) => (
+                <tr key={transacao.id}>
+                  <td>{formatarData(transacao.dataTransacao)}</td>
+                  <td>{transacao.descricao}</td>
+                  <td className={transacao.valor < 0 ? 'valor-negativo' : 'valor-positivo'}>
+                    {formatarMoeda(transacao.valor)}
+                  </td>
+                  <td>{transacao.nomeConta}</td>
+                  <td>{transacao.nomeCategoria}</td>
+                  <td>
+                    <div className="botoes">
+                      <button className="btn info">i</button>
+                      <button className="btn editar">✎</button>
+                      <button className="btn excluir">🗑️</button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         )}
       </div>
     </div>
