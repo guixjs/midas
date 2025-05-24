@@ -8,6 +8,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -18,5 +20,6 @@ public class ContaResponseDTO {
   private TipoConta tipoConta;
   private String banco;
   private String cor;
+  private BigDecimal saldo;
   private UsuarioResponseResumidoDTO usuario;
 }

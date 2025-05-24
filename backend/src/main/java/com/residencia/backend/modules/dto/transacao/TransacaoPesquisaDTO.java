@@ -5,10 +5,13 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.YearMonth;
 
 @Data
 @Schema(description = "DTO de filtro das transações")
 public class TransacaoPesquisaDTO {
+    @Schema(description = "Mês que as transações serão listadas, por padrão, o corrente")
+    private YearMonth mesCorrente;
     @Schema(description = "Data inicial para filtrar transações (inclusive)")
     private LocalDate dataInicio;
     @Schema(description = "Data final para filtrar transações (inclusive)")

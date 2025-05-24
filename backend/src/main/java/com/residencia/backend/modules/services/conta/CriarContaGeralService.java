@@ -7,6 +7,8 @@ import com.residencia.backend.modules.repositories.ContaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+
 @Service
 public class CriarContaGeralService {
 
@@ -15,6 +17,7 @@ public class CriarContaGeralService {
 
   public void criarContaGeral(UsuarioEntity usuario){
     var conta = this.contaRepository.findByIdUsuarioAndNome(usuario.getId(), "Geral");
+    BigDecimal saldo = BigDecimal.ZERO;
 
     if (conta.isEmpty()) {
       ContaEntity contaGeral = ContaEntity.builder()
@@ -22,6 +25,7 @@ public class CriarContaGeralService {
           .idUsuario(usuario.getId())
           .nome("Geral")
           .cor("#389111")
+          .saldo(saldo)
           .tipoConta(TipoConta.CARTEIRA)
           .build();
 

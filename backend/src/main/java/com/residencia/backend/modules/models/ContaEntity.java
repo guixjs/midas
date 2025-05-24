@@ -4,6 +4,7 @@ package com.residencia.backend.modules.models;
 import com.residencia.backend.modules.enums.TipoConta;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,6 +12,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -32,6 +34,9 @@ public class ContaEntity {
   @NotBlank(message = "Deve adicionar uma cor")
   @Column(length = 7)
   private String cor;
+
+  @NotNull(message = "O saldo não deve ser nulo")
+  private BigDecimal saldo;
 
   @Enumerated(EnumType.STRING)
   private TipoConta tipoConta;

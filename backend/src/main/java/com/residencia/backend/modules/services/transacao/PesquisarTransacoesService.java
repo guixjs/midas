@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.data.jpa.domain.Specification;
 import jakarta.persistence.criteria.Predicate;
+
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -26,6 +28,12 @@ public class PesquisarTransacoesService {
             
             // Filtro usuario (obrigatório)
             predicates.add(builder.equal(root.get("idUsuario"), idUsuario));
+
+            if (filtros.getDataInicio() == null && filtros.getDataFim() == null) {
+                YearMonth anoMes = filtros.getMesCorrente() != null ? filtros.getMesCorrente() : YearMonth.now();
+                filtros.setDataInicio(anoMes.atDay(1));
+                filtros.setDataFim(anoMes.atEndOfMonth());
+            }
             
             // Filtro periodo
             if (filtros.getDataInicio() != null) {

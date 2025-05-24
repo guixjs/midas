@@ -16,6 +16,7 @@ public class ContaMapper {
           .nome(contaDTO.getNome())
           .banco(contaDTO.getBanco())
           .cor(contaDTO.getCor())
+          .saldo(contaDTO.getSaldo())
           .tipoConta(contaDTO.getTipoConta())
           .idUsuario(idUsuario)
           .build();
@@ -31,6 +32,7 @@ public class ContaMapper {
         .cor(resultado.getCor())
         .tipoConta(resultado.getTipoConta())
         .banco(resultado.getBanco())
+        .saldo(resultado.getSaldo())
         .usuario(usuarioResponse)
         .build();
   }
@@ -42,6 +44,7 @@ public class ContaMapper {
         .cor(contaGeral.getCor())
         .banco(contaGeral.getBanco())
         .tipoConta(contaGeral.getTipoConta())
+        .saldo(contaGeral.getSaldo())
         .build();
   }
 }
