@@ -1,18 +1,21 @@
 "use client";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import './contas.css';
+import { api } from '@/services/api';
 
 interface Conta {
-  id: number;
+  idConta: number;
   nome: string;
-  banco: string;
+  tipoConta: "CARTEIRA" | "CORRENTE" | "POUPANCA";
+  banco: string | null;
   saldo: number;
   cor: string;
 }
 
 interface FormData {
   nome: string;
+  tipoConta: "CARTEIRA" | "CORRENTE" | "POUPANCA";
   banco: string;
   saldo: string;
   cor: string;
@@ -20,26 +23,40 @@ interface FormData {
 
 export default function Contas() {
     // Estado para armazenar as contas
-    const [contas, setContas] = useState<Conta[]>([
-        // Dados de exemplo
-        { id: 1, nome: 'Conta Corrente', banco: 'Nubank', saldo: 2500.75, cor: '#8A2BE2' },
-        { id: 2, nome: 'Poupança', banco: 'Banco do Brasil', saldo: 15000.50, cor: '#FFD700' },
-        { id: 3, nome: 'Investimentos', banco: 'XP Investimentos', saldo: 7800.25, cor: '#32CD32' },
-        { id: 4, nome: 'Carteira', banco: 'Dinheiro Físico', saldo: -150.30, cor: '#FF6347' }
-    ]);
-
-    // Estado para o formulário
+    const [contas, setContas] = useState<Conta[]>([]);
     const [formData, setFormData] = useState<FormData>({
         nome: '',
+        tipoConta: "CORRENTE",
         banco: '',
         saldo: '',
         cor: '#fbc02d'
     });
-
-    // Estado para controlar se estamos editando ou criando
     const [editingId, setEditingId] = useState<number | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
-    // Função para lidar com mudanças no formulário
+
+
+    useEffect(() => {
+        carregarContas();
+    }, []);
+
+  const carregarContas = async ()=>{
+    try{
+        setLoading(true)
+        setError(null)
+        const response = await api.get(`/account`)
+        console.log(response)
+        setContas(response)
+    }catch(error){
+        console.log(error)
+        setError("Erro ao carregar contas. Tente recarregar a página.");
+        setContas([]);
+    }finally{
+        setLoading(false)
+    }
+  };
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormData({
@@ -49,54 +66,69 @@ export default function Contas() {
     };
 
     // Função para salvar uma nova conta ou atualizar existente
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        
-        if (editingId) {
-            // Atualizar conta existente
-            setContas(contas.map(conta => 
-                conta.id === editingId ? { ...formData, id: editingId, saldo: parseFloat(formData.saldo) } : conta
-            ));
-            setEditingId(null);
-        } else {
-            // Adicionar nova conta
-            const newConta: Conta = {
-                id: Date.now(),
-                nome: formData.nome,
-                banco: formData.banco,
-                saldo: parseFloat(formData.saldo),
-                cor: formData.cor
-            };
-            setContas([...contas, newConta]);
-        }
+        setError(null)
 
-        // Limpar formulário
-        setFormData({
-            nome: '',
-            banco: '',
-            saldo: '',
-            cor: '#fbc02d'
-        });
+        if (!formData.nome || !formData.saldo) {
+            setError("Nome e saldo são obrigatórios");
+            return;
+        }
+        
+        try{
+            const payload = {
+                nome: formData.nome,
+                tipoConta: formData.tipoConta,
+                banco: formData.banco,
+                saldo: Number(formData.saldo),
+                cor: formData.cor
+            }
+            if (editingId) {
+                await api.put(`/account`,editingId, payload);
+            } else {
+                await api.post("/account/new", payload);
+            }
+
+            await carregarContas();
+            setFormData({
+                nome: '',
+                tipoConta: "CORRENTE",
+                banco: '',
+                saldo: '',
+                cor: '#fbc02d'
+            })
+            setEditingId(null)
+
+        }catch(error){
+            console.log(error)
+            setError("Erro ao salvar conta. Verifique os dados e tente novamente.");
+        }
     };
 
-    // Função para editar uma conta
+    // // Função para editar uma conta
     const handleEdit = (conta: Conta) => {
         setFormData({
             nome: conta.nome,
-            banco: conta.banco,
+            tipoConta: conta.tipoConta,
+            banco: conta.banco || '',
             saldo: conta.saldo.toString(),
             cor: conta.cor
         });
-        setEditingId(conta.id);
-        
-        // Rolar para o formulário
-        document.querySelector('.contas-form-container')?.scrollIntoView({ behavior: 'smooth' });
+        setEditingId(conta.idConta);
     };
+        
 
-    // Função para excluir uma conta
-    const handleDelete = (id: number) => {
-        if (window.confirm('Tem certeza que deseja excluir esta conta?')) {
-            setContas(contas.filter(conta => conta.id !== id));
+    // // Função para excluir uma conta
+    const handleDelete = async (idConta: number) => {
+        if(!confirm('Tem certeza que deseja apagar esta conta?')){
+            return;
+        }
+        try{
+            await api.delete(`/account`,idConta)
+            await carregarContas()
+        }catch(error){
+            console.error(error);
+            setError("Erro ao excluir conta");
         }
     };
 
@@ -211,7 +243,7 @@ export default function Contas() {
                                 <p>Nenhuma conta cadastrada. Adicione sua primeira conta!</p>
                             ) : (
                                 contas.map(conta => (
-                                    <div className="conta-item" key={conta.id}>
+                                    <div className="conta-item" key={conta.idConta}>
                                         <div className="conta-color" style={{ backgroundColor: conta.cor }}></div>
                                         <div className="conta-info">
                                             <h3>{conta.nome}</h3>
@@ -229,7 +261,7 @@ export default function Contas() {
                                             </button>
                                             <button 
                                                 className="action-btn delete"
-                                                onClick={() => handleDelete(conta.id)}
+                                                onClick={() => handleDelete(conta.idConta)}
                                             >
                                                 🗑️
                                             </button>
