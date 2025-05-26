@@ -2,6 +2,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import "./transacoes.css";
 import { api } from "../../services/api";
 import { gerarListaDeMeses, gerarMesAtual } from "@/utils/MesesUtil";
@@ -39,7 +40,7 @@ interface NovaTransacao {
 }
 
 const Transacoes = () => {
-  // const router = useRouter();
+  const router = useRouter();
   const [mostrarFiltro, setMostrarFiltro] = useState(false);
   const [transacoes, setTransacoes] = useState<Transacao[]>([]);
   const [loading, setLoading] = useState(true);
@@ -155,13 +156,13 @@ const Transacoes = () => {
 
   const irParaRecorrentes = () => {
     fecharModalOpcoes();
-    // router.push('/recorrentes');
+    router.push('/recorrentes');
     
   };
 
   const irParaImportarCSV = () => {
     fecharModalOpcoes();
-    // router.push('/importar');
+    router.push('/importar');
   };
 
   // Função para lidar com mudanças nos campos do formulário
