@@ -215,10 +215,10 @@ body {
 }
 
 .color-input {
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
     border: none;
-    border-radius: none;
+    border-radius: 50%;
     cursor: pointer;
     overflow: hidden;
     padding: 0;
