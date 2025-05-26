@@ -4,6 +4,8 @@
 import { useState, useEffect } from "react";
 import "./transacoes.css";
 import { api } from "../../services/api";
+import { gerarListaDeMeses, gerarMesAtual } from "@/utils/MesesUtil";
+
 interface Transacao {
   id: string;
   valor: number;
@@ -16,6 +18,7 @@ interface Transacao {
 }
 
 interface FiltrosTransacoes {
+  mesCorrente?: string,
   dataInicio?: string;
   dataFim?: string;
   valorMin?: number;
@@ -34,8 +37,12 @@ const Transacoes = () => {
 
   const [filtros, setFiltros] = useState<FiltrosTransacoes>({});
 
+  const meses = gerarListaDeMeses()
+  
+
   useEffect(() => {
   const carregarTransacoes = async () => {
+    
     try {
       setLoading(true);
       setError(null);
@@ -44,36 +51,13 @@ const Transacoes = () => {
       if (!token) {
         throw new Error("Usuário não autenticado");
       }
-
-      const response = await fetch(`http://localhost:8080/transaction/search`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
-        },
-        body: JSON.stringify(filtros),
-      });
-
-      // Verifica se o content-type é JSON
-      const contentType = response.headers.get("content-type");
-      if (!contentType || !contentType.includes("application/json")) {
-        const text = await response.text();
-        throw new Error(text || "Resposta inválida do servidor");
-      }
-
-      const data = await response.json();
-      
-      if (!response.ok) {
-        throw new Error(data.message || "Erro ao carregar transações");
-      }
-
-      setTransacoes(data);
+      const response = await api.post("/transaction/search",filtros)
+      setTransacoes(response);
     } catch (err) {
       console.error('Erro ao carregar transações:', err);
       
       let errorMessage = "Erro desconhecido ao carregar transações";
       if (err instanceof Error) {
-        // Trata erros de JSON inválido
         if (err.message.includes("Unexpected token")) {
           errorMessage = "Resposta inválida do servidor";
         } else {
@@ -141,6 +125,20 @@ const Transacoes = () => {
     
        <div className="tabela">
         <div className="topo-tabela">
+          
+          <select
+            name="mesCorrente"
+            id="mesCorrente"
+            value={filtros.mesCorrente || ''}
+            onChange={(e) => handleFiltroChange('mesCorrente', e.target.value)}
+          >
+            <option value="">Mês atual</option>
+            {meses.map((mes) => (
+              <option key={mes.value} value={mes.value}>
+                {mes.label}
+              </option>
+            ))}
+          </select>
           <button 
             className="botao-nova-transacao"
             onClick={() => setMostrarFiltro(!mostrarFiltro)}
