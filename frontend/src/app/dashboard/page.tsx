@@ -216,7 +216,7 @@ const Dashboard = () => {
                 value={filters.top}
                 onChange={(e) => handleFilterChange('top', e.target.value)}
               >
-                <option value="MAIS_RECENTES">Criadas recentemente</option>
+                <option value="RECENTES">Criadas recentemente</option>
                 <option value="DESPESAS_MES">Maiores despesas do mês</option>
                 <option value="RECEITAS_MES">Maiores receitas do mês</option>
               </select>

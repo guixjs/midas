@@ -57,7 +57,7 @@ export default function Contas() {
     }
   };
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         setFormData({
             ...formData,
@@ -181,9 +181,24 @@ export default function Contas() {
                                     name="nome"
                                     value={formData.nome}
                                     onChange={handleChange}
-                                    placeholder="Ex: Conta Corrente, Poupança..."
+                                    placeholder="Ex: Conta salário, Conta secundária..."
                                     required
                                 />
+                            </div>
+
+                            <div className="form-group">
+                                <label htmlFor="tipoConta">Tipo da Conta</label>
+                                    <select
+                                    name="tipoConta"
+                                    id="tipoConta"
+                                    value={formData.tipoConta}
+                                    onChange={handleChange}
+                                    required>
+                                        <option value="CORRENTE">Corrente</option>
+                                        <option value="Carteira">Carteira</option>
+                                        <option value="POUPANCA">Poupança</option>
+
+                                    </select>
                             </div>
 
                             <div className="form-group">
@@ -198,20 +213,22 @@ export default function Contas() {
                                     required
                                 />
                             </div>
-
+                            
+                            {!editingId && (
                             <div className="form-group">
-                                <label htmlFor="saldo">Saldo Atual</label>
-                                <input
-                                    type="number"
-                                    id="saldo"
-                                    name="saldo"
-                                    value={formData.saldo}
-                                    onChange={handleChange}
-                                    placeholder="0.00"
-                                    step="0.01"
-                                    required
-                                />
+                                <label htmlFor="saldo">Saldo Inicial</label>
+                                    <input
+                                        type="number"
+                                        id="saldo"
+                                        name="saldo"
+                                        value={formData.saldo}
+                                        onChange={handleChange}
+                                        placeholder="0.00"
+                                        step="0.10"
+                                        required
+                                    />
                             </div>
+                            )}
 
                             <div className="form-group">
                                 <label htmlFor="cor">Cor da Conta</label>
@@ -253,18 +270,22 @@ export default function Contas() {
                                             <div className="conta-banco">{conta.banco}</div>
                                         </div>
                                         <div className="conta-actions">
-                                            <button 
-                                                className="action-btn edit"
-                                                onClick={() => handleEdit(conta)}
-                                            >
-                                                ✎
-                                            </button>
-                                            <button 
-                                                className="action-btn delete"
-                                                onClick={() => handleDelete(conta.idConta)}
-                                            >
-                                                🗑️
-                                            </button>
+                                            {conta.nome !== "Geral" && (
+                                                <>
+                                                    <button 
+                                                        className="action-btn edit"
+                                                        onClick={() => handleEdit(conta)}
+                                                    >
+                                                        ✎
+                                                    </button>
+                                                    <button 
+                                                        className="action-btn delete"
+                                                        onClick={() => handleDelete(conta.idConta)}
+                                                    >
+                                                        🗑️
+                                                    </button>
+                                                </>
+                                            )}
                                         </div>
                                     </div>
                                 ))
