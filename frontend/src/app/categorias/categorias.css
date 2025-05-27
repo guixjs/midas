@@ -92,9 +92,9 @@ body {
 }
 
 .user-icon {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
+    width: 0px;
+    height: 0px;
+    border-radius: 0%;
     background-color: #333;
     display: flex;
     align-items: center;
@@ -103,7 +103,6 @@ body {
     cursor: pointer;
 }
 
-/* Conteúdo específico da página de categorias */
 .categorias-container {
     padding: 30px;
     max-width: 1200px;
@@ -149,7 +148,6 @@ body {
     text-align: center;
 }
 
-/* Formulário */
 .categorias-form {
     display: flex;
     flex-direction: column;
@@ -207,7 +205,6 @@ body {
     display: none;
 }
 
-/* Estilização do seletor de cor simplificado */
 .color-picker {
     display: flex;
     align-items: center;
@@ -267,7 +264,6 @@ body {
     background-color: #ffd54f;
 }
 
-/* Lista de categorias */
 .categorias-list {
     display: flex;
     flex-direction: column;
@@ -345,7 +341,6 @@ body {
     background-color: #f0f0f0;
 }
 
-/* Botão de adicionar categoria */
 .add-category-container {
     margin-top: 20px;
     display: flex;

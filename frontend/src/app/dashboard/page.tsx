@@ -147,7 +147,7 @@ const Dashboard = () => {
             <li>Contas</li>
           </ul>
         </nav>
-        <div className="icone-usuario">👤</div>
+        <div className="icone-usuario"></div>
       </div>
 
       <div className="container">

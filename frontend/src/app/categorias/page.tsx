@@ -105,7 +105,7 @@ export default function Categorias() {
                 
                 <div className="user-profile">
                     <div className="user-icon">
-                        <span>👤</span>
+                        <span></span>
                     </div>
                 </div>
             </nav>

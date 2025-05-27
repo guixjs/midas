@@ -186,7 +186,7 @@ export default function Recorrentes() {
                 
                 <div className="user-profile">
                     <div className="user-icon">
-                        <span>👤</span>
+                        <span></span>
                     </div>
                 </div>
             </nav>
