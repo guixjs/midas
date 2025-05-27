@@ -92,6 +92,7 @@ public class RecorrenteMapper {
     }
 
     return TransacaoDTO.builder()
+        .id(recorrente.getId())
         .descricao(recorrente.getDescricao())
         .valor(recorrente.getValor())
         .tipoTransacao(recorrente.getTipoTransacao())

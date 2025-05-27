@@ -1,48 +1,107 @@
 "use client";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './recorrentes.css';
+import { api } from '@/services/api';
+
+interface Recorrente {
+  id: number;
+  descricao: string;
+  dataTransacao: string;
+  valor: number | null;
+  tipoTransacao: string;
+  idCategoria: number;
+  idConta: number;
+  idCartao: number | null;
+}
+
+interface Categoria {
+  id: number;
+  nome: string;
+}
 
 export default function Recorrentes() {
     const [descricao, setDescricao] = useState("");
     const [valor, setValor] = useState("");
     const [categoria, setCategoria] = useState("");
-    const [frequencia, setFrequencia] = useState("mensal");
+    const [repetirValor, setRepetirValor] = useState(true);
     const [tipo, setTipo] = useState("despesa");
-    
-    const [transacoesSelecionadas, setTransacoesSelecionadas] = useState<number[]>([]);
+    const [idConta, setIdConta] = useState(1);
+    const [selectedIds, setSelectedIds] = useState<number[]>([]);
+    const [valoresTemporarios, setValoresTemporarios] = useState<Record<number, number | null>>({});
+    const [recorrentes, setRecorrentes] = useState<Recorrente[]>([]);
+    const [categorias, setCategorias] = useState<Categoria[]>([]);
     const [mostrarConfirmacao, setMostrarConfirmacao] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
 
-    const toggleSelecao = (id: number) => {
-        if (transacoesSelecionadas.includes(id)) {
-            setTransacoesSelecionadas(transacoesSelecionadas.filter(item => item !== id));
-        } else {
-            setTransacoesSelecionadas([...transacoesSelecionadas, id]);
-        }
+    useEffect(() => {
+        const carregarDados = async () => {
+            try {
+                setLoading(true);
+                
+                // Carrega categorias e recorrentes em paralelo
+                const [categoriasData, recorrentesData] = await Promise.all([
+                    api.get('/category'),
+                    api.get('/recurring')
+                ]);
+                
+                setCategorias(categoriasData);
+                setRecorrentes(recorrentesData);
+                
+            } catch (err:any) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+        
+        carregarDados();
+    }, []);
+
+    const handleSelect = (id: number) => {
+        setSelectedIds(prev => 
+            prev.includes(id)
+            ? prev.filter(itemId => itemId !== id)
+            : [...prev, id]
+        );
     };
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
         
-       
-        if (!descricao || !valor || !categoria || !frequencia) {
-            alert("Por favor, preencha todos os campos obrigatórios");
-            return;
+        try {
+            setLoading(true);
+            const valorNumerico = parseFloat(valor.replace(",", "."));
+            
+            await api.post('/recurring/new', {
+                descricao,
+                tipoTransacao: tipo.toUpperCase(),
+                valor: valorNumerico,
+                idCategoria: parseInt(categoria),
+                idConta,
+                idCartao: null,
+                repetirValor
+            });
+            
+            // Recarrega a lista de recorrentes
+            const novaLista = await api.get('/recurring');
+            setRecorrentes(novaLista);
+            
+            // Limpa o formulário
+            setDescricao("");
+            setValor("");
+            setCategoria("");
+            setRepetirValor(true);
+            setTipo("despesa");
+            
+            alert("Transação recorrente cadastrada com sucesso!");
+        } catch (err:any) {
+            setError(err.message);
+            alert("Erro ao cadastrar transação recorrente: " + err.message);
+        } finally {
+            setLoading(false);
         }
-        
-        //  lógica para enviar os dados para o back
-        console.log("Dados da transação recorrente:", { 
-            descricao, 
-            valor, 
-            categoria, 
-            frequencia, 
-            tipo 
-        });
-        
-        setDescricao("");
-        setValor("");
-        setCategoria("");
-        setFrequencia("mensal");
-        setTipo("despesa");
     };
 
     const formatarValor = (valor: string) => {
@@ -54,7 +113,7 @@ export default function Recorrentes() {
     };
 
     const handleCadastrarTransacao = () => {
-        if (transacoesSelecionadas.length === 0) {
+        if (selectedIds.length === 0) {
             alert("Por favor, selecione pelo menos uma transação para cadastrar.");
             return;
         }
@@ -64,20 +123,40 @@ export default function Recorrentes() {
 
     const confirmarCadastro = async () => {
         try {
-            //  lógica para enviar as transações para o backend
-            console.log("Transações cadastradas:", transacoesSelecionadas);
+            setLoading(true);
+            
+            const transacoesParaConverter = recorrentes
+                .filter(rec => selectedIds.includes(rec.id))
+                .map(rec => {
+                    // Usa o valor temporário se existir, senão o valor original
+                    const valorFinal = rec.valor === null 
+                        ? valoresTemporarios[rec.id] 
+                        : rec.valor;
+                    
+                    if (valorFinal === null) {
+                        throw new Error(`A transação "${rec.descricao}" não tem valor definido`);
+                    }
+                    
+                    return {
+                        ...rec,
+                        valor: valorFinal
+                    };
+                });
+            
+            await api.post('/recurring/many', transacoesParaConverter);
             
             setMostrarConfirmacao(false);
+            setSelectedIds([]);
             
-            setTransacoesSelecionadas([]);
+            const novaLista = await api.get('/recurring');
+            setRecorrentes(novaLista);
             
-            alert("Transações cadastradas com sucesso!");
-            
-            // Recarregar a página
-            window.location.reload();
-        } catch (error) {
-            console.error("Erro ao cadastrar transações:", error);
-            alert("Erro ao cadastrar transações. Por favor, tente novamente.");
+            alert("Transações convertidas com sucesso!");
+        } catch (err:any) {
+            setError(err.message);
+            alert("Erro ao converter transações: " + err.message);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -85,11 +164,16 @@ export default function Recorrentes() {
         setMostrarConfirmacao(false);
     };
 
+    const getNomeCategoria = (id: number) => {
+        const categoriaEncontrada = categorias.find(c => c.id === id);
+        return categoriaEncontrada ? categoriaEncontrada.nome : `Categoria ${id}`;
+    };
+
     return (
         <div className="dashboard">
             <nav className="navbar">
                 <div className="logo-container">
-                    <img src="imgs\MIDA$NOME.svg" alt="Midas" className="logo" />
+                    <img src="imgs/MIDA$NOME.svg" alt="Midas" className="logo" />
                 </div>
                 
                 <div className="nav-links">
@@ -125,7 +209,7 @@ export default function Recorrentes() {
                                         id="descricao" 
                                         value={descricao}
                                         onChange={(e) => setDescricao(e.target.value)}
-                                        placeholder="Ex: Assinatura Netflix"
+                                        placeholder="Ex: Assinatura"
                                     />
                                 </div>
                                 <div className="form-group">
@@ -149,14 +233,9 @@ export default function Recorrentes() {
                                         onChange={(e) => setCategoria(e.target.value)}
                                     >
                                         <option value="">Selecione uma categoria</option>
-                                        <option value="moradia">Moradia</option>
-                                        <option value="transporte">Transporte</option>
-                                        <option value="alimentacao">Alimentação</option>
-                                        <option value="lazer">Lazer</option>
-                                        <option value="saude">Saúde</option>
-                                        <option value="educacao">Educação</option>
-                                        <option value="servicos">Serviços</option>
-                                        <option value="outros">Outros</option>
+                                        {categorias.map(cat => (
+                                            <option key={cat.id} value={cat.id}>{cat.nome}</option>
+                                        ))}
                                     </select>
                                 </div>
                                 <div className="form-group">
@@ -188,78 +267,92 @@ export default function Recorrentes() {
                             
                             <div className="form-row">
                                 <div className="form-group">
-                                    <label htmlFor="frequencia">Repetir valor:*</label>
-                                    <select 
-                                        id="frequencia" 
-                                        value={frequencia}
-                                        onChange={(e) => setFrequencia(e.target.value)}
-                                    >
-                                        <option value="sim">Sim</option>
-                                        <option value="não">Não</option>
-                                    </select>
+                                    <label htmlFor="repetirValor">Repetir valor:</label>
+                                    <div className="checkbox-group">
+                                        <label className="checkbox-label">
+                                            <input 
+                                                type="checkbox" 
+                                                id="repetirValor"
+                                                checked={repetirValor}
+                                                onChange={(e) => setRepetirValor(e.target.checked)}
+                                            />
+                                            Manter o mesmo valor nas próximas transações
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                             
-                            <button type="submit" className="save-button">Salvar Transação Recorrente</button>
+                            <button type="submit" className="save-button" disabled={loading}>
+                                {loading ? 'Salvando...' : 'Salvar Transação Recorrente'}
+                            </button>
                         </form>
                     </div>
                     
                     <div className="recorrentes-list-container">
                         <h2>Suas Transações Recorrentes</h2>
                         <div className="recorrentes-list">
-                            <div className="recorrentes-item">
-                                <div className="recorrentes-checkbox">
-                                    <input 
-                                        type="checkbox" 
-                                        id="transacao-1"
-                                        checked={transacoesSelecionadas.includes(1)}
-                                        onChange={() => toggleSelecao(1)}
-                                    />
-                                </div>
-                                <div className="recorrentes-item-header">
-                                    <h3>Assinatura Netflix</h3>
-                                    <span className="recorrentes-valor despesa">R$ 39,90</span>
-                                </div>
-                                <div className="recorrentes-item-details">
-                                    <span className="recorrentes-categoria">Lazer</span>
-                                    <span className="recorrentes-frequencia">Mensal</span>
-                                    <span className="recorrentes-data">Desde: 01/01/2023</span>
-                                </div>
-                                <div className="recorrentes-item-actions">
-                                    <button className="action-btn edit">Editar</button>
-                                    <button className="action-btn delete">Excluir</button>
-                                </div>
-                            </div>
+                            {loading && <p>Carregando...</p>}
+                            {error && <p className="error-message">{error}</p>}
                             
-                            <div className="recorrentes-item">
-                                <div className="recorrentes-checkbox">
-                                    <input 
-                                        type="checkbox" 
-                                        id="transacao-2"
-                                        checked={transacoesSelecionadas.includes(2)}
-                                        onChange={() => toggleSelecao(2)}
+                            {recorrentes.map((recorrente) => (
+                                <div className="recorrentes-item" key={recorrente.id}>
+                                    <div className="recorrentes-checkbox">
+                                    <input
+                                        type="checkbox"
+                                        checked={selectedIds.includes(recorrente.id)}
+                                        onChange={() => handleSelect(recorrente.id)}
+                                        disabled={recorrente.valor === null && valoresTemporarios[recorrente.id]==null}
                                     />
+                                    </div>
+                                    <div className="recorrentes-item-header">
+                                        <h3>{recorrente.descricao}</h3>
+                                        {recorrente.valor !== null ? (
+                                            <span className={`recorrentes-valor ${recorrente.tipoTransacao.toLowerCase() === 'despesa' ? 'despesa' : 'receita'}`}>
+                                                R$ {Math.abs(recorrente.valor).toFixed(2).replace(".", ",")}
+                                            </span>
+                                        ) : (
+                                            <div className="valor-temporario-container">
+                                                <input
+                                                    type="text"
+                                                    placeholder="Defina o valor"
+                                                    value={valoresTemporarios[recorrente.id]?.toFixed(2).replace(".", ",") || ""}
+                                                    onChange={(e) => {
+                                                        const valor = parseFloat(e.target.value.replace(/\D/g, "")) / 100 || null;
+                                                        setValoresTemporarios(prev => ({
+                                                            ...prev,
+                                                            [recorrente.id]: valor
+                                                        }));
+                                                    }}
+                                                    className="input-valor-temporario"
+                                                />
+                                                <span className="hint-text">* Valor apenas para esta conversão</span>
+                                            </div>
+                                        )}
+                                    </div>
+                                    <div className="recorrentes-item-details">
+                                        <span className="recorrentes-categoria">{getNomeCategoria(recorrente.idCategoria)}</span>
+                                    </div>
+                                    <div className="recorrentes-item-actions">
+                                        <button className="action-btn edit">Editar</button>
+                                        <button className="action-btn delete">Excluir</button>
+                                    </div>
+                                    {recorrente.valor === null && (
+                                        <div className="recorrentes-warning">
+                                            Defina um valor para esta transação antes de convertê-la
+                                        </div>
+                                    )}
                                 </div>
-                                <div className="recorrentes-item-header">
-                                    <h3>Salário</h3>
-                                    <span className="recorrentes-valor receita">R$ 3.500,00</span>
-                                </div>
-                                <div className="recorrentes-item-details">
-                                    <span className="recorrentes-categoria">Trabalho</span>
-                                    <span className="recorrentes-frequencia">Mensal</span>
-                                    <span className="recorrentes-data">Desde: 01/01/2023</span>
-                                </div>
-                                <div className="recorrentes-item-actions">
-                                    <button className="action-btn edit">Editar</button>
-                                    <button className="action-btn delete">Excluir</button>
-                                </div>
-                            </div>
+                            ))}
                         </div>
                         
                         <div className="add-transaction-container">
-                            <button className="add-transaction-button" onClick={handleCadastrarTransacao}>
+                            <button 
+                                className="add-transaction-button" 
+                                onClick={handleCadastrarTransacao}
+                                disabled={loading || selectedIds.length === 0}
+                            >
                                 <span className="add-icon">+</span>
-                                Cadastrar Transação
+                                {loading ? 'Processando...' : 'Cadastrar Transação'}
                             </button>
                         </div>
                     </div>
@@ -271,10 +364,12 @@ export default function Recorrentes() {
                 <div className="modal-overlay">
                     <div className="modal-confirmacao">
                         <h3>Confirmar Cadastro</h3>
-                        <p>Tem certeza que deseja cadastrar {transacoesSelecionadas.length} transação(ões)?</p>
+                        <p>Tem certeza que deseja cadastrar {selectedIds.length} transação(ões)?</p>
                         <div className="modal-buttons">
-                            <button className="btn-cancelar" onClick={cancelarCadastro}>Cancelar</button>
-                            <button className="btn-confirmar" onClick={confirmarCadastro}>Confirmar</button>
+                            <button className="btn-cancelar" onClick={cancelarCadastro} disabled={loading}>Cancelar</button>
+                            <button className="btn-confirmar" onClick={confirmarCadastro} disabled={loading}>
+                                {loading ? 'Confirmando...' : 'Confirmar'}
+                            </button>
                         </div>
                     </div>
                 </div>

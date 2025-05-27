@@ -48,7 +48,6 @@ const Transacoes = () => {
   const [filtros, setFiltros] = useState<FiltrosTransacoes>({});
   const meses = gerarListaDeMeses()
   
-  // Estados para o modal de opções e formulário
   const [mostrarModalOpcoes, setMostrarModalOpcoes] = useState(false);
   const [mostrarModalFormulario, setMostrarModalFormulario] = useState(false);
   const [novaTransacao, setNovaTransacao] = useState<NovaTransacao>({
@@ -178,19 +177,7 @@ const Transacoes = () => {
     try {
       // Aqui você implementaria a lógica para salvar a transação no backend
       console.log('Salvando transação:', novaTransacao);
-      
-      // Exemplo de como seria a chamada para a API
-      // const token = localStorage.getItem("token");
-      // const response = await fetch(`http://localhost:8080/transaction`, {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //     "Authorization": `Bearer ${token}`,
-      //   },
-      //   body: JSON.stringify(novaTransacao),
-      // });
-      
-      // Após salvar, fechar o modal e recarregar as transações
+      await api.post("/transaction/new",novaTransacao)
       fecharModalFormulario();
       // Recarregar as transações
       setFiltros({...filtros});

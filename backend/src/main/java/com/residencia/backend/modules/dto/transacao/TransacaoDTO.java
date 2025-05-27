@@ -18,6 +18,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Schema(description = "DTO de criação de transações")
 public class TransacaoDTO {
+  private UUID id;
   @Schema(description = "Descrição da transação")
   private String descricao;
   @Schema(description = "Data da transação")

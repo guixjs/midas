@@ -11,6 +11,25 @@ body {
     position: relative;
 }
 
+.valor-temporario-container {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.input-valor-temporario {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    max-width: 120px;
+}
+
+.hint-text {
+    font-size: 0.8rem;
+    color: #666;
+    font-style: italic;
+}
+
 .navbar {
     background-color: black;
     display: flex;
