@@ -39,7 +39,7 @@ body {
     position: absolute;
     height: 300px;
     top: -120px;
-    left: 0;
+    left: 24;
 }
 
 .nav-links {
@@ -92,9 +92,9 @@ body {
 }
 
 .user-icon {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
+    width: 0px;
+    height: 0px;
+    border-radius: 0%;
     background-color: #333;
     display: flex;
     align-items: center;
@@ -142,7 +142,6 @@ body {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Formulário de adição de conta */
 .contas-form-title {
     font-size: 20px;
     margin-bottom: 20px;
@@ -265,7 +264,6 @@ body {
     background-color: #ffd54f;
 }
 
-/* Lista de contas */
 .contas-list {
     display: flex;
     flex-direction: column;
@@ -345,7 +343,6 @@ body {
     background-color: #f0f0f0;
 }
 
-/* Botão de adicionar conta */
 .add-account-container {
     margin-top: 20px;
     display: flex;

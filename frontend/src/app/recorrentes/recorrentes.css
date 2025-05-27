@@ -63,7 +63,7 @@ body {
     position: absolute;
     height: 300px;
     top: -120px; 
-    left: 0;
+    left: 24;
 }
 
 .nav-links {
@@ -114,9 +114,9 @@ body {
 }
 
 .user-icon {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
+    width: 0px;
+    height: 0px;
+    border-radius: 0%;
     background-color: #333;
     display: flex;
     align-items: center;
