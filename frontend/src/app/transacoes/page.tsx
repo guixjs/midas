@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import "./transacoes.css";
 import { api } from "../../services/api";
-import { gerarListaDeMeses, gerarMesAtual } from "@/utils/MesesUtil";
+import { gerarListaDeMeses } from "@/utils/MesesUtil";
 
 interface Transacao {
   id: string;
@@ -42,7 +42,6 @@ interface NovaTransacao {
 const Transacoes = () => {
   const router = useRouter();
   
-  // Estados
   const [mostrarFiltro, setMostrarFiltro] = useState(false);
   const [transacoes, setTransacoes] = useState<Transacao[]>([]);
   const [loading, setLoading] = useState(true);
@@ -94,7 +93,6 @@ const Transacoes = () => {
     carregarTransacoes();
   }, [filtros]);
 
-  // Funções auxiliares
   const formatarData = (dataString: string) => {
     const partes = dataString.split('-');
     return `${partes[2]}/${partes[1]}/${partes[0]}`;
@@ -107,7 +105,7 @@ const Transacoes = () => {
     });
   };
 
-  // Handlers de filtros
+
   const handleFiltroChange = (campo: keyof FiltrosTransacoes, valor: any) => {
     setFiltros(prev => ({
       ...prev,

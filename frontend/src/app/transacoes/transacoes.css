@@ -406,7 +406,6 @@ th, td {
 }
 
 
-/* Estilos para o Modal */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -615,7 +614,6 @@ th, td {
   background-color: #ffc107;
 }
 
-/* Ajustes responsivos para telas menores */
 @media (max-width: 768px) {
   .modal-formulario {
     width: 95%;
@@ -653,7 +651,6 @@ th, td {
   }
 }
 
-/* Ajustes para telas muito pequenas */
 @media (max-width: 480px) {
   .modal-formulario {
     width: 95%;
@@ -669,7 +666,6 @@ th, td {
 }
 
 
-/* Estilos para a importação de CSV */
 .importacao-csv p {
   margin-bottom: 20px;
   text-align: center;
@@ -701,7 +697,6 @@ th, td {
   background-color: #ffc107;
 }
 
-/* Estilos para o modal de informações da transação */
 .modal-info-transacao {
   background-color: white;
   border-radius: 8px;

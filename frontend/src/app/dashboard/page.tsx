@@ -1,9 +1,11 @@
 'use client';
 
 import './dashboard.css';
-import { LineChart, Line, XAxis, BarChart, Bar, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import './checkbox.css'
+import { XAxis, BarChart, Bar, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { useEffect, useState } from 'react';
-import { api } from '../../services/api'; // Ajuste o caminho conforme sua estrutura
+import { api } from '../../services/api';
+import { gerarListaDeMeses, gerarMesAtual } from '@/utils/MesesUtil';
 
 interface UsuarioInfo {
   id: string;
@@ -60,7 +62,15 @@ interface Filters {
   qtdTransacoes: number;
 }
 
+interface Conta {
+  idConta: number;
+  nome: string;
+  saldo: number;
+  cor: string;
+}
+
 const Dashboard = () => {
+  const [contas, setContas] = useState<Conta[]>([]);
   const [dashboardData, setDashboardData] = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -71,6 +81,27 @@ const Dashboard = () => {
     meses: 6,
     qtdTransacoes: 5
   });
+  const [selectedMonth, setSelectedMonth] = useState('');
+  const [selectedAccountId, setSelectedAccountId] = useState("null");
+  const [selectedConta, setSelectedConta] = useState("");
+  type MetricKey = 'transacoes' | 'saldo' | 'receitas' | 'despesas';
+  const metrics = [
+    { key: 'transacoes', label: 'Quantidade', color: '#00C49F' },
+    { key: 'saldo', label: 'Saldo', color: '#8884d8' },
+    { key: 'receitas', label: 'Receitas', color: '#82ca9d' },
+    { key: 'despesas', label: 'Despesas', color: '#FF8042' },
+  ] as const;
+
+  const [checked, setChecked] = useState<Record<MetricKey, boolean>>({
+    transacoes: true,
+    saldo: true,
+    receitas: false,
+    despesas: false,
+  });
+
+  
+  const meses = gerarListaDeMeses()
+  const mesAtual = gerarMesAtual()
 
   useEffect(() => {
     const fetchDashboardData = async () => {
@@ -96,7 +127,10 @@ const Dashboard = () => {
     };
 
     fetchDashboardData();
+    carregarContas();
   }, [filters]);
+
+  
 
   const handleFilterChange = (filterName: keyof Filters, value: string | number | null) => {
     setFilters(prev => ({
@@ -104,6 +138,24 @@ const Dashboard = () => {
       [filterName]: value
     }));
   };
+
+  const handleCheckboxChange = (key: MetricKey) => {
+    setChecked(prev => ({
+      ...prev,
+      [key]: !prev[key]
+    }));
+  };
+
+  const handleMonthChange = (value: string) => {
+    setSelectedMonth(value);
+    handleFilterChange('yearMonth', value);
+  };
+
+  const carregarContas = async()=>{
+    const contasCarregadas = await api.get("/account")
+    setContas(contasCarregadas)
+  }
+
 
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat('pt-BR', {
@@ -122,7 +174,7 @@ const Dashboard = () => {
   if (!dashboardData) return <div className="pagina-dashboard">Nenhum dado disponível</div>;
 
   const dadosMeses = dashboardData.listaResumoMeses.map(mes => ({
-    mes: mes.mes.split('-')[1], // Pega apenas o mês (MM)
+    mes: mes.mes.split('-')[1],
     saldo: mes.saldoDoMes,
     transacoes: mes.quantidadeTransacoes,
     receitas: mes.receitasDoMes,
@@ -153,20 +205,22 @@ const Dashboard = () => {
       <div className="container">
         <div className="topo">
           <div className="mensagem">
-            <h2>Olá {dashboardData.usuarioInfo.nome}!</h2>
-            <span>Essas são suas informações financeiras do mês de: 
-              <select 
-                id='option-mes'
-                onChange={(e) => handleFilterChange('yearMonth', e.target.value)}
-              >
-                <option value="">Selecione</option>
-                {dashboardData.listaResumoMeses.map((mes, index) => (
-                  <option key={index} value={mes.mes}>
-                    {mes.mes.split('-')[1]}/{mes.mes.split('-')[0]}
-                  </option>
-                ))}
-              </select>
-            </span>
+             <h2>Olá {dashboardData.usuarioInfo.nome}!</h2>
+        <span>
+          Essas são suas informações financeiras do mês de:
+          <select
+              id="option-mes"
+              value={selectedMonth}
+              onChange={(e) => handleMonthChange(e.target.value)}
+            >
+            <option value="">{mesAtual}</option>
+            {meses.map((mes) => (
+              <option key={mes.value} value={mes.value}>
+                {mes.label}
+              </option>
+            ))}
+          </select>
+        </span>
           </div>
           <button className="botao-nova-transacao">Nova Transação</button>
         </div>
@@ -174,12 +228,26 @@ const Dashboard = () => {
         <div className="cards">
           <div className="card-saldo">
             <div className="dropdownConta">
-              <label>Conta:</label>
-              <select onChange={(e) => handleFilterChange('idConta', e.target.value)}>
-                <option value="">Todas as contas</option>
-                {/* Aqui você precisaria ter uma lista de contas disponíveis */}
-              </select>
-            </div>
+                <label>Conta:</label>
+                <select
+                  value={selectedAccountId}
+                  onChange={(e) => {
+                    const selectedId = e.target.value;
+                    setSelectedAccountId(selectedId);
+                    handleFilterChange('idConta', selectedId);
+
+                    const selectedConta = contas.find(conta => String(conta.idConta) === selectedId);
+                    setSelectedConta(selectedConta ? selectedConta.nome : '');
+                  }}
+                >
+                  <option value="">Todas as contas</option>
+                  {contas.map((conta) => (
+                    <option key={conta.idConta} value={conta.idConta}>
+                      {conta.nome}
+                    </option>
+                  ))}
+                </select>
+              </div>
             
             <div className="valores">
               <div className="saldo">
@@ -204,22 +272,36 @@ const Dashboard = () => {
             <div className="topo-card-grafico">
               <h3>Quantidade meses: 
                 <select 
-                  value={filters.meses}
-                  onChange={(e) => handleFilterChange('meses', parseInt(e.target.value))}
-                >
-                  <option value="3">3</option>
-                  <option value="6">6</option>
-                  <option value="12">12</option>
-                </select>
+                    value={filters.meses}
+                    onChange={(e) => handleFilterChange('meses', parseInt(e.target.value))}
+                  >
+                    {[...Array(10)].map((_, i) => {
+                      const mes = i + 3;
+                      return (
+                        <option key={mes} value={mes}>
+                          {mes}
+                        </option>
+                      );
+                    })}
+                  </select>
               </h3>
-              <select
-                value={filters.top}
-                onChange={(e) => handleFilterChange('top', e.target.value)}
-              >
-                <option value="RECENTES">Criadas recentemente</option>
-                <option value="DESPESAS_MES">Maiores despesas do mês</option>
-                <option value="RECEITAS_MES">Maiores receitas do mês</option>
-              </select>
+
+              <div className="checkbox-group">
+                {metrics.map((metric) => (
+                  <label 
+                    key={metric.key} 
+                    className="checkbox-item"
+                    style={{ color: metric.color }}
+                  >
+                    <input 
+                      type="checkbox"
+                      checked={checked[metric.key]}
+                      onChange={() => handleCheckboxChange(metric.key)}
+                    />
+                    <span className="checkbox-label">{metric.label}</span>
+                  </label>
+                ))}
+              </div>
             </div>
 
             <ResponsiveContainer width="100%" height="90%">
@@ -228,11 +310,26 @@ const Dashboard = () => {
                 <XAxis dataKey="mes" />
                 <YAxis />
                 <Tooltip 
-                  formatter={(value: number) => formatCurrency(value)}
+                  formatter={(value: number, name: string) => {
+                    if (name === 'Quantidade') {
+                      return [`${value}`, name];
+                    }
+                    return [formatCurrency(value), name];
+                  }}
                 />
                 <Legend />
-                <Bar dataKey="transacoes" fill="#00C49F" name="Quantidade Transações" />
-                <Bar dataKey="saldo" fill="#8884d8" name="Saldo" />
+
+                {metrics.map(
+                  (metric) => 
+                    checked[metric.key] && (
+                      <Bar 
+                        key={metric.key}
+                        dataKey={metric.key} 
+                        fill={metric.color} 
+                        name={metric.label} 
+                      />
+                    )
+                )}
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -261,7 +358,7 @@ const Dashboard = () => {
                 value={filters.top}
                 onChange={(e) => handleFilterChange('top', e.target.value)}
               >
-                <option value="MAIS_RECENTES">Criadas recentemente</option>
+                <option value="RECENTES">Criadas recentemente</option>
                 <option value="DESPESAS_MES">Maiores despesas do mês</option>
                 <option value="RECEITAS_MES">Maiores receitas do mês</option>
               </select>
