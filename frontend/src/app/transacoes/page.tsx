@@ -96,8 +96,8 @@ const Transacoes = () => {
 
   // Funções auxiliares
   const formatarData = (dataString: string) => {
-    const data = new Date(dataString);
-    return data.toLocaleDateString('pt-BR');
+    const partes = dataString.split('-');
+    return `${partes[2]}/${partes[1]}/${partes[0]}`;
   };
 
   const formatarMoeda = (valor: number) => {
