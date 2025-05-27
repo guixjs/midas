@@ -41,15 +41,18 @@ interface NovaTransacao {
 
 const Transacoes = () => {
   const router = useRouter();
+  
+  // Estados
   const [mostrarFiltro, setMostrarFiltro] = useState(false);
   const [transacoes, setTransacoes] = useState<Transacao[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [filtros, setFiltros] = useState<FiltrosTransacoes>({});
-  const meses = gerarListaDeMeses()
-  
   const [mostrarModalOpcoes, setMostrarModalOpcoes] = useState(false);
   const [mostrarModalFormulario, setMostrarModalFormulario] = useState(false);
+  const [mostrarModalInfo, setMostrarModalInfo] = useState(false);
+  const [transacaoSelecionada, setTransacaoSelecionada] = useState<Transacao | null>(null);
+  
   const [novaTransacao, setNovaTransacao] = useState<NovaTransacao>({
     descricao: '',
     valor: 0,
@@ -59,48 +62,39 @@ const Transacoes = () => {
     idConta: undefined
   });
 
+  const meses = gerarListaDeMeses();
+
+  // Efeitos
   useEffect(() => {
-  const carregarTransacoes = async () => {
-    
-    try {
-      setLoading(true);
-      setError(null);
-      
-      const token = localStorage.getItem("token");
-      if (!token) {
-        throw new Error("Usuário não autenticado");
-      }
-      const response = await api.post("/transaction/search",filtros)
-      setTransacoes(response);
-    } catch (err) {
-      console.error('Erro ao carregar transações:', err);
-      
-      let errorMessage = "Erro desconhecido ao carregar transações";
-      if (err instanceof Error) {
-        if (err.message.includes("Unexpected token")) {
-          errorMessage = "Resposta inválida do servidor";
-        } else {
-          errorMessage = err.message;
+    const carregarTransacoes = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        
+        const token = localStorage.getItem("token");
+        if (!token) {
+          throw new Error("Usuário não autenticado");
         }
+        const response = await api.post("/transaction/search", filtros);
+        setTransacoes(response);
+      } catch (err) {
+        console.error('Erro ao carregar transações:', err);
+        let errorMessage = "Erro desconhecido ao carregar transações";
+        if (err instanceof Error) {
+          errorMessage = err.message.includes("Unexpected token") 
+            ? "Resposta inválida do servidor"
+            : err.message;
+        }
+        setError(errorMessage);
+      } finally {
+        setLoading(false);
       }
-      
-      setError(errorMessage);
-    } finally {
-      setLoading(false);
-    }
-  };
+    };
 
     carregarTransacoes();
   }, [filtros]);
 
-  const aplicarFiltros = (novosFiltros: Partial<FiltrosTransacoes>) => {
-    setFiltros(prev => ({
-      ...prev,
-      ...novosFiltros
-    }));
-    setMostrarFiltro(false);
-  };
-
+  // Funções auxiliares
   const formatarData = (dataString: string) => {
     const data = new Date(dataString);
     return data.toLocaleDateString('pt-BR');
@@ -113,6 +107,7 @@ const Transacoes = () => {
     });
   };
 
+  // Handlers de filtros
   const handleFiltroChange = (campo: keyof FiltrosTransacoes, valor: any) => {
     setFiltros(prev => ({
       ...prev,
@@ -120,51 +115,56 @@ const Transacoes = () => {
     }));
   };
 
-  // Funções para gerenciar os modais
-  const abrirModalOpcoes = () => {
-    setMostrarModalOpcoes(true);
+  const aplicarFiltros = (novosFiltros: Partial<FiltrosTransacoes>) => {
+    setFiltros(prev => ({
+      ...prev,
+      ...novosFiltros
+    }));
+    setMostrarFiltro(false);
   };
 
-  const fecharModalOpcoes = () => {
-    setMostrarModalOpcoes(false);
-  };
+  // Funções do modal de opções
+  const abrirModalOpcoes = () => setMostrarModalOpcoes(true);
+  const fecharModalOpcoes = () => setMostrarModalOpcoes(false);
 
+  // Funções do modal de formulário
   const abrirModalFormulario = (tipo: 'RECEITA' | 'DESPESA') => {
     setNovaTransacao({
       ...novaTransacao,
       tipoTransacao: tipo,
       valor: 0,
-      dataTransacao: new Date().toISOString().split('T')[0] // Data atual no formato YYYY-MM-DD
+      dataTransacao: new Date().toISOString().split('T')[0]
     });
     setMostrarModalOpcoes(false);
     setMostrarModalFormulario(true);
   };
 
-  const fecharModalFormulario = () => {
-    setMostrarModalFormulario(false);
+  const fecharModalFormulario = () => setMostrarModalFormulario(false);
+
+  // Funções do modal de informações
+  const abrirModalInfo = (transacao: Transacao) => {
+    setTransacaoSelecionada(transacao);
+    setMostrarModalInfo(true);
   };
 
-  // Funções para lidar com as opções do modal
-  const criarNovaReceita = () => {
-    abrirModalFormulario('RECEITA');
+  const fecharModalInfo = () => {
+    setMostrarModalInfo(false);
+    setTransacaoSelecionada(null);
   };
 
-  const criarNovaDespesa = () => {
-    abrirModalFormulario('DESPESA');
-  };
-
+  // Handlers de navegação
+  const criarNovaReceita = () => abrirModalFormulario('RECEITA');
+  const criarNovaDespesa = () => abrirModalFormulario('DESPESA');
   const irParaRecorrentes = () => {
     fecharModalOpcoes();
     router.push('/recorrentes');
-    
   };
-
   const irParaImportarCSV = () => {
     fecharModalOpcoes();
     router.push('/importar');
   };
 
-  // Função para lidar com mudanças nos campos do formulário
+  // Handlers do formulário
   const handleFormChange = (campo: keyof NovaTransacao, valor: any) => {
     setNovaTransacao(prev => ({
       ...prev,
@@ -172,18 +172,13 @@ const Transacoes = () => {
     }));
   };
 
-  // Função para salvar a nova transação
   const salvarTransacao = async () => {
     try {
-      // Aqui você implementaria a lógica para salvar a transação no backend
-      console.log('Salvando transação:', novaTransacao);
-      await api.post("/transaction/new",novaTransacao)
+      await api.post("/transaction/new", novaTransacao);
       fecharModalFormulario();
-      // Recarregar as transações
-      setFiltros({...filtros});
+      setFiltros({...filtros}); // Recarrega as transações
     } catch (err) {
       console.error('Erro ao salvar transação:', err);
-      // Aqui você poderia mostrar uma mensagem de erro para o usuário
     }
   };
 
@@ -204,14 +199,13 @@ const Transacoes = () => {
         
         <div className="user-profile">
           <div className="user-icon">
-            <span>👤</span>
+            <span></span>
           </div>
         </div>
       </nav>
     
       <div className="tabela">
         <div className="topo-tabela">
-          
           <select
             name="mesCorrente"
             id="mesCorrente"
@@ -231,7 +225,9 @@ const Transacoes = () => {
           >
             {mostrarFiltro ? 'Ocultar Filtros' : 'Mostrar Filtros'}
           </button>
-          <button className="botao-nova-transacao" onClick={abrirModalOpcoes}>Nova Transação</button>
+          <button className="botao-nova-transacao" onClick={abrirModalOpcoes}>
+            Nova Transação
+          </button>
         </div>
 
         {/* Modal de opções */}
@@ -273,7 +269,7 @@ const Transacoes = () => {
           </div>
         )}
 
-        {/* Modal de formulário para nova transação */}
+        {/* Modal de formulário */}
         {mostrarModalFormulario && (
           <div className="modal-overlay">
             <div className="modal-formulario">
@@ -334,7 +330,6 @@ const Transacoes = () => {
                   onChange={(e) => handleFormChange('idCategoria', e.target.value ? parseInt(e.target.value) : undefined)}
                 >
                   <option value="">Selecione uma categoria</option>
-                  {/* Aqui você carregaria as categorias do backend */}
                   <option value="1">Alimentação</option>
                   <option value="2">Transporte</option>
                   <option value="3">Lazer</option>
@@ -349,7 +344,6 @@ const Transacoes = () => {
                   onChange={(e) => handleFormChange('idConta', e.target.value ? parseInt(e.target.value) : undefined)}
                 >
                   <option value="">Selecione uma conta</option>
-                  {/* Aqui você carregaria as contas do backend */}
                   <option value="1">NuBank</option>
                   <option value="2">Inter</option>
                   <option value="3">Bradesco</option>
@@ -374,6 +368,49 @@ const Transacoes = () => {
           </div>
         )}
 
+        {/* Modal de informações */}
+        {mostrarModalInfo && transacaoSelecionada && (
+          <div className="modal-overlay">
+            <div className="modal-info-transacao">
+              <button className="btn-fechar-modal" onClick={fecharModalInfo}>X</button>
+              
+              <div className="info-transacao-header">
+                <h2 className="info-transacao-descricao">{transacaoSelecionada.descricao}</h2>
+                <p className="info-transacao-tipo">
+                  {transacaoSelecionada.tipoTransacao === 'RECEITA' ? 'Receita' : 'Despesa'}
+                </p>
+              </div>
+              
+              <div className="info-transacao-valor">
+                <h3 className={transacaoSelecionada.valor < 0 ? 'valor-negativo' : 'valor-positivo'}>
+                  {formatarMoeda(transacaoSelecionada.valor)}
+                </h3>
+                <p className="info-transacao-data">{formatarData(transacaoSelecionada.dataTransacao)}</p>
+              </div>
+              
+              <div className="info-transacao-detalhes">
+                <div className="info-item">
+                  <h4>Categoria</h4>
+                  <p>{transacaoSelecionada.nomeCategoria}</p>
+                </div>
+                
+                <div className="info-item">
+                  <h4>Conta</h4>
+                  <p>{transacaoSelecionada.nomeConta}</p>
+                </div>
+                
+                {transacaoSelecionada.nomeCartao && (
+                  <div className="info-item">
+                    <h4>Cartão</h4>
+                    <p>{transacaoSelecionada.nomeCartao}</p>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Filtros */}
         {mostrarFiltro && (
           <div className="filtro">
             <button className="btn-fechar-filtro" onClick={() => setMostrarFiltro(false)}>X</button>
@@ -430,10 +467,21 @@ const Transacoes = () => {
                 onChange={(e) => handleFiltroChange('idConta', parseInt(e.target.value))}
               >
                 <option value="">Todas</option>
-                {/* Aqui você precisaria carregar as contas do usuário */}
                 <option value="1">NuBank</option>
                 <option value="2">Inter</option>
                 <option value="3">Bradesco</option>
+              </select>
+            </label>
+
+            <label><b>Categoria</b>
+              <select 
+                value={filtros.idCategoria || ''} 
+                onChange={(e) => handleFiltroChange('idCategoria', parseInt(e.target.value))}
+              >
+                <option value="">Todas</option>
+                <option value="1">Alimentação</option>
+                <option value="2">Transporte</option>
+                <option value="3">Lazer</option>
               </select>
             </label>
 
@@ -454,6 +502,7 @@ const Transacoes = () => {
           </div>
         )}
 
+        {/* Tabela de transações */}
         {loading ? (
           <div className="carregando">Carregando transações...</div>
         ) : error ? (
@@ -487,7 +536,7 @@ const Transacoes = () => {
                   <td>{transacao.nomeCategoria}</td>
                   <td>
                     <div className="botoes">
-                      <button className="btn info">i</button>
+                      <button className="btn info" onClick={() => abrirModalInfo(transacao)}>i</button>
                       <button className="btn editar">✎</button>
                       <button className="btn excluir">🗑️</button>
                     </div>

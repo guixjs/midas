@@ -700,3 +700,96 @@ th, td {
 .btn-upload:hover {
   background-color: #ffc107;
 }
+
+/* Estilos para o modal de informações da transação */
+.modal-info-transacao {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  max-width: 500px;
+  width: 90%;
+  padding: 20px;
+  position: relative;
+}
+
+.info-transacao-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+.info-transacao-descricao {
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.info-transacao-tipo {
+  font-size: 1rem;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background-color: #f0f0f0;
+  margin: 0;
+}
+
+.info-transacao-valor {
+  text-align: center;
+  margin-bottom: 20px;
+  padding: 15px 0;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+}
+
+.info-transacao-valor h3 {
+  font-size: 2rem;
+  margin: 0 0 5px 0;
+}
+
+.info-transacao-data {
+  color: #666;
+  margin: 0;
+}
+
+.info-transacao-detalhes {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+}
+
+.info-item h4 {
+  margin: 0;
+  color: #555;
+  font-weight: 600;
+}
+
+.info-item p {
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .modal-info-transacao {
+    width: 95%;
+    padding: 15px;
+  }
+  
+  .info-transacao-descricao {
+    font-size: 1.2rem;
+  }
+  
+  .info-transacao-valor h3 {
+    font-size: 1.5rem;
+  }
+}
