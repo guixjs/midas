@@ -1,3 +1,4 @@
+
 .pagina-transacoes {
   font-family: 'Segoe UI', sans-serif;
   background-color: #f5f5f7;
@@ -15,7 +16,7 @@
   align-items: center;
   padding: 0 16px;
   flex-wrap: wrap;
-  height: 60px;
+  height: 80px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   position: relative;
   overflow: visible;
@@ -71,13 +72,8 @@ body {
   text-align: center;
 }
 
-.nav-link:hover {
-  color: #ffd700;
-}
-
 .nav-link.active {
-  color: #ffd700;
-  border-bottom: 2px solid #ffd700;
+  color: #fbc02d;
 }
 
 .nav-link.active::after {
@@ -257,9 +253,6 @@ th, td {
 }
 
 
-
-
-
 .btn-filtro {
     background-color: #facc15;
   color: white;
@@ -283,17 +276,18 @@ th, td {
   position: fixed;
   top: 70px;
   right: 0;
-  width: 320px;
-  height: 70%;
+  width: 280px; /* Reduzi de 320px para 280px */
+  height: auto; /* Mudei de 70% para auto */
+  max-height: 70vh; /* Adicionei limite máximo */
   background-color: #fff;
   border-left: 1px solid #ddd;
-  padding: 20px;
+  padding: 16px; /* Reduzi de 20px para 16px */
   z-index: 100;
   box-shadow: -4px 0 10px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 5px; /* Reduzi de 12px para 10px */
 }
 
 .filtro h3 {
@@ -410,6 +404,7 @@ th, td {
 }
 
 
+/* Estilos para o Modal */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -618,6 +613,7 @@ th, td {
   background-color: #ffc107;
 }
 
+/* Ajustes responsivos para telas menores */
 @media (max-width: 768px) {
   .modal-formulario {
     width: 95%;
@@ -655,6 +651,7 @@ th, td {
   }
 }
 
+/* Ajustes para telas muito pequenas */
 @media (max-width: 480px) {
   .modal-formulario {
     width: 95%;
@@ -670,6 +667,7 @@ th, td {
 }
 
 
+/* Estilos para a importação de CSV */
 .importacao-csv p {
   margin-bottom: 20px;
   text-align: center;
@@ -701,6 +699,7 @@ th, td {
   background-color: #ffc107;
 }
 
+/* Estilos para o modal de informações da transação */
 .modal-info-transacao {
   background-color: white;
   border-radius: 8px;
@@ -777,6 +776,7 @@ th, td {
   font-weight: 500;
 }
 
+/* Responsividade */
 @media (max-width: 768px) {
   .modal-info-transacao {
     width: 95%;
