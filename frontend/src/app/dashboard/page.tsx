@@ -190,19 +190,25 @@ const Dashboard = () => {
 
   return (
     <div className="pagina-dashboard">
-      <div className="cabecalho">
-        <h1>MIDA$</h1>
-        <nav>
-          <ul className="menu">
-            <li className="ativo">Dashboard</li>
-            <li>Transações</li>
-            <li>Recorrentes</li>
-            <li>Categorias</li>
-            <li>Contas</li>
-          </ul>
-        </nav>
-        <div className="icone-usuario"></div>
-      </div>
+      <nav className="navbar">
+                <div className="logo-container">
+                    <img src="/imgs/MIDA$NOME.svg" alt="Midas" className="logo" />
+                </div>
+                
+                <div className="nav-links">
+                    <a href="/dashboard" className="nav-link active">Dashboard</a>
+                    <a href="/transacoes" className="nav-link">Transações</a>
+                    <a href="/recorrentes" className="nav-link">Recorrentes</a>
+                    <a href="/categorias" className="nav-link">Categorias</a>
+                    <a href="/contas" className="nav-link">Contas</a>
+                </div>
+                
+                <div className="user-profile">
+                    <div className="user-icon">
+                        <span></span>
+                    </div>
+                </div>
+            </nav>
 
       <div className="container">
         <div className="topo">

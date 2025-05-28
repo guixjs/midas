@@ -13,7 +13,7 @@
   padding-top: 80px;
 }
 
-.cabecalho {
+.navbar {
   background-color: #000;
   color: white;
   display: flex;
@@ -28,31 +28,80 @@
   z-index: 1000;
 }
 
-.cabecalho h1 {
-  margin: 0;
-  font-size: 28px;
-  color: gold;
+.logo-container {
+  position: relative;
+  height: 60px;
+  overflow: visible;
+  margin-right: 40px;
+  z-index: 10;
 }
 
-.menu {
-  list-style: none;
+.logo {
+  position: absolute;
+  height: 300px;
+  top: -120px;
+  left: 8;
+}
+
+.nav-links {
   display: flex;
-  gap: 24px;
-  margin: 0;
-  padding: 0;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    height: 100%;
+    margin: 0 auto;
+    position: absolute;
+    left: 15;
+    right: 0;
 }
 
-.menu li {
+.nav-link {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 0 10px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: color 0.3s;
+  text-align: center;
+}
+
+.nav-link.active {
+  color: #fbc02d;
+}
+
+.nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background-color: #fbc02d;
+}
+
+.user-profile {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 10;
+}
+
+.user-icon {
+  width: 0px;
+  height: 0px;
+  border-radius: 0%;
+  background-color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
   cursor: pointer;
-}
-
-.menu li.ativo {
-  border-bottom: 2px solid gold;
-  color: gold;
-}
-
-.icone-usuario {
-  font-size: 0px;
 }
 
 
