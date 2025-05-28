@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import "./button.css";
 import { api } from "@/services/api";
+import Categorias from "@/app/categorias/page";
 
 interface NovaTransacao {
   descricao: string;
@@ -14,6 +15,22 @@ interface NovaTransacao {
   idConta?: number;
 }
 
+interface Conta {
+  idConta: number;
+  nome: string;
+  saldo: number;
+  cor: string;
+}
+
+interface Categoria {
+  id: number;
+  nome: string;
+  descricao?: string;
+  cor: string;
+  tipoTransacao: "DESPESA" | "RECEITA";
+}
+
+
 interface NovaTransacaoButtonProps {
   onTransacaoSalva?: () => void;
 }
@@ -21,6 +38,8 @@ interface NovaTransacaoButtonProps {
 export const NovaTransacaoButton = ({ onTransacaoSalva }: NovaTransacaoButtonProps) => {
   const router = useRouter();
   
+  const [contas, setContas] = useState<Conta[]>([]);
+  const [categorias,setCategorias] = useState<Categoria[]>([])
   const [mostrarModalOpcoes, setMostrarModalOpcoes] = useState(false);
   const [mostrarModalFormulario, setMostrarModalFormulario] = useState(false);
   const [novaTransacao, setNovaTransacao] = useState<NovaTransacao>({
@@ -32,11 +51,9 @@ export const NovaTransacaoButton = ({ onTransacaoSalva }: NovaTransacaoButtonPro
     idConta: undefined
   });
 
-  // Funções do modal de opções
   const abrirModalOpcoes = () => setMostrarModalOpcoes(true);
   const fecharModalOpcoes = () => setMostrarModalOpcoes(false);
 
-  // Funções do modal de formulário
   const abrirModalFormulario = (tipo: 'RECEITA' | 'DESPESA') => {
     setNovaTransacao({
       ...novaTransacao,
@@ -48,9 +65,28 @@ export const NovaTransacaoButton = ({ onTransacaoSalva }: NovaTransacaoButtonPro
     setMostrarModalFormulario(true);
   };
 
+  const carregarContas = async () =>{
+    try{
+      const contasResponse = await api.get("/account")
+      setContas(contasResponse)
+
+    }catch(error){
+      console.log(error)
+    }
+  }
+
+  const carregarCategorias = async() =>{
+    try{
+      const categoriaResponse = await api.get("/category")
+      setCategorias(categoriaResponse)
+
+    }catch(error){
+      console.log(error)
+    }
+  }
+
   const fecharModalFormulario = () => setMostrarModalFormulario(false);
 
-  // Handlers de navegação
   const criarNovaReceita = () => abrirModalFormulario('RECEITA');
   const criarNovaDespesa = () => abrirModalFormulario('DESPESA');
   const irParaRecorrentes = () => {
@@ -62,7 +98,7 @@ export const NovaTransacaoButton = ({ onTransacaoSalva }: NovaTransacaoButtonPro
     router.push('/importar');
   };
 
-  // Handlers do formulário
+
   const handleFormChange = (campo: keyof NovaTransacao, valor: any) => {
     setNovaTransacao(prev => ({
       ...prev,
@@ -91,6 +127,11 @@ export const NovaTransacaoButton = ({ onTransacaoSalva }: NovaTransacaoButtonPro
       console.error('Erro ao salvar transação:', err);
     }
   };
+
+  useEffect(()=>{
+    carregarContas()
+    carregarCategorias()
+  },[])
 
   return (
     <>
@@ -140,7 +181,6 @@ export const NovaTransacaoButton = ({ onTransacaoSalva }: NovaTransacaoButtonPro
         </div>
       )}
 
-      {/* Modal de formulário */}
       {mostrarModalFormulario && (
         <div className="modal-overlay">
           <div className="modal-formulario">
@@ -201,9 +241,11 @@ export const NovaTransacaoButton = ({ onTransacaoSalva }: NovaTransacaoButtonPro
                 onChange={(e) => handleFormChange('idCategoria', e.target.value ? parseInt(e.target.value) : undefined)}
               >
                 <option value="">Selecione uma categoria</option>
-                <option value="1">Alimentação</option>
-                <option value="2">Transporte</option>
-                <option value="3">Lazer</option>
+                {categorias.map((cat)=>(
+                  <option key={cat.id} value={cat.id}>
+                    {cat.nome}
+                  </option>
+                ))}
               </select>
             </div>
             
@@ -215,9 +257,11 @@ export const NovaTransacaoButton = ({ onTransacaoSalva }: NovaTransacaoButtonPro
                 onChange={(e) => handleFormChange('idConta', e.target.value ? parseInt(e.target.value) : undefined)}
               >
                 <option value="">Selecione uma conta</option>
-                <option value="1">NuBank</option>
-                <option value="2">Inter</option>
-                <option value="3">Bradesco</option>
+                {contas.map((conta) => (
+                  <option key={conta.idConta} value={conta.idConta}>
+                    {conta.nome}
+                  </option>
+                ))}
               </select>
             </div>
             

@@ -38,8 +38,8 @@ public class CriarCartaoService {
     var conta = contaRepository.findByIdAndIdUsuario(cartaoDTO.getIdConta(), idUsuario)
         .orElseThrow(() -> new OperacaoNaoPermitidaException("Conta não encontrada"));
 
-    if(conta.getNome().equals("Geral") ) {
-      throw new OperacaoNaoPermitidaException("O cartão não pode ser vinculado à conta Geral");
+    if(conta.getNome().equals("Padrão") ) {
+      throw new OperacaoNaoPermitidaException("O cartão não pode ser vinculado à conta Padrão");
     }
 
     boolean cartaoExistente = cartaoRepository.existsByIdUsuarioAndNome(idUsuario,cartaoDTO.getNome());

@@ -6,7 +6,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.residencia.backend.modules.dto.usuario.AuthUsuarioDTO;
 import com.residencia.backend.modules.dto.usuario.AuthUsuarioResponseDTO;
 import com.residencia.backend.modules.repositories.UsuarioRepository;
-import com.residencia.backend.modules.services.conta.CriarContaGeralService;
+import com.residencia.backend.modules.services.conta.CriarContaPadraoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -27,7 +27,7 @@ public class AutenticarUsuarioService {
   private UsuarioRepository usuarioRepository;
 
   @Autowired
-  private CriarContaGeralService criarContaGeralService;
+  private CriarContaPadraoService criarContaPadraoService;
 
   @Autowired
   private PasswordEncoder passwordEncoder;
@@ -54,7 +54,7 @@ public class AutenticarUsuarioService {
         .withExpiresAt(expires_in)
         .sign(algorithm);
 
-    criarContaGeralService.criarContaGeral(usuario);
+    criarContaPadraoService.criarContaPadrao(usuario);
     return AuthUsuarioResponseDTO.builder()
     .token(token)
     .expires_in(expires_in.toEpochMilli())

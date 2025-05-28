@@ -10,26 +10,27 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 
 @Service
-public class CriarContaGeralService {
+public class CriarContaPadraoService {
 
   @Autowired
   private ContaRepository contaRepository;
 
-  public void criarContaGeral(UsuarioEntity usuario){
-    var conta = this.contaRepository.findByIdUsuarioAndNome(usuario.getId(), "Geral");
+  public void criarContaPadrao(UsuarioEntity usuario){
+    var conta = this.contaRepository.findByIdUsuarioAndNome(usuario.getId(), "Padrão");
     BigDecimal saldo = BigDecimal.ZERO;
 
     if (conta.isEmpty()) {
-      ContaEntity contaGeral = ContaEntity.builder()
+      ContaEntity contaPadrao = ContaEntity.builder()
           .usuarioEntity(usuario)
           .idUsuario(usuario.getId())
-          .nome("Geral")
+          .nome("Padrão")
           .cor("#389111")
           .saldo(saldo)
           .tipoConta(TipoConta.CARTEIRA)
+          .banco("Conta criada automaticamente pelo sistema")
           .build();
 
-      contaRepository.save(contaGeral);
+      contaRepository.save(contaPadrao);
     }
 
   }

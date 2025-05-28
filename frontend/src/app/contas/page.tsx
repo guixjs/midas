@@ -270,7 +270,7 @@ export default function Contas() {
                                             <div className="conta-banco">{conta.banco}</div>
                                         </div>
                                         <div className="conta-actions">
-                                            {conta.nome !== "Geral" && (
+                                            {conta.nome !== "Padrão" && (
                                                 <>
                                                     <button 
                                                         className="action-btn edit"

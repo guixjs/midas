@@ -25,8 +25,8 @@ public class ExcluirContaService {
         ContaEntity conta = contaRepository.findByIdAndIdUsuario(id, idUsuario)
             .orElseThrow(() -> new OperacaoNaoPermitidaException("Conta não encontrada ou sem permissão"));
 
-        if (conta.getNome().equalsIgnoreCase("Geral")) {
-            throw new OperacaoNaoPermitidaException("A conta Geral não pode ser excluída");
+        if (conta.getNome().equalsIgnoreCase("Padrão")) {
+            throw new OperacaoNaoPermitidaException("A conta Padrão não pode ser excluída");
         }
 
         Optional<List<CartaoEntity>> cartoes = cartaoRepository.findByIdUsuarioAndIdConta(idUsuario,id);

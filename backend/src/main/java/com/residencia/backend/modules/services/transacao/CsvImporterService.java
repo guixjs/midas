@@ -45,8 +45,8 @@ public class CsvImporterService {
         UUID idUsuario = UUID.fromString(request.getAttribute("id_usuario").toString());
         
         // Obter a conta padrão do usuário (Geral)
-        ContaEntity contaPadrao = contaRepository.findByIdUsuarioAndNome(idUsuario, "Geral")
-                .orElseThrow(() -> new RuntimeException("Conta padrão 'Geral' não encontrada"));
+        ContaEntity contaPadrao = contaRepository.findByIdUsuarioAndNome(idUsuario, "Padrão")
+                .orElseThrow(() -> new RuntimeException("Conta padrão 'Padrão' não encontrada"));
         
         // Configurar leitores CSV
         CSVReader reader = new CSVReaderBuilder(new InputStreamReader(file.getInputStream(), StandardCharsets.UTF_8))

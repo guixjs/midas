@@ -46,8 +46,8 @@ public class TransacaoValidator {
 
   public Integer validarConta(Integer idConta, UUID user) {
     if (idConta == null) {
-      return contaRepository.findByIdUsuarioAndNome(user, "Geral")
-          .orElseThrow(() -> new OperacaoNaoPermitidaException("Conta Geral não encontrada"))
+      return contaRepository.findByIdUsuarioAndNome(user, "Padrão")
+          .orElseThrow(() -> new OperacaoNaoPermitidaException("Conta Padrão não encontrada"))
           .getId();
     }
     return contaRepository.findByIdAndIdUsuario(idConta, user)
