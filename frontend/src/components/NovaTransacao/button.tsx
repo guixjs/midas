@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import "./button.css";
 import { api } from "@/services/api";
-import Categorias from "@/app/categorias/page";
 
 interface NovaTransacao {
   descricao: string;

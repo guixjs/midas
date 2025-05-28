@@ -30,6 +30,21 @@ interface FiltrosTransacoes {
   possuiCartao?: boolean;
 }
 
+interface Conta {
+  idConta: number;
+  nome: string;
+  saldo: number;
+  cor: string;
+}
+
+interface Categoria {
+  id: number;
+  nome: string;
+  descricao?: string;
+  cor: string;
+  tipoTransacao: "DESPESA" | "RECEITA";
+}
+
 
 const Transacoes = () => {
   
@@ -40,11 +55,12 @@ const Transacoes = () => {
   const [filtros, setFiltros] = useState<FiltrosTransacoes>({});
   const [mostrarModalInfo, setMostrarModalInfo] = useState(false);
   const [transacaoSelecionada, setTransacaoSelecionada] = useState<Transacao | null>(null);
+  const [contas, setContas] = useState<Conta[]>([]);
+  const [categorias,setCategorias] = useState<Categoria[]>([])
   
 
   const meses = gerarListaDeMeses();
 
-  // Efeitos
   useEffect(() => {
     const carregarTransacoes = async () => {
       try {
@@ -70,7 +86,28 @@ const Transacoes = () => {
         setLoading(false);
       }
     };
+    const carregarContas = async () =>{
+    try{
+      const contasResponse = await api.get("/account")
+      setContas(contasResponse)
 
+    }catch(error){
+      console.log(error)
+    }
+  }
+
+  const carregarCategorias = async() =>{
+    try{
+      const categoriaResponse = await api.get("/category")
+      setCategorias(categoriaResponse)
+
+    }catch(error){
+      console.log(error)
+    }
+  }
+    
+    carregarCategorias()
+    carregarContas()
     carregarTransacoes();
   }, [filtros]);
 
@@ -251,7 +288,7 @@ const Transacoes = () => {
                 value={filtros.tipoTransacao || ''} 
                 onChange={(e) => handleFiltroChange('tipoTransacao', e.target.value)}
               >
-                <option value="">Todos</option>
+                <option value="null">Todos</option>
                 <option value="RECEITA">Receita</option>
                 <option value="DESPESA">Despesa</option>
               </select>
@@ -259,34 +296,32 @@ const Transacoes = () => {
 
             <label><b>Conta</b>
               <select 
-                value={filtros.idConta || ''} 
-                onChange={(e) => handleFiltroChange('idConta', parseInt(e.target.value))}
+                id="conta"
+                value={filtros.idConta || ''}
+                onChange={(e) => handleFiltroChange('idConta', e.target.value ? parseInt(e.target.value) : undefined)}
               >
-                <option value="">Todas</option>
-                <option value="1">NuBank</option>
-                <option value="2">Inter</option>
-                <option value="3">Bradesco</option>
+                <option value="">Selecione uma conta</option>
+                {contas.map((conta) => (
+                  <option key={conta.idConta} value={conta.idConta}>
+                    {conta.nome}
+                  </option>
+                ))}
               </select>
             </label>
 
             <label><b>Categoria</b>
               <select 
-                value={filtros.idCategoria || ''} 
-                onChange={(e) => handleFiltroChange('idCategoria', parseInt(e.target.value))}
+                id="categoria"
+                value={filtros.idCategoria || ''}
+                onChange={(e) => handleFiltroChange('idCategoria', e.target.value ? parseInt(e.target.value) : undefined)}
               >
-                <option value="">Todas</option>
-                <option value="1">Alimentação</option>
-                <option value="2">Transporte</option>
-                <option value="3">Lazer</option>
+                <option value="">Selecione uma categoria</option>
+                {categorias.map((cat)=>(
+                  <option key={cat.id} value={cat.id}>
+                    {cat.nome}
+                  </option>
+                ))}
               </select>
-            </label>
-
-            <label><b>Cartão</b><br />
-              <input 
-                type="checkbox" 
-                checked={filtros.possuiCartao || false} 
-                onChange={(e) => handleFiltroChange('possuiCartao', e.target.checked)} 
-              /> Com cartão
             </label>
 
             <button 
