@@ -6,6 +6,7 @@ import { XAxis, BarChart, Bar, YAxis, CartesianGrid, Tooltip, Legend, Responsive
 import { useEffect, useState } from 'react';
 import { api } from '../../services/api';
 import { gerarListaDeMeses, gerarMesAtual } from '@/utils/MesesUtil';
+import { NovaTransacaoButton } from '@/components/NovaTransacao/button';
 
 interface UsuarioInfo {
   id: string;
@@ -91,6 +92,7 @@ const Dashboard = () => {
     { key: 'receitas', label: 'Receitas', color: '#82ca9d' },
     { key: 'despesas', label: 'Despesas', color: '#FF8042' },
   ] as const;
+  const [atualizar, setAtualizar] = useState(false);
 
   const [checked, setChecked] = useState<Record<MetricKey, boolean>>({
     transacoes: true,
@@ -128,7 +130,7 @@ const Dashboard = () => {
 
     fetchDashboardData();
     carregarContas();
-  }, [filters]);
+  }, [filters,atualizar]);
 
   
 
@@ -222,7 +224,7 @@ const Dashboard = () => {
           </select>
         </span>
           </div>
-          <button className="botao-nova-transacao">Nova Transação</button>
+          <NovaTransacaoButton onTransacaoSalva={() => setAtualizar(prev => !prev)}/>
         </div>
 
         <div className="cards">
