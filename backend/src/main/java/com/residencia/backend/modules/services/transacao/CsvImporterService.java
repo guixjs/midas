@@ -2,6 +2,7 @@ package com.residencia.backend.modules.services.transacao;
 
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
+import com.residencia.backend.modules.enums.OperacoesRealizadas;
 import com.residencia.backend.modules.enums.TipoTransacao;
 import com.residencia.backend.modules.models.CategoriaEntity;
 import com.residencia.backend.modules.models.ContaEntity;
@@ -9,8 +10,11 @@ import com.residencia.backend.modules.models.TransacaoEntity;
 import com.residencia.backend.modules.repositories.CategoriaRepository;
 import com.residencia.backend.modules.repositories.ContaRepository;
 import com.residencia.backend.modules.repositories.TransacaoRepository;
+import com.residencia.backend.modules.services.conta.AtualizarSaldoService;
 import com.residencia.backend.shareds.util.CorUtil;
 import jakarta.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,6 +32,9 @@ public class CsvImporterService {
     private final TransacaoRepository transacaoRepository;
     private final CategoriaRepository categoriaRepository;
     private final ContaRepository contaRepository;
+
+    @Autowired
+    private AtualizarSaldoService atualizarSaldoService;
 
     public CsvImporterService(TransacaoRepository transacaoRepository, CategoriaRepository categoriaRepository, ContaRepository contaRepository) {
         this.transacaoRepository = transacaoRepository;
@@ -191,6 +198,7 @@ public class CsvImporterService {
                         .idUsuario(idUsuario)
                         .build();
 
+                atualizarSaldoService.atualizarSaldo(transacao, OperacoesRealizadas.CRIACAO);
                 transacoes.add(transacao);
                 linhasImportadas++;
             } catch (Exception e) {
