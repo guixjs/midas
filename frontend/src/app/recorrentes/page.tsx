@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import './recorrentes.css';
 import { api } from '@/services/api';
 
+
 interface Recorrente {
   id: number;
   descricao: string;
@@ -35,7 +36,10 @@ export default function Recorrentes() {
     const [error, setError] = useState("");
 
     useEffect(() => {
-        const carregarDados = async () => {
+        carregarDados();
+    }, []);
+
+    const carregarDados = async () => {
             try {
                 setLoading(true);
                 
@@ -54,10 +58,6 @@ export default function Recorrentes() {
                 setLoading(false);
             }
         };
-        
-        carregarDados();
-    }, []);
-
     const handleSelect = (id: number) => {
         setSelectedIds(prev => 
             prev.includes(id)
@@ -101,6 +101,19 @@ export default function Recorrentes() {
             alert("Erro ao cadastrar transação recorrente: " + err.message);
         } finally {
             setLoading(false);
+        }
+    };
+
+    const handleDelete = async (id: number) => {
+        if(!confirm('Tem certeza que deseja apagar esta conta?')){
+            return;
+        }
+        try{
+            await api.delete(`/recurring`,id)
+            await carregarDados()
+        }catch(error){
+            console.error(error);
+            setError("Erro ao excluir conta");
         }
     };
 
@@ -333,8 +346,8 @@ export default function Recorrentes() {
                                         <span className="recorrentes-categoria">{getNomeCategoria(recorrente.idCategoria)}</span>
                                     </div>
                                     <div className="recorrentes-item-actions">
-                                        <button className="action-btn edit">Editar</button>
-                                        <button className="action-btn delete">Excluir</button>
+                                        <button className="action-btn edit" >Editar</button>
+                                        <button className="action-btn delete" onClick={()=>handleDelete(recorrente.id)}>Excluir</button>
                                     </div>
                                     {recorrente.valor === null && (
                                         <div className="recorrentes-warning">

@@ -6,9 +6,10 @@ import "./transacoes.css";
 import { api } from "../../services/api";
 import { gerarListaDeMeses } from "@/utils/MesesUtil";
 import { NovaTransacaoButton } from "@/components/NovaTransacao/button";
+import { UUID } from "crypto";
 
 interface Transacao {
-  id: string;
+  id: UUID;
   valor: number;
   descricao: string;
   dataTransacao: string;
@@ -61,8 +62,13 @@ const Transacoes = () => {
 
   const meses = gerarListaDeMeses();
 
-  useEffect(() => {
-    const carregarTransacoes = async () => {
+  useEffect(() => { 
+    carregarCategorias()
+    carregarContas()
+    carregarTransacoes();
+  }, [filtros]);
+
+  const carregarTransacoes = async () => {
       try {
         setLoading(true);
         setError(null);
@@ -105,11 +111,6 @@ const Transacoes = () => {
       console.log(error)
     }
   }
-    
-    carregarCategorias()
-    carregarContas()
-    carregarTransacoes();
-  }, [filtros]);
 
   const formatarData = (dataString: string) => {
     const partes = dataString.split('-');
@@ -149,6 +150,19 @@ const Transacoes = () => {
     setMostrarModalInfo(false);
     setTransacaoSelecionada(null);
   };
+
+  const handleDelete = async (id: UUID) => {
+        if(!confirm('Tem certeza que deseja apagar esta conta?')){
+            return;
+        }
+        try{
+            await api.delete(`/transaction`,id)
+            await carregarTransacoes()
+        }catch(error){
+            console.error(error);
+            setError("Erro ao excluir conta");
+        }
+    };
 
 
   return (
@@ -368,8 +382,8 @@ const Transacoes = () => {
                   <td>
                     <div className="botoes">
                       <button className="btn info" onClick={() => abrirModalInfo(transacao)}>i</button>
-                      <button className="btn editar">✎</button>
-                      <button className="btn excluir">🗑️</button>
+                      {/* <button className="btn editar">✎</button> */}
+                      <button className="btn excluir" onClick={()=>handleDelete(transacao.id)}>🗑️</button>
                     </div>
                   </td>
                 </tr>

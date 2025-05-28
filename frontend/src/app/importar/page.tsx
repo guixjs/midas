@@ -45,7 +45,8 @@ export default function ImportarCsv() {
 
       setUploadStatus('Arquivo CSV importado com sucesso!');
       setSelectedFile(null);
-      // Limpa o input de arquivo
+      
+      
       const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
       if (fileInput) fileInput.value = '';
     } catch (error) {
