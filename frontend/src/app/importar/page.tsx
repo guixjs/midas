@@ -117,8 +117,8 @@ export default function ImportarCsv() {
           </form>
 
           <div className="botoes">
-            <button className="botao">Voltar</button>
-            <button className="botao">Nova Transação</button>
+            <a href="/transacoes" className="botao">Voltar</a>
+            
           </div>
         </div>
       </main>
