@@ -2,7 +2,7 @@
 
 import './dashboard.css';
 import './checkbox.css'
-import { XAxis, BarChart, Bar, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { XAxis, BarChart, Bar, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts';
 import { useEffect, useState } from 'react';
 import { api } from '../../services/api';
 import { gerarListaDeMeses, gerarMesAtual } from '@/utils/MesesUtil';
@@ -27,6 +27,7 @@ interface CategoriaGasto {
   nomeCategoria: string;
   valorGasto: number;
   percentual: number;
+  corCategoria: string;
 }
 
 interface Transacao {
@@ -87,16 +88,16 @@ const Dashboard = () => {
   const [selectedConta, setSelectedConta] = useState("");
   type MetricKey = 'transacoes' | 'saldo' | 'receitas' | 'despesas';
   const metrics = [
-    { key: 'transacoes', label: 'Quantidade', color: '#00C49F' },
     { key: 'saldo', label: 'Saldo', color: '#8884d8' },
+    { key: 'transacoes', label: 'Quantidade', color: '#00C49F' },
     { key: 'receitas', label: 'Receitas', color: '#82ca9d' },
     { key: 'despesas', label: 'Despesas', color: '#FF8042' },
   ] as const;
   const [atualizar, setAtualizar] = useState(false);
 
   const [checked, setChecked] = useState<Record<MetricKey, boolean>>({
-    transacoes: true,
     saldo: true,
+    transacoes: false,
     receitas: false,
     despesas: false,
   });
@@ -183,9 +184,11 @@ const Dashboard = () => {
     despesas: Math.abs(mes.despesasDoMes)
   }));
 
-  const dadosCategorias = dashboardData.categoriasMaisGastas.map(categoria => ({
-    categoria: categoria.nomeCategoria,
-    valor: categoria.valorGasto
+  const dadosCategorias = dashboardData.categoriasMaisGastas.map(cat => ({
+    categoria: cat.nomeCategoria,
+    valor: cat.valorGasto,
+    cor: cat.corCategoria,
+    percentual: cat.percentual
   }));
 
   return (
@@ -295,7 +298,8 @@ const Dashboard = () => {
               </h3>
 
               <div className="checkbox-group">
-                {metrics.map((metric) => (
+                {metrics.map(
+                  (metric) => (
                   <label 
                     key={metric.key} 
                     className="checkbox-item"
@@ -325,7 +329,8 @@ const Dashboard = () => {
                     return [formatCurrency(value), name];
                   }}
                 />
-                <Legend />
+                <Legend 
+                iconType="circle"/>
 
                 {metrics.map(
                   (metric) => 
@@ -334,7 +339,8 @@ const Dashboard = () => {
                         key={metric.key}
                         dataKey={metric.key} 
                         fill={metric.color} 
-                        name={metric.label} 
+                        name={metric.label}
+                        barSize={50}
                       />
                     )
                 )}
@@ -345,21 +351,44 @@ const Dashboard = () => {
 
         <div className="cards-baixo">
           <div className="card-categorias">
-            <h3>Categorias mais gastas</h3>
+            <h3>Categorias com mais gastos</h3>
+
             <ResponsiveContainer width="100%" height={200}>
               <BarChart data={dadosCategorias}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="categoria" />
-                <YAxis />
+                <YAxis 
+                type='number'
+                domain={[0,100]}
+                tickFormatter={(value)=>`${value}%`}
+                />
                 <Tooltip 
                   formatter={(value: number) => formatCurrency(value)}
+                  
                 />
-                <Legend />
-                <Bar dataKey="valor" fill="#facc15" name="Valor Gasto" />
+                <Legend 
+                  payload={dadosCategorias.map((cat)=>({
+                    value: cat.categoria,
+                    type: 'circle',
+                    color: cat.cor
+                  }))}
+                />
+                <Bar 
+                dataKey="percentual"
+                barSize={50}>
+                  {dadosCategorias.map(
+                    (cat,index)=>(
+                      <Cell
+                        key={`cell-${index}`}
+                        fill={cat.cor}
+                      />
+                  ))}
+                
+                </Bar>
               </BarChart>
             </ResponsiveContainer>
-          </div>
 
+          </div>
           <div className="card-tabela">
             <div className="topo-card-grafico">
               <select
@@ -375,8 +404,14 @@ const Dashboard = () => {
                   value={filters.qtdTransacoes}
                   onChange={(e) => handleFilterChange('qtdTransacoes', parseInt(e.target.value))}
                 >
-                  <option value="5">5</option>
-                  <option value="10">10</option>
+                   {[...Array(6)].map((_, i) => {
+                      const index = i + 5;
+                      return (
+                        <option key={index} value={index}>
+                          {index}
+                        </option>
+                      );
+                    })}
                 </select>
               </h3>
             </div>
