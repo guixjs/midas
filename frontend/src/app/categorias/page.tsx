@@ -13,19 +13,23 @@ interface Categoria {
 
 interface NovaCategoria{
     nome:string,
-    descricao:string,
+    descricao?:string,
 	tipoTransacao: "DESPESA" | "RECEITA",
     cor:string
 }
 
 
 export default function Categorias() {
-    const [nome, setNome] = useState("");
     const [tipo, setTipo] = useState<"DESPESA" | "RECEITA">("DESPESA");
-    const [cor, setCor] = useState("#4299e1");
-    const [descricao,setDescricao] = useState("")
     const [categorias,setCategorias] = useState<Categoria[]>([])
     const [carregando,setCarregando] = useState(true)
+    const [editingId,setEditingId] = useState<number | null>(null);
+    const [formData, setFormData] = useState <NovaCategoria>({
+        nome:'',
+        descricao: '',
+        cor: '',
+        tipoTransacao: "DESPESA" 
+    })
 
     useEffect(()=>{
             carregarCategorias();
@@ -47,32 +51,53 @@ export default function Categorias() {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        if (!nome) {
+        if (!formData.nome) {
             alert("Por favor, preencha o nome da categoria");
             return;
         }
 
 
         try{
-            await api.post("/category/new",{
-                nome,
-                descricao,
-                tipoTransacao: tipo,
-                cor
-            });
-            console.log("categoria cadastrada")
-            carregarCategorias()
+            const payload ={
+                nome: formData.nome,
+                descricao: formData.descricao,
+                tipoTransacao: formData.tipoTransacao,
+                cor: formData.cor
+            }
 
-            setNome("");
-            setTipo("DESPESA");
-            setCor("#4299e1");
-            setDescricao("")
+            if(editingId){
+                await api.put(`/category`,editingId,payload)
+            }else{
+                await api.post("/category/new",payload)
+
+            }
+            console.log("categoria cadastrada")
+            await carregarCategorias()
+
+            setFormData({
+                nome:'',
+                tipoTransacao:"DESPESA",
+                descricao: '',
+                cor: ''
+            })
+
+            setEditingId(null)
 
         }catch(error){
             console.log(error)
             alert("Erro ao criar categoria")
         }
     };
+
+    const handleEdit = (categoria: Categoria) =>{
+        setFormData({
+            nome: categoria.nome,
+            descricao: categoria.descricao,
+            cor: categoria.cor,
+            tipoTransacao: categoria.tipoTransacao
+        })
+        setEditingId(categoria.id)
+    }
 
     const handleDelete = async (id: number) => {
         if (!confirm("Tem certeza que deseja excluir esta categoria?")) return;
@@ -85,6 +110,14 @@ export default function Categorias() {
             console.error("Erro ao excluir categoria:", error);
             alert("Erro ao excluir categoria");
         }
+    };
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
     };
 
 
@@ -118,15 +151,17 @@ export default function Categorias() {
 
                 <div className="categorias-content">
                     <div className="categorias-form-container">
-                        <h2>Nova Categoria</h2>
+                        <h2>{editingId ? 'Editar Categoria' :
+                            'Adicionar Categoria'}</h2>
                         <form className="categorias-form" onSubmit={handleSubmit}>
                             <div className="form-group">
                                 <label htmlFor="nome">Nome da Categoria:*</label>
                                 <input 
                                     type="text" 
                                     id="nome" 
-                                    value={nome}
-                                    onChange={(e) => setNome(e.target.value)}
+                                    name="nome"
+                                    value={formData.nome}
+                                    onChange={handleChange}
                                     placeholder="Ex: Alimentação"
                                 />
                             </div>
@@ -135,36 +170,37 @@ export default function Categorias() {
                                 <label htmlFor="descricao">Descrição:</label>
                                 <input 
                                     type="text" 
-                                    id="descricao" 
-                                    value={descricao}
-                                    onChange={(e) => setDescricao(e.target.value)}
+                                    id="descricao"
+                                    name='descricao' 
+                                    value={formData.descricao}
+                                    onChange={handleChange}
                                     placeholder="Opcional"
                                 />
                             </div>
                             
                             <div className="form-group">
-                                <label htmlFor="tipo">Tipo:*</label>
-                                <div className="radio-group">
-                                    <label className={`radio-label ${tipo === 'DESPESA' ? 'active' : ''}`}>
-                                        <input 
-                                            type="radio" 
-                                            name="tipo" 
-                                            value="DESPESA"
-                                            checked={tipo === 'DESPESA'}
-                                            onChange={() => setTipo('DESPESA')}
-                                        />
-                                        Despesa
-                                    </label>
-                                    <label className={`radio-label ${tipo === 'RECEITA' ? 'active' : ''}`}>
-                                        <input 
-                                            type="radio" 
-                                            name="tipo" 
-                                            value="RECEITA"
-                                            checked={tipo === 'RECEITA'}
-                                            onChange={() => setTipo('RECEITA')}
-                                        />
-                                        Receita
-                                    </label>
+                                 <label htmlFor="tipo">Tipo:*</label>
+                                    <div className="radio-group">
+                                        <label className={`radio-label ${formData.tipoTransacao === 'DESPESA' ? 'active' : ''}`}>
+                                            <input 
+                                                type="radio" 
+                                                name="tipoTransacao" 
+                                                value="DESPESA"
+                                                checked={formData.tipoTransacao === 'DESPESA'}
+                                                onChange={handleChange}
+                                            />
+                                            Despesa
+                                        </label>
+                                        <label className={`radio-label ${formData.tipoTransacao === 'RECEITA' ? 'active' : ''}`}>
+                                            <input 
+                                                type="radio" 
+                                                name="tipoTransacao" 
+                                                value="RECEITA"
+                                                checked={formData.tipoTransacao === 'RECEITA'}
+                                                onChange={handleChange}
+                                            />
+                                            Receita
+                                        </label>
                                 </div>
                             </div>
                             
@@ -174,15 +210,18 @@ export default function Categorias() {
                                     <input 
                                         type="color" 
                                         id="cor" 
-                                        value={cor}
-                                        onChange={(e) => setCor(e.target.value)}
+                                        name='cor'
+                                        value={formData.cor}
+                                        onChange={handleChange}
                                         className="color-input"
                                     />
                                     <span>Selecione uma cor para sua categoria</span>
                                 </div>
                             </div>
                             
-                            <button type="submit" className="save-button">Salvar Categoria</button>
+                            <button type="submit" className="save-button">
+                                {editingId ? "Atualizar Categoria": "Salvar Categoria"}
+                            </button>
                         </form>
                     </div>
                     
@@ -203,13 +242,20 @@ export default function Categorias() {
                                             {categoria.descricao && <p>{categoria.descricao}</p>}
                                         </div>
                                         <div className="categoria-actions">
-                                            <button className="action-btn edit">✎</button>
-                                            <button 
-                                                className="action-btn delete"
-                                                onClick={() => handleDelete(categoria.id)}
-                                            >
-                                                🗑️
-                                            </button>
+                                            {categoria.id > 7 && (
+                                                <>
+                                                <button className="action-btn edit"
+                                                onClick={()=>handleEdit(categoria)}
+                                                >✎</button>
+                                                <button 
+                                                    className="action-btn delete"
+                                                    onClick={() => handleDelete(categoria.id)}
+                                                >
+                                                    🗑️
+                                                </button>
+                                                </>
+                                            )}
+                                            
                                         </div>
                                     </div>
                                 ))}

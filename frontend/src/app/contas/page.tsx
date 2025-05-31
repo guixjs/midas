@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
 import './contas.css';
 import { api } from '@/services/api';
 
@@ -13,7 +12,7 @@ interface Conta {
   cor: string;
 }
 
-interface FormData {
+interface NovaConta {
   nome: string;
   tipoConta: "CARTEIRA" | "CORRENTE" | "POUPANCA";
   banco: string;
@@ -24,7 +23,7 @@ interface FormData {
 export default function Contas() {
     // Estado para armazenar as contas
     const [contas, setContas] = useState<Conta[]>([]);
-    const [formData, setFormData] = useState<FormData>({
+    const [formData, setFormData] = useState<NovaConta>({
         nome: '',
         tipoConta: "CORRENTE",
         banco: '',
