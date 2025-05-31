@@ -140,6 +140,21 @@ const Transacoes = () => {
     setMostrarFiltro(false);
   };
 
+  const limparFiltro = () =>{
+    const filtrosLimpos: FiltrosTransacoes = {
+      mesCorrente: undefined,
+      dataInicio: undefined,
+      dataFim: undefined,
+      valorMin: undefined,
+      valorMax: undefined,
+      idCategoria: undefined,
+      tipoTransacao: undefined,
+      idConta: undefined,
+      possuiCartao: undefined
+    };
+    aplicarFiltros(filtrosLimpos);
+  }
+
 
   const abrirModalInfo = (transacao: Transacao) => {
     setTransacaoSelecionada(transacao);
@@ -300,9 +315,9 @@ const Transacoes = () => {
             <label><b>Tipo</b>
               <select 
                 value={filtros.tipoTransacao || ''} 
-                onChange={(e) => handleFiltroChange('tipoTransacao', e.target.value)}
+                onChange={(e) => handleFiltroChange('tipoTransacao', e.target.value || undefined)}
               >
-                <option value="null">Todos</option>
+                <option value="">Todos</option>
                 <option value="RECEITA">Receita</option>
                 <option value="DESPESA">Despesa</option>
               </select>
@@ -337,13 +352,22 @@ const Transacoes = () => {
                 ))}
               </select>
             </label>
+              <div className="btns-footer-filtro">
+                <button 
+                  className="btn-limpar-filtro" 
+                  onClick={() => limparFiltro()}
+                  >
+                  Limpar Filtros
+                </button>
 
-            <button 
-              className="btn-aplicar-filtro" 
-              onClick={() => aplicarFiltros(filtros)}
-            >
-              Aplicar Filtro
-            </button>
+                <button 
+                  className="btn-aplicar-filtro" 
+                  onClick={() => aplicarFiltros(filtros)}
+                  >
+                  Aplicar Filtro
+                </button>
+
+              </div>
           </div>
         )}
 

@@ -225,11 +225,12 @@ th, td {
 }
 
 
+.btn-filtro:hover {
+  background-color: #e0e0e0;
 
-
-
+}
 .btn-filtro {
-    background-color: #facc15;
+  background-color: #facc15;
   color: white;
   border: none;
   padding: 10px 18px;
@@ -237,13 +238,8 @@ th, td {
   font-weight: bold;
   cursor: pointer;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  transition: background-color 0.2s;
+  transition: background-color 0.7s;
   gap: 15px;
-  
-}
-
-.btn-filtro:hover {
-  background-color: #e0e0e0;
   
 }
 
@@ -294,6 +290,26 @@ th, td {
   margin-right: 8px;
 }
 
+
+.btns-footer-filtro{
+  display: flex;
+  justify-content: flex-end;
+  gap: 2%; 
+}
+
+.btn-limpar-filtro{
+  background-color: #fff;
+  color: #ffb703;
+  border: #ffb703 2px solid;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: auto;
+  margin-bottom: 8px;
+}
+
+
 .btn-aplicar-filtro {
   background-color: #ffb703;
   color: black;
@@ -304,11 +320,16 @@ th, td {
   cursor: pointer;
   margin-top: auto;
   margin-bottom: 10px;
+  transition: 100ms;
 }
-
-.btn-aplicar-filtro:hover {
+.btn-aplicar-filtro:hover{
   background-color: #e4a403;
 }
+.btn-limpar-filtro:hover{
+  background-color: #e6dbbd;
+  color: #312c21;
+}
+
 
 .btn-fechar-filtro {
   background-color: transparent;
