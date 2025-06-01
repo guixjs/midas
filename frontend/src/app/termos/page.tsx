@@ -8,10 +8,8 @@ export default function TermosDeUso() {
   const router = useRouter();
 
   const handleConcordar = () => {
-    // Armazenar a concordância no localStorage
     localStorage.setItem('termosAceitos', 'true');
     
-    // Redirecionar para a página de cadastro
     router.push('/cadastro');
   };
 

@@ -27,7 +27,6 @@ export default function Cadastro() {
         }
     }, []);
 
-    // Formatação de CPF
     const formatarCPF = (valor: string) => {
         valor = valor.replace(/\D/g, "").slice(0, 11);
 

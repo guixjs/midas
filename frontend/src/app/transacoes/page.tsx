@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useEffect } from "react";
@@ -228,9 +227,6 @@ const Transacoes = () => {
 
         </div>
 
-        
-
-        {/* Modal de informações */}
         {mostrarModalInfo && transacaoSelecionada && (
           <div className="modal-overlay">
             <div className="modal-info-transacao">
@@ -272,7 +268,6 @@ const Transacoes = () => {
           </div>
         )}
 
-        {/* Filtros */}
         {mostrarFiltro && (
           <div className="filtro">
             <button className="btn-fechar-filtro" onClick={() => setMostrarFiltro(false)}>X</button>
@@ -371,7 +366,6 @@ const Transacoes = () => {
           </div>
         )}
 
-        {/* Tabela de transações */}
         {loading ? (
           <div className="carregando">Carregando transações...</div>
         ) : error ? (
