@@ -1,5 +1,6 @@
 "use client";
 
+import { api } from "@/services/api";
 import "./import.css";
 import { useState } from 'react';
 
@@ -16,7 +17,7 @@ export default function ImportarCsv() {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    
+
     if (!selectedFile) {
       setUploadStatus('Por favor, selecione um arquivo.');
       return;
@@ -29,24 +30,11 @@ export default function ImportarCsv() {
       const formData = new FormData();
       formData.append('file', selectedFile);
 
-      const token = localStorage.getItem("token");
-      
-      const response = await fetch('http://localhost:8080/transaction/import', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-        body: formData,
-      });
-
-      if (!response.ok) {
-        throw new Error(await response.text());
-      }
+      await api.postArquivo('/transaction/import', formData);
 
       setUploadStatus('Arquivo CSV importado com sucesso!');
       setSelectedFile(null);
-      
-      
+
       const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
       if (fileInput) fileInput.value = '';
     } catch (error) {

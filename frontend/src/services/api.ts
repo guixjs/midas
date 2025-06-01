@@ -91,6 +91,21 @@ export const api = {
         "Authorization": `Bearer ${token}`,
       }
     })
+  },
+  postArquivo: async (endpoint: string, formData: FormData) => {
+    const token = localStorage.getItem("token");
+    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+      },
+      body: formData,
+    });
+
+    if (!response.ok) {
+        throw new Error(await response.text());
+      }
+      
   }
 }
 
