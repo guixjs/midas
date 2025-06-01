@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.residencia</groupId>
 	<artifactId>backend</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1</version>
 	<name>midas-backend</name>
 	<description>Midas - gestor financeiro</description>
 	<url/>

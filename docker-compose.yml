@@ -1,5 +1,7 @@
 services:
-  postgre:
+  postgres_midas:
+    networks:
+      - midas_network
     image: postgres:15-alpine
     container_name: postgres_midas
     environment:
@@ -17,8 +19,9 @@ services:
     ports:
       - "${SERVER_PORT}:8080"
     depends_on:
-      - postgre
+      - postgres_midas
     environment:
+      SPRING_PROFILES_ACTIVE: prod
       DATABASE_URL: ${DATABASE_URL}
       DATABASE_USERNAME: ${DATABASE_USERNAME}
       DATABASE_PASSWORD: ${DATABASE_PASSWORD}
