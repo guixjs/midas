@@ -29,6 +29,20 @@ services:
     networks:
       - midas_network
 
+  frontend:
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: midas_frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    environment:
+      - NEXT_PUBLIC_API_BASE_URL=http://backend:8080
+    networks:
+      - midas_network
+
 volumes:
   postgres_data:
 
