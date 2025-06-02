@@ -2,7 +2,6 @@
 import { useState, useEffect } from 'react';
 import './recorrentes.css';
 import { api } from '@/services/api';
-import { UUID } from 'crypto';
 
 
 interface Recorrente {
@@ -32,12 +31,6 @@ interface Categoria {
 }
 
 export default function Recorrentes() {
-    const [descricao, setDescricao] = useState("");
-    const [valor, setValor] = useState("");
-    const [categoria, setCategoria] = useState("");
-    const [repetirValor, setRepetirValor] = useState(true);
-    const [tipo, setTipo] = useState("despesa");
-    const [idConta, setIdConta] = useState(1);
     const [selectedIds, setSelectedIds] = useState<number[]>([]);
     const [valoresTemporarios, setValoresTemporarios] = useState<Record<number, number | null>>({});
     const [recorrentes, setRecorrentes] = useState<Recorrente[]>([]);
@@ -63,7 +56,6 @@ export default function Recorrentes() {
         try {
             setLoading(true);
             
-            // Carrega categorias e recorrentes em paralelo
             const [categoriasData, recorrentesData] = await Promise.all([
                 api.get('/category'),
                 api.get('/recurring')
@@ -119,7 +111,6 @@ export default function Recorrentes() {
                 await api.post('/recurring/new',payload)
             }
                         
-            // Recarrega a lista de recorrentes
             const novaLista = await api.get('/recurring');
             setRecorrentes(novaLista);
             
@@ -192,7 +183,6 @@ export default function Recorrentes() {
             const transacoesParaConverter = recorrentes
                 .filter(rec => selectedIds.includes(rec.id))
                 .map(rec => {
-                    // Usa o valor temporário se existir, senão o valor original
                     const valorFinal = rec.valor === null 
                         ? valoresTemporarios[rec.id] 
                         : rec.valor;
@@ -427,7 +417,6 @@ export default function Recorrentes() {
                 </div>
             </main>
 
-            {/* Modal de confirmação */}
             {mostrarConfirmacao && (
                 <div className="modal-overlay">
                     <div className="modal-confirmacao">

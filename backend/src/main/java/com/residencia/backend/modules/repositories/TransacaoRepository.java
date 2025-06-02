@@ -18,17 +18,16 @@ import java.util.UUID;
 
 public interface TransacaoRepository extends JpaRepository<TransacaoEntity, UUID>, JpaSpecificationExecutor<TransacaoEntity> {
   Optional<TransacaoEntity> findByIdAndIdUsuario(UUID uuid, UUID idUsuario);
-
   List<TransacaoEntity> findByUsuarioIdOrderByDataCriacaoDesc(UUID usuarioId, Pageable pageable);
 
   @Query("""
     SELECT t FROM TransacaoEntity t
     WHERE t.idUsuario = :idUsuario
-        AND FUNCTION('MONTH', t.dataTransacao)= :mes
-        AND FUNCTION('YEAR', t.dataTransacao)= :ano
-        AND t.tipoTransacao= :tipo
+        AND EXTRACT(MONTH FROM t.dataTransacao) = :mes
+        AND EXTRACT(YEAR FROM t.dataTransacao) = :ano
+        AND t.tipoTransacao = :tipo
     ORDER BY ABS(t.valor) DESC
-""")
+  """)
   List<TransacaoEntity> buscarTopTransacoesPorTipoEMes(
       @Param("idUsuario") UUID idUsuario,
       @Param("tipo") TipoTransacao tipo,
@@ -40,19 +39,19 @@ public interface TransacaoRepository extends JpaRepository<TransacaoEntity, UUID
       SELECT SUM(t.valor) FROM TransacaoEntity t
       WHERE t.conta.id = :idConta
          AND t.tipoTransacao = 'RECEITA'
-         AND FUNCTION('MONTH', t.dataTransacao)= :mes
-         AND FUNCTION('YEAR', t.dataTransacao)= :ano
+         AND EXTRACT(MONTH FROM t.dataTransacao) = :mes
+         AND EXTRACT(YEAR FROM t.dataTransacao) = :ano
       """)
-  BigDecimal somaReceitasPorContaMes(@Param("idConta") Integer idConta, @Param("mes") int mes, @Param("ano")int ano);
+  BigDecimal somaReceitasPorContaMes(@Param("idConta") Integer idConta, @Param("mes") int mes, @Param("ano") int ano);
 
   @Query("""
       SELECT SUM(t.valor) FROM TransacaoEntity t
       WHERE t.conta.id = :idConta
          AND t.tipoTransacao = 'DESPESA'
-         AND FUNCTION('MONTH', t.dataTransacao)= :mes
-         AND FUNCTION('YEAR', t.dataTransacao)= :ano
+         AND EXTRACT(MONTH FROM t.dataTransacao) = :mes
+         AND EXTRACT(YEAR FROM t.dataTransacao) = :ano
       """)
-  BigDecimal somaDespesasPorContaMes(@Param("idConta") Integer idConta, @Param("mes") int mes, @Param("ano")int ano);
+  BigDecimal somaDespesasPorContaMes(@Param("idConta") Integer idConta, @Param("mes") int mes, @Param("ano") int ano);
 
   @Query("""
     SELECT new com.residencia.backend.modules.dto.dashboard.CategoriaValorDTO(
@@ -64,28 +63,27 @@ public interface TransacaoRepository extends JpaRepository<TransacaoEntity, UUID
     JOIN t.categoria c
     WHERE t.usuario.id = :idUsuario
         AND t.tipoTransacao = 'DESPESA'
-        AND MONTH(t.dataTransacao) = :mes
-        AND YEAR(t.dataTransacao) = :ano
-    GROUP BY c.nome
+        AND EXTRACT(MONTH FROM t.dataTransacao) = :mes
+        AND EXTRACT(YEAR FROM t.dataTransacao) = :ano
+    GROUP BY c.nome, c.cor
     ORDER BY SUM(t.valor) ASC
-""")
+  """)
   List<CategoriaValorDTO> buscarGastosPorCategoriaNoMes(UUID idUsuario, int mes, int ano);
 
   @Query("""
     SELECT new com.residencia.backend.modules.dto.dashboard.ResumoMensalDTO(
-      YEAR(t.dataTransacao),
-      MONTH(t.dataTransacao),
+      EXTRACT(YEAR FROM t.dataTransacao),
+      EXTRACT(MONTH FROM t.dataTransacao),
       COUNT(t),
       SUM(t.valor),
-      SUM(CASE WHEN t.tipoTransacao = 'RECEITA' THEN t.valor ELSE 0 end),
-      SUM(CASE WHEN t.tipoTransacao = 'DESPESA' THEN t.valor ELSE 0 end)
-      )
+      SUM(t.valor) FILTER (WHERE t.tipoTransacao = 'RECEITA'),
+      SUM(t.valor) FILTER (WHERE t.tipoTransacao = 'DESPESA')
+    )
     FROM TransacaoEntity t
     WHERE t.usuario.id = :idUsuario
         AND t.dataTransacao >= :dataInicial
-    GROUP BY YEAR(t.dataTransacao),MONTH(t.dataTransacao)
-    ORDER BY YEAR(t.dataTransacao) DESC,MONTH(t.dataTransacao) DESC
-""")
+    GROUP BY EXTRACT(YEAR FROM t.dataTransacao), EXTRACT(MONTH FROM t.dataTransacao)
+    ORDER BY EXTRACT(YEAR FROM t.dataTransacao) DESC, EXTRACT(MONTH FROM t.dataTransacao) DESC
+  """)
   List<ResumoMensalDTO> buscarResumoMensal(@Param("idUsuario") UUID idUsuario, @Param("dataInicial") LocalDate dataInicial);
-
 }

@@ -64,7 +64,6 @@ export default function Contas() {
         });
     };
 
-    // Função para salvar uma nova conta ou atualizar existente
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setError(null)
@@ -104,7 +103,6 @@ export default function Contas() {
         }
     };
 
-    // // Função para editar uma conta
     const handleEdit = (conta: Conta) => {
         setFormData({
             nome: conta.nome,
@@ -131,7 +129,6 @@ export default function Contas() {
         }
     };
 
-    // Função para formatar valor monetário
     const formatCurrency = (value: number) => {
         return new Intl.NumberFormat('pt-BR', {
             style: 'currency',
@@ -166,7 +163,6 @@ export default function Contas() {
                 </div>
 
                 <div className="contas-content">
-                    {/* Formulário para adicionar/editar conta */}
                     <div className="contas-form-container">
                         <h2 className="contas-form-title">
                             {editingId ? 'Editar Conta' : 'Adicionar Nova Conta'}
