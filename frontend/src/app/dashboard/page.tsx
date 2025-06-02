@@ -217,13 +217,29 @@ const Dashboard = () => {
         <div className="topo">
           <div className="mensagem">
              <h2>Olá {dashboardData.usuarioInfo.nome}!</h2>
-        <span>
+              <span style={{ 
+                    fontSize: '18px', 
+                    fontWeight: '600', 
+                    color: '#333',
+                    marginRight: '8px'
+                }}>
           Essas são suas informações financeiras do mês de:
           <select
-              id="option-mes"
-              value={selectedMonth}
-              onChange={(e) => handleMonthChange(e.target.value)}
-            >
+            id="option-mes"
+            value={selectedMonth}
+            onChange={(e) => handleMonthChange(e.target.value)}
+            style={{
+              padding: '5px 5px',
+              borderRadius: '2px',
+              border: '1px solid #ccc',
+              backgroundColor: '#f9f9f9',
+              fontWeight: '500',
+              cursor: 'pointer',
+              outline: 'none',
+              boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+              transition: '0.3s'
+            }}
+          >
             <option value="">{mesAtual}</option>
             {meses.map((mes) => (
               <option key={mes.value} value={mes.value}>
