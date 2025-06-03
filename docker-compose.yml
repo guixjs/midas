@@ -39,7 +39,7 @@ services:
     depends_on:
       - backend
     environment:
-      - NEXT_PUBLIC_API_BASE_URL=https://midas-production.up.railway.app
+      - NEXT_PUBLIC_API_BASE_URL=http://backend:8080
     networks:
       - midas_network
 
