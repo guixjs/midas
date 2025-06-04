@@ -47,7 +47,7 @@ public class AutenticarUsuarioService {
     }
 
     Algorithm algorithm = Algorithm.HMAC256(secretKey);
-    var expires_in = Instant.now().plus(Duration.ofHours(4));
+    var expires_in = Instant.now().plus(Duration.ofMinutes(40));
     var token = JWT.create()
         .withIssuer("midas")
         .withSubject(usuario.getId().toString())
