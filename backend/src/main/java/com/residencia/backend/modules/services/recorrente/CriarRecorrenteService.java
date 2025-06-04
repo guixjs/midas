@@ -33,7 +33,7 @@ public class CriarRecorrenteService {
 
     UsuarioEntity usuario = usuarioRepository.findById(idUsuario).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
     CategoriaEntity categoria = validator.validarCategoria(recorrenteDTO.getIdCategoria(), idUsuario);
-    Integer idConta = validator.validarConta(recorrenteDTO.getIdConta(), idUsuario);
+    Integer idConta = validator.validarConta(null, idUsuario);
     ContaEntity contaGeral = validator.getContaById(idConta);
     CartaoEntity cartao = validator.validarCartao(recorrenteDTO.getIdCartao(), idConta, idUsuario);
 
